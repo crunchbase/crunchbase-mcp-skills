@@ -1,7 +1,7 @@
 {
-  "name": "crunchbase-vc-sourcing",
-  "version": "1.0.0+codex.20260930201551",
-  "description": "Source and analyze private-market companies with structured Crunchbase workflows.",
+  "name": "crunchbase-mcp-skills",
+  "version": "1.0.0+codex.20260930204110",
+  "description": "Reusable skills for researching companies, analyzing markets, and managing Crunchbase workflows.",
   "author": {
     "name": "Crunchbase",
     "url": "https://www.crunchbase.com"
@@ -9,15 +9,16 @@
   "homepage": "https://www.crunchbase.com",
   "keywords": [
     "crunchbase",
-    "venture-capital",
-    "sourcing",
-    "private-markets"
+    "mcp",
+    "company-research",
+    "market-analysis",
+    "skills"
   ],
   "skills": "./skills/",
   "interface": {
-    "displayName": "Crunchbase VC Sourcing",
-    "shortDescription": "Crunchbase workflows for VC sourcing",
-    "longDescription": "Review funding signals, build thesis landscapes, prepare company briefs, analyze capital intensity, and monitor saved Crunchbase lists.",
+    "displayName": "Crunchbase MCP Skills",
+    "shortDescription": "Reusable skills for Crunchbase workflows",
+    "longDescription": "Research companies and markets with reusable Crunchbase skills. Current workflows cover company briefs, funding signals, thesis landscapes, capital intensity, and saved lists.",
     "developerName": "Crunchbase",
     "category": "Business",
     "capabilities": [
@@ -28,9 +29,9 @@
     "privacyPolicyURL": "https://about.crunchbase.com/terms-of-service/privacy-policy",
     "termsOfServiceURL": "https://about.crunchbase.com/terms-of-service",
     "defaultPrompt": [
-      "Review recent seed rounds against my investment criteria.",
-      "Build a landscape of vertical SaaS for dental practices.",
-      "Analyze capital intensity across a confirmed company set."
+      "Prepare a Crunchbase company brief for my next meeting.",
+      "Build a Crunchbase market landscape using my criteria.",
+      "Help me manage my Crunchbase saved lists."
     ],
     "brandColor": "#146AFF",
     "composerIcon": "./assets/crunchbase-icon-blue.png",

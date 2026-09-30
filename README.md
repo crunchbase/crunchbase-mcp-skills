@@ -1,75 +1,62 @@
 # Crunchbase MCP Skills
 
-Five focused skills for private-company research using a connected Crunchbase data source. Build a company landscape, screen recent funding, prepare a meeting brief, analyze a confirmed company universe, or manage a saved list.
+Reusable agent skills for working with Crunchbase through its Model Context Protocol (MCP) tools. This is Crunchbase's general skills repository: each skill packages a focused workflow, supporting instructions, and any calculation helpers it needs.
+
+The initial collection covers private-company research, funding analysis, and saved lists. The repository can accommodate additional Crunchbase workflows without changing the scope of existing skills.
+
+## Available skills
 
 | Skill | Use it for | Result |
 | --- | --- | --- |
 | [Build thesis landscape](skills/crunchbase-build-thesis-landscape/SKILL.md) | Discover companies against a thesis | Segmented candidates, inclusion reasons, query scope, and an optional saved list |
-| [Review funding signals](skills/crunchbase-review-funding-signals/SKILL.md) | Screen recently announced rounds | A review queue tied to your mandate, with dated rounds and linked companies |
+| [Review funding signals](skills/crunchbase-review-funding-signals/SKILL.md) | Screen recently announced rounds | A review queue tied to your criteria, with dated rounds and linked companies |
 | [Prepare company brief](skills/crunchbase-prepare-company-brief/SKILL.md) | Prepare for a company meeting | A concise brief covering business, financing, team, peers, and questions to test |
 | [Analyze capital intensity](skills/crunchbase-analyze-capital-intensity/SKILL.md) | Compare funding within a confirmed company set | Period comparisons, concentration, formation, and explicit denominators |
-| [Manage saved lists](skills/crunchbase-manage-saved-lists/SKILL.md) | Inspect, monitor, or change an existing list | Current membership or dated events; verified membership after requested changes |
+| [Manage saved lists](skills/crunchbase-manage-saved-lists/SKILL.md) | Inspect, monitor, or change a list | Current membership or dated events; verified membership after requested changes |
 
-## Before installing
+See the [private-company research guide](docs/guides/private-company-research.md) for example requests, workflow boundaries, and how the agent handles missing information.
 
-You need an agent that can load `SKILL.md` and its supporting files, plus an authenticated Crunchbase connector exposing the [required tools](MCP-REQUIREMENTS.md). Python 3 is needed for the bundled calculation helper. The skills do not install a connector, provide credentials, or grant Crunchbase data access. Account entitlements determine which data and list operations are available.
+## Requirements
 
-The workflows were developed for Codex. Other skill-compatible agents also need the same tool capabilities and file access; cross-agent behavior has not been verified for this revision.
+Use an agent that can load `SKILL.md` and its supporting files, with an authenticated Crunchbase connection exposing the [required tools](MCP-REQUIREMENTS.md). Skills do not install a connector or grant Crunchbase data access. Account entitlements determine available fields and operations. Python 3 is needed for skills that use the bundled calculation helper.
 
-## Install from this checkout
+These workflows were developed for Codex. Other skill-compatible agents need equivalent tools and local file access; compatibility must be verified for each host.
 
-With Node.js and npm available, run these commands from the repository root:
+## Install
+
+From a local checkout, with Node.js and npm available:
 
 ```sh
-# Inspect the five available skills without installing.
+# List skills without installing.
 npx skills add . --list
 
-# Choose which skills and agent to install to.
+# Choose skills and a target agent.
 npx skills add .
 
-# Or install only the company-brief skill.
+# Install a single skill.
 npx skills add . --skill crunchbase-prepare-company-brief
 ```
 
-Alternatively, copy individual directories from `skills/` into your agent's skill location. Keep each directory intact, including its references, scripts, assets, and optional agent metadata. Install one copy of each workflow; installing this collection alongside another renamed edition can give the agent duplicate choices.
+The repository supports multiple skills. Each directory under `skills/` is independently installable; retain its references, scripts, assets, and agent metadata. Avoid installing renamed copies of the same workflow together, since competing definitions can make routing ambiguous.
 
-The root `.codex-plugin/plugin.json` supplies the Codex plugin wrapper. The `skills/` directories can also be distributed individually.
+The root `.codex-plugin/plugin.json` packages this collection as the **Crunchbase MCP Skills** Codex plugin. The individual skill directories are also usable without that wrapper.
 
-The repository is [crunchbase/crunchbase-mcp-skills](https://github.com/crunchbase/crunchbase-mcp-skills). Once the skills have been published there, install them with:
+After a revision has been published to [crunchbase/crunchbase-mcp-skills](https://github.com/crunchbase/crunchbase-mcp-skills), it can be installed with:
 
 ```sh
 npx skills add crunchbase/crunchbase-mcp-skills --list
-npx skills add crunchbase/crunchbase-mcp-skills --skill crunchbase-build-thesis-landscape
+npx skills add crunchbase/crunchbase-mcp-skills --skill crunchbase-prepare-company-brief
 ```
 
-The [skills CLI](https://github.com/vercel-labs/skills) supports multiple skills in one repository. According to the [skills.sh FAQ](https://www.skills.sh/docs/faq), leaderboard discovery follows CLI installation telemetry. The commands above target the published repository; unpublished local changes are available only through the local-checkout installation instructions.
+These remote commands use the published repository, not unpushed local changes. Use the checkout commands above to test a local candidate. The [skills CLI](https://github.com/vercel-labs/skills) supports multi-skill repositories; [skills.sh discovery](https://www.skills.sh/docs/faq) follows CLI installation telemetry.
 
-## Try a workflow
+## Development
 
-- **Landscape:** “Use Crunchbase to map software for independent dental practices. Segment companies by the workflow they serve.”
-- **Funding:** “Use Crunchbase to screen European seed rounds in climate software announced in the past 30 days.”
-- **Company brief:** “Use Crunchbase to prepare a meeting brief on Canva, including financing, team, peers, and questions to test.”
-- **Capital analysis:** “Use Crunchbase to analyze capital intensity across this confirmed company set: Canva, Figma, and Miro. Compare the trailing 12 months with the preceding 12 months.”
-- **Saved list:** “Use Crunchbase to inspect my ‘Climate software’ list and summarize its current membership.” Replace the example list name with your own.
+Keep each skill focused on a distinct user task and declare its own required inputs, tool access, and output expectations. New workflows do not need to be about venture capital or private-company sourcing. See [contributing](CONTRIBUTING.md) for repository conventions and validation expectations.
 
-To save a newly discovered landscape, include “save the reviewed companies to a new list named …” in the landscape request. To append companies to an existing list, name the list and the companies explicitly. The agent previews canonical identities before the write and checks persisted membership afterward.
+The [evaluation framework](evals/README.md) provides controlled MCP fixtures, repeated comparisons with and without skills, multi-turn checks, outcome grading, and blinded review. Its first suite covers the current private-company research collection; additional collections can bring their own cases and fixtures. Evaluation infrastructure lives outside the installable skills.
 
-## Scope and defaults
-
-The skills activate for an explicit Crunchbase request, a selected Crunchbase source, or a continuation of an active workflow. A landscape needs a usable thesis; capital analysis needs a confirmed company set. The agent asks when an essential identity or input is ambiguous.
-
-Your stated mandate controls the screen. When a missing input would materially change the companies selected, the analysis, or a saved-list action, the agent asks one focused question covering the unresolved essentials. It reuses answers already supplied and offers concrete options when helpful. Proposed defaults require acceptance; an unspecified geography or stage is not silently interpreted as unrestricted, and an omitted funding window is not silently interpreted as 30 days. An explicit request for a broad screen is sufficient to proceed broadly.
-
-A first-pass landscape is bounded and labeled with what was retrieved and reviewed; an explicit complete request requires the relevant pagination. Confirmed-list results are never presented as whole-market estimates.
-
-For example, “US, pre-seed through Series A, operating private companies with less than $15 million raised” is a valid mandate when you request it. It is not an automatic filter applied to every landscape.
-
-Outputs distinguish retrieved facts, calculations, interpretation, and suggested actions. A dash means no value was returned for that field. Material limitations—such as partial retrieval, unresolved identities, or excluded amounts—are stated with their effect on the conclusion. No returned event is not evidence that no event occurred.
-
-## Maintenance and feedback
-
-When reporting an issue, include the skill name, package version, host/model, prompt, expected behavior, and the relevant redacted response or tool error. Keep credentials and private company/list data out of public reports. The existing evaluation suite is maintained separately and is not included or rerun as part of this revision.
 
 ## License
 
-The skill instructions and code are provided under the [MIT License](LICENSE). The package retains the existing Crunchbase attribution. Crunchbase data access and use remain subject to the applicable service terms; this code license does not grant access to the service or trademark rights. Bundled Crunchbase brand assets are excluded from the code license and retain their existing terms.
+Skill instructions and code are provided under the [MIT License](LICENSE). Crunchbase data access and use remain subject to the applicable service terms; this license does not grant service access or trademark rights. Bundled Crunchbase brand assets retain their existing terms and are excluded from the code license. See [NOTICE](NOTICE).

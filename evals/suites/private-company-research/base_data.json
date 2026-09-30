@@ -1,0 +1,3032 @@
+{
+  "schema_version": 1,
+  "synthetic": true,
+  "as_of": "2026-09-30",
+  "description": "Entirely fictional evaluation data. Company names, identifiers, URLs, financials, people and list state are synthetic. No URLs should be fetched. API envelope and supported field contracts modeled from connector schemas inspected 2026-09-30; subset only.",
+  "entities": {
+    "organizations": [
+      {
+        "identifier": {
+          "uuid": "c5adddb8-e684-5350-b79d-7fc88f4ecdb4",
+          "permalink": "fixture-lumenquill-dental",
+          "value": "Lumenquill Dental",
+          "entity_def_id": "organization"
+        },
+        "url": "https://www.crunchbase.com/organization/fixture-lumenquill-dental",
+        "name": "Lumenquill Dental",
+        "aliases": [],
+        "short_description": "Scheduling and billing software for independent dental practices.",
+        "description": "Scheduling and billing software for independent dental practices.",
+        "website_url": "https://fixture-lumenquill-dental.example",
+        "categories": [
+          {
+            "uuid": "f5d10a0c-3fca-5de0-87bd-4d49193b3dca",
+            "permalink": "fixture-dental",
+            "value": "Dental",
+            "entity_def_id": "category"
+          },
+          {
+            "uuid": "67243aed-1ddf-5ff5-9e9d-2c2ca49045ab",
+            "permalink": "fixture-software",
+            "value": "Software",
+            "entity_def_id": "category"
+          }
+        ],
+        "category_groups": [
+          {
+            "uuid": "67243aed-1ddf-5ff5-9e9d-2c2ca49045ab",
+            "permalink": "fixture-software",
+            "value": "Software",
+            "entity_def_id": "category"
+          }
+        ],
+        "location_identifiers": [
+          {
+            "uuid": "897424e7-be0a-50d6-836d-4ca9a6798d28",
+            "permalink": "fixture-united-states",
+            "value": "United States",
+            "entity_def_id": "location"
+          }
+        ],
+        "facet_ids": [
+          "company"
+        ],
+        "status": "operating",
+        "operating_status": "operating",
+        "ipo_status": "private",
+        "funding_total": {
+          "value": 4000000,
+          "currency": "USD",
+          "value_usd": 4000000
+        },
+        "equity_funding_total": {
+          "value": 4000000,
+          "currency": "USD",
+          "value_usd": 4000000
+        },
+        "last_funding_total": {
+          "value": 2000000,
+          "currency": "USD",
+          "value_usd": 2000000
+        },
+        "last_funding_at": "2026-09-10",
+        "last_funding_type": "seed",
+        "last_equity_funding_type": "seed",
+        "funding_stage": "seed",
+        "founded_on": {
+          "value": "2020-01-01",
+          "precision": "day"
+        },
+        "num_employees_enum": "c_0011_0050",
+        "rank_org": 100,
+        "last_layoff_date": null,
+        "last_key_employee_change_date": "2026-09-15",
+        "investor_identifiers": [],
+        "founder_identifiers": [
+          {
+            "uuid": "ebacc36a-d143-5935-8e71-a03a3a42691b",
+            "permalink": "fixture-aster-vale",
+            "value": "Aster Vale",
+            "entity_def_id": "person"
+          }
+        ]
+      },
+      {
+        "identifier": {
+          "uuid": "6e9e1cb0-5413-5186-bdb8-04996464a52a",
+          "permalink": "fixture-brambleflux-dental",
+          "value": "Brambleflux Dental",
+          "entity_def_id": "organization"
+        },
+        "url": "https://www.crunchbase.com/organization/fixture-brambleflux-dental",
+        "name": "Brambleflux Dental",
+        "aliases": [],
+        "short_description": "Imaging workflow software for independent dental practices.",
+        "description": "Imaging workflow software for independent dental practices.",
+        "website_url": "https://fixture-brambleflux-dental.example",
+        "categories": [
+          {
+            "uuid": "f5d10a0c-3fca-5de0-87bd-4d49193b3dca",
+            "permalink": "fixture-dental",
+            "value": "Dental",
+            "entity_def_id": "category"
+          },
+          {
+            "uuid": "67243aed-1ddf-5ff5-9e9d-2c2ca49045ab",
+            "permalink": "fixture-software",
+            "value": "Software",
+            "entity_def_id": "category"
+          }
+        ],
+        "category_groups": [
+          {
+            "uuid": "67243aed-1ddf-5ff5-9e9d-2c2ca49045ab",
+            "permalink": "fixture-software",
+            "value": "Software",
+            "entity_def_id": "category"
+          }
+        ],
+        "location_identifiers": [
+          {
+            "uuid": "897424e7-be0a-50d6-836d-4ca9a6798d28",
+            "permalink": "fixture-united-states",
+            "value": "United States",
+            "entity_def_id": "location"
+          }
+        ],
+        "facet_ids": [
+          "company"
+        ],
+        "status": "operating",
+        "operating_status": "operating",
+        "ipo_status": "private",
+        "funding_total": {
+          "value": 8000000,
+          "currency": "USD",
+          "value_usd": 8000000
+        },
+        "equity_funding_total": {
+          "value": 8000000,
+          "currency": "USD",
+          "value_usd": 8000000
+        },
+        "last_funding_total": {
+          "value": 4000000,
+          "currency": "USD",
+          "value_usd": 4000000
+        },
+        "last_funding_at": "2026-09-10",
+        "last_funding_type": "seed",
+        "last_equity_funding_type": "seed",
+        "funding_stage": "seed",
+        "founded_on": {
+          "value": "2021-01-01",
+          "precision": "day"
+        },
+        "num_employees_enum": "c_0011_0050",
+        "rank_org": 101,
+        "last_layoff_date": null,
+        "last_key_employee_change_date": null,
+        "investor_identifiers": [],
+        "founder_identifiers": [
+          {
+            "uuid": "4a0bbbf6-d826-5187-9d36-729509e0ddb9",
+            "permalink": "fixture-tavi-brook",
+            "value": "Tavi Brook",
+            "entity_def_id": "person"
+          }
+        ]
+      },
+      {
+        "identifier": {
+          "uuid": "3930ee58-a5cd-5c2e-907d-ea2757bc2118",
+          "permalink": "fixture-mossrelay-dental",
+          "value": "Mossrelay Dental",
+          "entity_def_id": "organization"
+        },
+        "url": "https://www.crunchbase.com/organization/fixture-mossrelay-dental",
+        "name": "Mossrelay Dental",
+        "aliases": [],
+        "short_description": "Claims software for independent dental practices.",
+        "description": "Claims software for independent dental practices.",
+        "website_url": "https://fixture-mossrelay-dental.example",
+        "categories": [
+          {
+            "uuid": "f5d10a0c-3fca-5de0-87bd-4d49193b3dca",
+            "permalink": "fixture-dental",
+            "value": "Dental",
+            "entity_def_id": "category"
+          },
+          {
+            "uuid": "67243aed-1ddf-5ff5-9e9d-2c2ca49045ab",
+            "permalink": "fixture-software",
+            "value": "Software",
+            "entity_def_id": "category"
+          }
+        ],
+        "category_groups": [
+          {
+            "uuid": "67243aed-1ddf-5ff5-9e9d-2c2ca49045ab",
+            "permalink": "fixture-software",
+            "value": "Software",
+            "entity_def_id": "category"
+          }
+        ],
+        "location_identifiers": [
+          {
+            "uuid": "897424e7-be0a-50d6-836d-4ca9a6798d28",
+            "permalink": "fixture-united-states",
+            "value": "United States",
+            "entity_def_id": "location"
+          }
+        ],
+        "facet_ids": [
+          "company"
+        ],
+        "status": "operating",
+        "operating_status": "operating",
+        "ipo_status": "private",
+        "funding_total": null,
+        "equity_funding_total": null,
+        "last_funding_total": null,
+        "last_funding_at": "2026-09-10",
+        "last_funding_type": "seed",
+        "last_equity_funding_type": "seed",
+        "funding_stage": "seed",
+        "founded_on": {
+          "value": "2022-01-01",
+          "precision": "day"
+        },
+        "num_employees_enum": "c_0011_0050",
+        "rank_org": 102,
+        "last_layoff_date": null,
+        "last_key_employee_change_date": null,
+        "investor_identifiers": [],
+        "founder_identifiers": []
+      },
+      {
+        "identifier": {
+          "uuid": "de21bcc2-7ad9-5c3e-9a1d-6607bf735b95",
+          "permalink": "fixture-cobaltnest-dental",
+          "value": "Cobaltnest Dental",
+          "entity_def_id": "organization"
+        },
+        "url": "https://www.crunchbase.com/organization/fixture-cobaltnest-dental",
+        "name": "Cobaltnest Dental",
+        "aliases": [],
+        "short_description": "Patient engagement software for independent dental practices.",
+        "description": "Patient engagement software for independent dental practices.",
+        "website_url": "https://fixture-cobaltnest-dental.example",
+        "categories": [
+          {
+            "uuid": "f5d10a0c-3fca-5de0-87bd-4d49193b3dca",
+            "permalink": "fixture-dental",
+            "value": "Dental",
+            "entity_def_id": "category"
+          },
+          {
+            "uuid": "67243aed-1ddf-5ff5-9e9d-2c2ca49045ab",
+            "permalink": "fixture-software",
+            "value": "Software",
+            "entity_def_id": "category"
+          }
+        ],
+        "category_groups": [
+          {
+            "uuid": "67243aed-1ddf-5ff5-9e9d-2c2ca49045ab",
+            "permalink": "fixture-software",
+            "value": "Software",
+            "entity_def_id": "category"
+          }
+        ],
+        "location_identifiers": [
+          {
+            "uuid": "897424e7-be0a-50d6-836d-4ca9a6798d28",
+            "permalink": "fixture-united-states",
+            "value": "United States",
+            "entity_def_id": "location"
+          }
+        ],
+        "facet_ids": [
+          "company"
+        ],
+        "status": "operating",
+        "operating_status": "operating",
+        "ipo_status": "private",
+        "funding_total": {
+          "value": 15000000,
+          "currency": "USD",
+          "value_usd": 15000000
+        },
+        "equity_funding_total": {
+          "value": 15000000,
+          "currency": "USD",
+          "value_usd": 15000000
+        },
+        "last_funding_total": {
+          "value": 7500000,
+          "currency": "USD",
+          "value_usd": 7500000
+        },
+        "last_funding_at": "2026-09-10",
+        "last_funding_type": "seed",
+        "last_equity_funding_type": "seed",
+        "funding_stage": "seed",
+        "founded_on": {
+          "value": "2023-01-01",
+          "precision": "day"
+        },
+        "num_employees_enum": "c_0011_0050",
+        "rank_org": 103,
+        "last_layoff_date": null,
+        "last_key_employee_change_date": null,
+        "investor_identifiers": [],
+        "founder_identifiers": []
+      },
+      {
+        "identifier": {
+          "uuid": "76cf5389-8e35-5c4d-b451-6b7bc3b57948",
+          "permalink": "fixture-embergrove-dental",
+          "value": "Embergrove Dental",
+          "entity_def_id": "organization"
+        },
+        "url": "https://www.crunchbase.com/organization/fixture-embergrove-dental",
+        "name": "Embergrove Dental",
+        "aliases": [],
+        "short_description": "Dental laboratory software for enterprises.",
+        "description": "Dental laboratory software for enterprises.",
+        "website_url": "https://fixture-embergrove-dental.example",
+        "categories": [
+          {
+            "uuid": "f5d10a0c-3fca-5de0-87bd-4d49193b3dca",
+            "permalink": "fixture-dental",
+            "value": "Dental",
+            "entity_def_id": "category"
+          },
+          {
+            "uuid": "67243aed-1ddf-5ff5-9e9d-2c2ca49045ab",
+            "permalink": "fixture-software",
+            "value": "Software",
+            "entity_def_id": "category"
+          }
+        ],
+        "category_groups": [
+          {
+            "uuid": "67243aed-1ddf-5ff5-9e9d-2c2ca49045ab",
+            "permalink": "fixture-software",
+            "value": "Software",
+            "entity_def_id": "category"
+          }
+        ],
+        "location_identifiers": [
+          {
+            "uuid": "897424e7-be0a-50d6-836d-4ca9a6798d28",
+            "permalink": "fixture-united-states",
+            "value": "United States",
+            "entity_def_id": "location"
+          }
+        ],
+        "facet_ids": [
+          "company"
+        ],
+        "status": "operating",
+        "operating_status": "operating",
+        "ipo_status": "private",
+        "funding_total": {
+          "value": 20000000,
+          "currency": "USD",
+          "value_usd": 20000000
+        },
+        "equity_funding_total": {
+          "value": 20000000,
+          "currency": "USD",
+          "value_usd": 20000000
+        },
+        "last_funding_total": {
+          "value": 10000000,
+          "currency": "USD",
+          "value_usd": 10000000
+        },
+        "last_funding_at": "2026-09-10",
+        "last_funding_type": "seed",
+        "last_equity_funding_type": "seed",
+        "funding_stage": "seed",
+        "founded_on": {
+          "value": "2024-01-01",
+          "precision": "day"
+        },
+        "num_employees_enum": "c_0011_0050",
+        "rank_org": 104,
+        "last_layoff_date": null,
+        "last_key_employee_change_date": null,
+        "investor_identifiers": [],
+        "founder_identifiers": []
+      },
+      {
+        "identifier": {
+          "uuid": "fcc4acb0-3687-5589-b4d5-7fb7430988c0",
+          "permalink": "fixture-fenwicksprout-dental",
+          "value": "Fenwicksprout Dental",
+          "entity_def_id": "organization"
+        },
+        "url": "https://www.crunchbase.com/organization/fixture-fenwicksprout-dental",
+        "name": "Fenwicksprout Dental",
+        "aliases": [],
+        "short_description": "Scheduling software for independent dental practices in the UK.",
+        "description": "Scheduling software for independent dental practices in the UK.",
+        "website_url": "https://fixture-fenwicksprout-dental.example",
+        "categories": [
+          {
+            "uuid": "f5d10a0c-3fca-5de0-87bd-4d49193b3dca",
+            "permalink": "fixture-dental",
+            "value": "Dental",
+            "entity_def_id": "category"
+          },
+          {
+            "uuid": "67243aed-1ddf-5ff5-9e9d-2c2ca49045ab",
+            "permalink": "fixture-software",
+            "value": "Software",
+            "entity_def_id": "category"
+          }
+        ],
+        "category_groups": [
+          {
+            "uuid": "67243aed-1ddf-5ff5-9e9d-2c2ca49045ab",
+            "permalink": "fixture-software",
+            "value": "Software",
+            "entity_def_id": "category"
+          }
+        ],
+        "location_identifiers": [
+          {
+            "uuid": "2219276c-1f13-587f-a0d7-859439ecc0f8",
+            "permalink": "fixture-united-kingdom",
+            "value": "United Kingdom",
+            "entity_def_id": "location"
+          }
+        ],
+        "facet_ids": [
+          "company"
+        ],
+        "status": "operating",
+        "operating_status": "operating",
+        "ipo_status": "private",
+        "funding_total": {
+          "value": 6000000,
+          "currency": "USD",
+          "value_usd": 6000000
+        },
+        "equity_funding_total": {
+          "value": 6000000,
+          "currency": "USD",
+          "value_usd": 6000000
+        },
+        "last_funding_total": {
+          "value": 3000000,
+          "currency": "USD",
+          "value_usd": 3000000
+        },
+        "last_funding_at": "2026-09-10",
+        "last_funding_type": "seed",
+        "last_equity_funding_type": "seed",
+        "funding_stage": "seed",
+        "founded_on": {
+          "value": "2020-01-01",
+          "precision": "day"
+        },
+        "num_employees_enum": "c_0011_0050",
+        "rank_org": 105,
+        "last_layoff_date": null,
+        "last_key_employee_change_date": null,
+        "investor_identifiers": [],
+        "founder_identifiers": []
+      },
+      {
+        "identifier": {
+          "uuid": "1bbc45c3-70d0-5f97-a23c-cc0ab9e38033",
+          "permalink": "fixture-gossamervault-dental",
+          "value": "Gossamervault Dental",
+          "entity_def_id": "organization"
+        },
+        "url": "https://www.crunchbase.com/organization/fixture-gossamervault-dental",
+        "name": "Gossamervault Dental",
+        "aliases": [],
+        "short_description": "Legacy dental software provider; closed.",
+        "description": "Legacy dental software provider; closed.",
+        "website_url": "https://fixture-gossamervault-dental.example",
+        "categories": [
+          {
+            "uuid": "f5d10a0c-3fca-5de0-87bd-4d49193b3dca",
+            "permalink": "fixture-dental",
+            "value": "Dental",
+            "entity_def_id": "category"
+          },
+          {
+            "uuid": "67243aed-1ddf-5ff5-9e9d-2c2ca49045ab",
+            "permalink": "fixture-software",
+            "value": "Software",
+            "entity_def_id": "category"
+          }
+        ],
+        "category_groups": [
+          {
+            "uuid": "67243aed-1ddf-5ff5-9e9d-2c2ca49045ab",
+            "permalink": "fixture-software",
+            "value": "Software",
+            "entity_def_id": "category"
+          }
+        ],
+        "location_identifiers": [
+          {
+            "uuid": "897424e7-be0a-50d6-836d-4ca9a6798d28",
+            "permalink": "fixture-united-states",
+            "value": "United States",
+            "entity_def_id": "location"
+          }
+        ],
+        "facet_ids": [
+          "company"
+        ],
+        "status": "closed",
+        "operating_status": "closed",
+        "ipo_status": "private",
+        "funding_total": {
+          "value": 3000000,
+          "currency": "USD",
+          "value_usd": 3000000
+        },
+        "equity_funding_total": {
+          "value": 3000000,
+          "currency": "USD",
+          "value_usd": 3000000
+        },
+        "last_funding_total": {
+          "value": 1500000,
+          "currency": "USD",
+          "value_usd": 1500000
+        },
+        "last_funding_at": "2026-09-10",
+        "last_funding_type": "seed",
+        "last_equity_funding_type": "seed",
+        "funding_stage": "seed",
+        "founded_on": {
+          "value": "2021-01-01",
+          "precision": "day"
+        },
+        "num_employees_enum": "c_0011_0050",
+        "rank_org": 106,
+        "last_layoff_date": null,
+        "last_key_employee_change_date": null,
+        "investor_identifiers": [],
+        "founder_identifiers": []
+      },
+      {
+        "identifier": {
+          "uuid": "3937bd1c-1a4c-5552-9b88-6070429dcf0a",
+          "permalink": "fixture-harbormosaic-dental",
+          "value": "Harbormosaic Dental",
+          "entity_def_id": "organization"
+        },
+        "url": "https://www.crunchbase.com/organization/fixture-harbormosaic-dental",
+        "name": "Harbormosaic Dental",
+        "aliases": [],
+        "short_description": "Publicly traded dental software platform.",
+        "description": "Publicly traded dental software platform.",
+        "website_url": "https://fixture-harbormosaic-dental.example",
+        "categories": [
+          {
+            "uuid": "f5d10a0c-3fca-5de0-87bd-4d49193b3dca",
+            "permalink": "fixture-dental",
+            "value": "Dental",
+            "entity_def_id": "category"
+          },
+          {
+            "uuid": "67243aed-1ddf-5ff5-9e9d-2c2ca49045ab",
+            "permalink": "fixture-software",
+            "value": "Software",
+            "entity_def_id": "category"
+          }
+        ],
+        "category_groups": [
+          {
+            "uuid": "67243aed-1ddf-5ff5-9e9d-2c2ca49045ab",
+            "permalink": "fixture-software",
+            "value": "Software",
+            "entity_def_id": "category"
+          }
+        ],
+        "location_identifiers": [
+          {
+            "uuid": "897424e7-be0a-50d6-836d-4ca9a6798d28",
+            "permalink": "fixture-united-states",
+            "value": "United States",
+            "entity_def_id": "location"
+          }
+        ],
+        "facet_ids": [
+          "company"
+        ],
+        "status": "ipo",
+        "operating_status": "operating",
+        "ipo_status": "public",
+        "funding_total": {
+          "value": 50000000,
+          "currency": "USD",
+          "value_usd": 50000000
+        },
+        "equity_funding_total": {
+          "value": 50000000,
+          "currency": "USD",
+          "value_usd": 50000000
+        },
+        "last_funding_total": {
+          "value": 25000000,
+          "currency": "USD",
+          "value_usd": 25000000
+        },
+        "last_funding_at": "2026-09-10",
+        "last_funding_type": "series_c",
+        "last_equity_funding_type": "seed",
+        "funding_stage": "seed",
+        "founded_on": {
+          "value": "2022-01-01",
+          "precision": "day"
+        },
+        "num_employees_enum": "c_0011_0050",
+        "rank_org": 107,
+        "last_layoff_date": null,
+        "last_key_employee_change_date": null,
+        "investor_identifiers": [],
+        "founder_identifiers": []
+      },
+      {
+        "identifier": {
+          "uuid": "ce648cbd-cc7b-5439-99a7-841bfe002547",
+          "permalink": "fixture-rivetwillow-cloud",
+          "value": "Rivetwillow Cloud",
+          "entity_def_id": "organization"
+        },
+        "url": "https://www.crunchbase.com/organization/fixture-rivetwillow-cloud",
+        "name": "Rivetwillow Cloud",
+        "aliases": [
+          "Rivetwillow"
+        ],
+        "short_description": "Cloud cost management software.",
+        "description": "Cloud cost management software.",
+        "website_url": "https://fixture-rivetwillow-cloud.example",
+        "categories": [
+          {
+            "uuid": "67243aed-1ddf-5ff5-9e9d-2c2ca49045ab",
+            "permalink": "fixture-software",
+            "value": "Software",
+            "entity_def_id": "category"
+          }
+        ],
+        "category_groups": [
+          {
+            "uuid": "67243aed-1ddf-5ff5-9e9d-2c2ca49045ab",
+            "permalink": "fixture-software",
+            "value": "Software",
+            "entity_def_id": "category"
+          }
+        ],
+        "location_identifiers": [
+          {
+            "uuid": "897424e7-be0a-50d6-836d-4ca9a6798d28",
+            "permalink": "fixture-united-states",
+            "value": "United States",
+            "entity_def_id": "location"
+          }
+        ],
+        "facet_ids": [
+          "company"
+        ],
+        "status": "operating",
+        "operating_status": "operating",
+        "ipo_status": "private",
+        "funding_total": {
+          "value": 2000000,
+          "currency": "USD",
+          "value_usd": 2000000
+        },
+        "equity_funding_total": {
+          "value": 2000000,
+          "currency": "USD",
+          "value_usd": 2000000
+        },
+        "last_funding_total": {
+          "value": 1000000,
+          "currency": "USD",
+          "value_usd": 1000000
+        },
+        "last_funding_at": "2026-09-10",
+        "last_funding_type": "seed",
+        "last_equity_funding_type": "seed",
+        "funding_stage": "seed",
+        "founded_on": {
+          "value": "2023-01-01",
+          "precision": "day"
+        },
+        "num_employees_enum": "c_0011_0050",
+        "rank_org": 108,
+        "last_layoff_date": null,
+        "last_key_employee_change_date": null,
+        "investor_identifiers": [],
+        "founder_identifiers": []
+      },
+      {
+        "identifier": {
+          "uuid": "4cb29194-3584-54ae-9972-ee6dcc34e7f8",
+          "permalink": "fixture-rivetwillow-health",
+          "value": "Rivetwillow Health",
+          "entity_def_id": "organization"
+        },
+        "url": "https://www.crunchbase.com/organization/fixture-rivetwillow-health",
+        "name": "Rivetwillow Health",
+        "aliases": [
+          "Rivetwillow"
+        ],
+        "short_description": "Patient workflow software for independent dental practices.",
+        "description": "Patient workflow software for independent dental practices.",
+        "website_url": "https://fixture-rivetwillow-health.example",
+        "categories": [
+          {
+            "uuid": "f5d10a0c-3fca-5de0-87bd-4d49193b3dca",
+            "permalink": "fixture-dental",
+            "value": "Dental",
+            "entity_def_id": "category"
+          },
+          {
+            "uuid": "67243aed-1ddf-5ff5-9e9d-2c2ca49045ab",
+            "permalink": "fixture-software",
+            "value": "Software",
+            "entity_def_id": "category"
+          }
+        ],
+        "category_groups": [
+          {
+            "uuid": "67243aed-1ddf-5ff5-9e9d-2c2ca49045ab",
+            "permalink": "fixture-software",
+            "value": "Software",
+            "entity_def_id": "category"
+          }
+        ],
+        "location_identifiers": [
+          {
+            "uuid": "897424e7-be0a-50d6-836d-4ca9a6798d28",
+            "permalink": "fixture-united-states",
+            "value": "United States",
+            "entity_def_id": "location"
+          }
+        ],
+        "facet_ids": [
+          "company"
+        ],
+        "status": "operating",
+        "operating_status": "operating",
+        "ipo_status": "private",
+        "funding_total": {
+          "value": 5000000,
+          "currency": "USD",
+          "value_usd": 5000000
+        },
+        "equity_funding_total": {
+          "value": 5000000,
+          "currency": "USD",
+          "value_usd": 5000000
+        },
+        "last_funding_total": {
+          "value": 2500000,
+          "currency": "USD",
+          "value_usd": 2500000
+        },
+        "last_funding_at": "2026-09-10",
+        "last_funding_type": "seed",
+        "last_equity_funding_type": "seed",
+        "funding_stage": "seed",
+        "founded_on": {
+          "value": "2024-01-01",
+          "precision": "day"
+        },
+        "num_employees_enum": "c_0011_0050",
+        "rank_org": 109,
+        "last_layoff_date": null,
+        "last_key_employee_change_date": null,
+        "investor_identifiers": [],
+        "founder_identifiers": []
+      }
+    ],
+    "funding_rounds": [
+      {
+        "identifier": {
+          "uuid": "5dace77a-582b-59a7-91b8-7ab467906a37",
+          "permalink": "fixture-round-0-0",
+          "value": "Seed 1 - Lumenquill Dental",
+          "entity_def_id": "funding_round"
+        },
+        "url": "https://www.crunchbase.com/funding_round/fixture-round-0-0",
+        "announced_on": "2025-02-01",
+        "investment_type": "seed",
+        "investment_stage": "seed",
+        "money_raised": {
+          "value": 1000000,
+          "currency": "USD",
+          "value_usd": 1000000
+        },
+        "funded_organization_identifier": {
+          "uuid": "c5adddb8-e684-5350-b79d-7fc88f4ecdb4",
+          "permalink": "fixture-lumenquill-dental",
+          "value": "Lumenquill Dental",
+          "entity_def_id": "organization"
+        },
+        "funded_organization_categories": [
+          {
+            "uuid": "f5d10a0c-3fca-5de0-87bd-4d49193b3dca",
+            "permalink": "fixture-dental",
+            "value": "Dental",
+            "entity_def_id": "category"
+          },
+          {
+            "uuid": "67243aed-1ddf-5ff5-9e9d-2c2ca49045ab",
+            "permalink": "fixture-software",
+            "value": "Software",
+            "entity_def_id": "category"
+          }
+        ],
+        "funded_organization_description": "Scheduling and billing software for independent dental practices.",
+        "funded_organization_location": [
+          {
+            "uuid": "897424e7-be0a-50d6-836d-4ca9a6798d28",
+            "permalink": "fixture-united-states",
+            "value": "United States",
+            "entity_def_id": "location"
+          }
+        ],
+        "funded_organization_funding_total": {
+          "value": 4000000,
+          "currency": "USD",
+          "value_usd": 4000000
+        },
+        "funded_organization_funding_stage": "seed",
+        "investor_identifiers": [],
+        "lead_investor_identifiers": [],
+        "num_investors": 0,
+        "post_money_valuation": null,
+        "is_equity": true
+      },
+      {
+        "identifier": {
+          "uuid": "c6377386-0c51-5872-8796-ffef19445a4b",
+          "permalink": "fixture-round-0-1",
+          "value": "Seed 2 - Lumenquill Dental",
+          "entity_def_id": "funding_round"
+        },
+        "url": "https://www.crunchbase.com/funding_round/fixture-round-0-1",
+        "announced_on": "2026-09-10",
+        "investment_type": "seed",
+        "investment_stage": "seed",
+        "money_raised": {
+          "value": 2000000,
+          "currency": "USD",
+          "value_usd": 2000000
+        },
+        "funded_organization_identifier": {
+          "uuid": "c5adddb8-e684-5350-b79d-7fc88f4ecdb4",
+          "permalink": "fixture-lumenquill-dental",
+          "value": "Lumenquill Dental",
+          "entity_def_id": "organization"
+        },
+        "funded_organization_categories": [
+          {
+            "uuid": "f5d10a0c-3fca-5de0-87bd-4d49193b3dca",
+            "permalink": "fixture-dental",
+            "value": "Dental",
+            "entity_def_id": "category"
+          },
+          {
+            "uuid": "67243aed-1ddf-5ff5-9e9d-2c2ca49045ab",
+            "permalink": "fixture-software",
+            "value": "Software",
+            "entity_def_id": "category"
+          }
+        ],
+        "funded_organization_description": "Scheduling and billing software for independent dental practices.",
+        "funded_organization_location": [
+          {
+            "uuid": "897424e7-be0a-50d6-836d-4ca9a6798d28",
+            "permalink": "fixture-united-states",
+            "value": "United States",
+            "entity_def_id": "location"
+          }
+        ],
+        "funded_organization_funding_total": {
+          "value": 4000000,
+          "currency": "USD",
+          "value_usd": 4000000
+        },
+        "funded_organization_funding_stage": "seed",
+        "investor_identifiers": [],
+        "lead_investor_identifiers": [],
+        "num_investors": 0,
+        "post_money_valuation": null,
+        "is_equity": true
+      },
+      {
+        "identifier": {
+          "uuid": "2ec9f5f7-d199-55ca-986b-4aa1ded91ca3",
+          "permalink": "fixture-round-1-0",
+          "value": "Seed 1 - Brambleflux Dental",
+          "entity_def_id": "funding_round"
+        },
+        "url": "https://www.crunchbase.com/funding_round/fixture-round-1-0",
+        "announced_on": "2025-02-01",
+        "investment_type": "seed",
+        "investment_stage": "seed",
+        "money_raised": {
+          "value": 4000000,
+          "currency": "USD",
+          "value_usd": 4000000
+        },
+        "funded_organization_identifier": {
+          "uuid": "6e9e1cb0-5413-5186-bdb8-04996464a52a",
+          "permalink": "fixture-brambleflux-dental",
+          "value": "Brambleflux Dental",
+          "entity_def_id": "organization"
+        },
+        "funded_organization_categories": [
+          {
+            "uuid": "f5d10a0c-3fca-5de0-87bd-4d49193b3dca",
+            "permalink": "fixture-dental",
+            "value": "Dental",
+            "entity_def_id": "category"
+          },
+          {
+            "uuid": "67243aed-1ddf-5ff5-9e9d-2c2ca49045ab",
+            "permalink": "fixture-software",
+            "value": "Software",
+            "entity_def_id": "category"
+          }
+        ],
+        "funded_organization_description": "Imaging workflow software for independent dental practices.",
+        "funded_organization_location": [
+          {
+            "uuid": "897424e7-be0a-50d6-836d-4ca9a6798d28",
+            "permalink": "fixture-united-states",
+            "value": "United States",
+            "entity_def_id": "location"
+          }
+        ],
+        "funded_organization_funding_total": {
+          "value": 8000000,
+          "currency": "USD",
+          "value_usd": 8000000
+        },
+        "funded_organization_funding_stage": "seed",
+        "investor_identifiers": [],
+        "lead_investor_identifiers": [],
+        "num_investors": 0,
+        "post_money_valuation": null,
+        "is_equity": true
+      },
+      {
+        "identifier": {
+          "uuid": "365f44c1-65ef-57e9-be87-1722369b254f",
+          "permalink": "fixture-round-1-1",
+          "value": "Seed 2 - Brambleflux Dental",
+          "entity_def_id": "funding_round"
+        },
+        "url": "https://www.crunchbase.com/funding_round/fixture-round-1-1",
+        "announced_on": "2026-09-10",
+        "investment_type": "seed",
+        "investment_stage": "seed",
+        "money_raised": {
+          "value": 4000000,
+          "currency": "USD",
+          "value_usd": 4000000
+        },
+        "funded_organization_identifier": {
+          "uuid": "6e9e1cb0-5413-5186-bdb8-04996464a52a",
+          "permalink": "fixture-brambleflux-dental",
+          "value": "Brambleflux Dental",
+          "entity_def_id": "organization"
+        },
+        "funded_organization_categories": [
+          {
+            "uuid": "f5d10a0c-3fca-5de0-87bd-4d49193b3dca",
+            "permalink": "fixture-dental",
+            "value": "Dental",
+            "entity_def_id": "category"
+          },
+          {
+            "uuid": "67243aed-1ddf-5ff5-9e9d-2c2ca49045ab",
+            "permalink": "fixture-software",
+            "value": "Software",
+            "entity_def_id": "category"
+          }
+        ],
+        "funded_organization_description": "Imaging workflow software for independent dental practices.",
+        "funded_organization_location": [
+          {
+            "uuid": "897424e7-be0a-50d6-836d-4ca9a6798d28",
+            "permalink": "fixture-united-states",
+            "value": "United States",
+            "entity_def_id": "location"
+          }
+        ],
+        "funded_organization_funding_total": {
+          "value": 8000000,
+          "currency": "USD",
+          "value_usd": 8000000
+        },
+        "funded_organization_funding_stage": "seed",
+        "investor_identifiers": [],
+        "lead_investor_identifiers": [],
+        "num_investors": 0,
+        "post_money_valuation": null,
+        "is_equity": true
+      },
+      {
+        "identifier": {
+          "uuid": "85e0c3d1-0836-5671-86b4-9145b2d88148",
+          "permalink": "fixture-round-2-0",
+          "value": "Seed 1 - Mossrelay Dental",
+          "entity_def_id": "funding_round"
+        },
+        "url": "https://www.crunchbase.com/funding_round/fixture-round-2-0",
+        "announced_on": "2025-02-01",
+        "investment_type": "seed",
+        "investment_stage": "seed",
+        "money_raised": null,
+        "funded_organization_identifier": {
+          "uuid": "3930ee58-a5cd-5c2e-907d-ea2757bc2118",
+          "permalink": "fixture-mossrelay-dental",
+          "value": "Mossrelay Dental",
+          "entity_def_id": "organization"
+        },
+        "funded_organization_categories": [
+          {
+            "uuid": "f5d10a0c-3fca-5de0-87bd-4d49193b3dca",
+            "permalink": "fixture-dental",
+            "value": "Dental",
+            "entity_def_id": "category"
+          },
+          {
+            "uuid": "67243aed-1ddf-5ff5-9e9d-2c2ca49045ab",
+            "permalink": "fixture-software",
+            "value": "Software",
+            "entity_def_id": "category"
+          }
+        ],
+        "funded_organization_description": "Claims software for independent dental practices.",
+        "funded_organization_location": [
+          {
+            "uuid": "897424e7-be0a-50d6-836d-4ca9a6798d28",
+            "permalink": "fixture-united-states",
+            "value": "United States",
+            "entity_def_id": "location"
+          }
+        ],
+        "funded_organization_funding_total": null,
+        "funded_organization_funding_stage": "seed",
+        "investor_identifiers": [],
+        "lead_investor_identifiers": [],
+        "num_investors": 0,
+        "post_money_valuation": null,
+        "is_equity": true
+      },
+      {
+        "identifier": {
+          "uuid": "2ae4fa08-aa5e-5e4f-8f66-8a5ad163786d",
+          "permalink": "fixture-round-2-1",
+          "value": "Seed 2 - Mossrelay Dental",
+          "entity_def_id": "funding_round"
+        },
+        "url": "https://www.crunchbase.com/funding_round/fixture-round-2-1",
+        "announced_on": "2026-09-10",
+        "investment_type": "seed",
+        "investment_stage": "seed",
+        "money_raised": null,
+        "funded_organization_identifier": {
+          "uuid": "3930ee58-a5cd-5c2e-907d-ea2757bc2118",
+          "permalink": "fixture-mossrelay-dental",
+          "value": "Mossrelay Dental",
+          "entity_def_id": "organization"
+        },
+        "funded_organization_categories": [
+          {
+            "uuid": "f5d10a0c-3fca-5de0-87bd-4d49193b3dca",
+            "permalink": "fixture-dental",
+            "value": "Dental",
+            "entity_def_id": "category"
+          },
+          {
+            "uuid": "67243aed-1ddf-5ff5-9e9d-2c2ca49045ab",
+            "permalink": "fixture-software",
+            "value": "Software",
+            "entity_def_id": "category"
+          }
+        ],
+        "funded_organization_description": "Claims software for independent dental practices.",
+        "funded_organization_location": [
+          {
+            "uuid": "897424e7-be0a-50d6-836d-4ca9a6798d28",
+            "permalink": "fixture-united-states",
+            "value": "United States",
+            "entity_def_id": "location"
+          }
+        ],
+        "funded_organization_funding_total": null,
+        "funded_organization_funding_stage": "seed",
+        "investor_identifiers": [],
+        "lead_investor_identifiers": [],
+        "num_investors": 0,
+        "post_money_valuation": null,
+        "is_equity": true
+      },
+      {
+        "identifier": {
+          "uuid": "ad05ef31-9b10-5755-9260-8f19acd77e13",
+          "permalink": "fixture-round-3-0",
+          "value": "Seed 1 - Cobaltnest Dental",
+          "entity_def_id": "funding_round"
+        },
+        "url": "https://www.crunchbase.com/funding_round/fixture-round-3-0",
+        "announced_on": "2025-02-01",
+        "investment_type": "seed",
+        "investment_stage": "seed",
+        "money_raised": {
+          "value": 7500000,
+          "currency": "USD",
+          "value_usd": 7500000
+        },
+        "funded_organization_identifier": {
+          "uuid": "de21bcc2-7ad9-5c3e-9a1d-6607bf735b95",
+          "permalink": "fixture-cobaltnest-dental",
+          "value": "Cobaltnest Dental",
+          "entity_def_id": "organization"
+        },
+        "funded_organization_categories": [
+          {
+            "uuid": "f5d10a0c-3fca-5de0-87bd-4d49193b3dca",
+            "permalink": "fixture-dental",
+            "value": "Dental",
+            "entity_def_id": "category"
+          },
+          {
+            "uuid": "67243aed-1ddf-5ff5-9e9d-2c2ca49045ab",
+            "permalink": "fixture-software",
+            "value": "Software",
+            "entity_def_id": "category"
+          }
+        ],
+        "funded_organization_description": "Patient engagement software for independent dental practices.",
+        "funded_organization_location": [
+          {
+            "uuid": "897424e7-be0a-50d6-836d-4ca9a6798d28",
+            "permalink": "fixture-united-states",
+            "value": "United States",
+            "entity_def_id": "location"
+          }
+        ],
+        "funded_organization_funding_total": {
+          "value": 15000000,
+          "currency": "USD",
+          "value_usd": 15000000
+        },
+        "funded_organization_funding_stage": "seed",
+        "investor_identifiers": [],
+        "lead_investor_identifiers": [],
+        "num_investors": 0,
+        "post_money_valuation": null,
+        "is_equity": true
+      },
+      {
+        "identifier": {
+          "uuid": "4d679fcd-1445-5fbe-b3d6-e123b4f79196",
+          "permalink": "fixture-round-3-1",
+          "value": "Seed 2 - Cobaltnest Dental",
+          "entity_def_id": "funding_round"
+        },
+        "url": "https://www.crunchbase.com/funding_round/fixture-round-3-1",
+        "announced_on": "2026-09-10",
+        "investment_type": "seed",
+        "investment_stage": "seed",
+        "money_raised": {
+          "value": 7500000,
+          "currency": "USD",
+          "value_usd": 7500000
+        },
+        "funded_organization_identifier": {
+          "uuid": "de21bcc2-7ad9-5c3e-9a1d-6607bf735b95",
+          "permalink": "fixture-cobaltnest-dental",
+          "value": "Cobaltnest Dental",
+          "entity_def_id": "organization"
+        },
+        "funded_organization_categories": [
+          {
+            "uuid": "f5d10a0c-3fca-5de0-87bd-4d49193b3dca",
+            "permalink": "fixture-dental",
+            "value": "Dental",
+            "entity_def_id": "category"
+          },
+          {
+            "uuid": "67243aed-1ddf-5ff5-9e9d-2c2ca49045ab",
+            "permalink": "fixture-software",
+            "value": "Software",
+            "entity_def_id": "category"
+          }
+        ],
+        "funded_organization_description": "Patient engagement software for independent dental practices.",
+        "funded_organization_location": [
+          {
+            "uuid": "897424e7-be0a-50d6-836d-4ca9a6798d28",
+            "permalink": "fixture-united-states",
+            "value": "United States",
+            "entity_def_id": "location"
+          }
+        ],
+        "funded_organization_funding_total": {
+          "value": 15000000,
+          "currency": "USD",
+          "value_usd": 15000000
+        },
+        "funded_organization_funding_stage": "seed",
+        "investor_identifiers": [],
+        "lead_investor_identifiers": [],
+        "num_investors": 0,
+        "post_money_valuation": null,
+        "is_equity": true
+      },
+      {
+        "identifier": {
+          "uuid": "2e9ffe2e-5161-5cba-8658-be8a9143c3a1",
+          "permalink": "fixture-round-4-0",
+          "value": "Seed 1 - Embergrove Dental",
+          "entity_def_id": "funding_round"
+        },
+        "url": "https://www.crunchbase.com/funding_round/fixture-round-4-0",
+        "announced_on": "2025-02-01",
+        "investment_type": "seed",
+        "investment_stage": "seed",
+        "money_raised": {
+          "value": 10000000,
+          "currency": "USD",
+          "value_usd": 10000000
+        },
+        "funded_organization_identifier": {
+          "uuid": "76cf5389-8e35-5c4d-b451-6b7bc3b57948",
+          "permalink": "fixture-embergrove-dental",
+          "value": "Embergrove Dental",
+          "entity_def_id": "organization"
+        },
+        "funded_organization_categories": [
+          {
+            "uuid": "f5d10a0c-3fca-5de0-87bd-4d49193b3dca",
+            "permalink": "fixture-dental",
+            "value": "Dental",
+            "entity_def_id": "category"
+          },
+          {
+            "uuid": "67243aed-1ddf-5ff5-9e9d-2c2ca49045ab",
+            "permalink": "fixture-software",
+            "value": "Software",
+            "entity_def_id": "category"
+          }
+        ],
+        "funded_organization_description": "Dental laboratory software for enterprises.",
+        "funded_organization_location": [
+          {
+            "uuid": "897424e7-be0a-50d6-836d-4ca9a6798d28",
+            "permalink": "fixture-united-states",
+            "value": "United States",
+            "entity_def_id": "location"
+          }
+        ],
+        "funded_organization_funding_total": {
+          "value": 20000000,
+          "currency": "USD",
+          "value_usd": 20000000
+        },
+        "funded_organization_funding_stage": "seed",
+        "investor_identifiers": [],
+        "lead_investor_identifiers": [],
+        "num_investors": 0,
+        "post_money_valuation": null,
+        "is_equity": true
+      },
+      {
+        "identifier": {
+          "uuid": "467fa0fb-a3f8-5dd2-bb7b-4fb6cca5fab4",
+          "permalink": "fixture-round-4-1",
+          "value": "Seed 2 - Embergrove Dental",
+          "entity_def_id": "funding_round"
+        },
+        "url": "https://www.crunchbase.com/funding_round/fixture-round-4-1",
+        "announced_on": "2026-09-10",
+        "investment_type": "seed",
+        "investment_stage": "seed",
+        "money_raised": {
+          "value": 10000000,
+          "currency": "USD",
+          "value_usd": 10000000
+        },
+        "funded_organization_identifier": {
+          "uuid": "76cf5389-8e35-5c4d-b451-6b7bc3b57948",
+          "permalink": "fixture-embergrove-dental",
+          "value": "Embergrove Dental",
+          "entity_def_id": "organization"
+        },
+        "funded_organization_categories": [
+          {
+            "uuid": "f5d10a0c-3fca-5de0-87bd-4d49193b3dca",
+            "permalink": "fixture-dental",
+            "value": "Dental",
+            "entity_def_id": "category"
+          },
+          {
+            "uuid": "67243aed-1ddf-5ff5-9e9d-2c2ca49045ab",
+            "permalink": "fixture-software",
+            "value": "Software",
+            "entity_def_id": "category"
+          }
+        ],
+        "funded_organization_description": "Dental laboratory software for enterprises.",
+        "funded_organization_location": [
+          {
+            "uuid": "897424e7-be0a-50d6-836d-4ca9a6798d28",
+            "permalink": "fixture-united-states",
+            "value": "United States",
+            "entity_def_id": "location"
+          }
+        ],
+        "funded_organization_funding_total": {
+          "value": 20000000,
+          "currency": "USD",
+          "value_usd": 20000000
+        },
+        "funded_organization_funding_stage": "seed",
+        "investor_identifiers": [],
+        "lead_investor_identifiers": [],
+        "num_investors": 0,
+        "post_money_valuation": null,
+        "is_equity": true
+      },
+      {
+        "identifier": {
+          "uuid": "f55af6d6-69e9-5fb5-914f-650fe4b38e6c",
+          "permalink": "fixture-round-5-0",
+          "value": "Seed 1 - Fenwicksprout Dental",
+          "entity_def_id": "funding_round"
+        },
+        "url": "https://www.crunchbase.com/funding_round/fixture-round-5-0",
+        "announced_on": "2025-02-01",
+        "investment_type": "seed",
+        "investment_stage": "seed",
+        "money_raised": {
+          "value": 3000000,
+          "currency": "USD",
+          "value_usd": 3000000
+        },
+        "funded_organization_identifier": {
+          "uuid": "fcc4acb0-3687-5589-b4d5-7fb7430988c0",
+          "permalink": "fixture-fenwicksprout-dental",
+          "value": "Fenwicksprout Dental",
+          "entity_def_id": "organization"
+        },
+        "funded_organization_categories": [
+          {
+            "uuid": "f5d10a0c-3fca-5de0-87bd-4d49193b3dca",
+            "permalink": "fixture-dental",
+            "value": "Dental",
+            "entity_def_id": "category"
+          },
+          {
+            "uuid": "67243aed-1ddf-5ff5-9e9d-2c2ca49045ab",
+            "permalink": "fixture-software",
+            "value": "Software",
+            "entity_def_id": "category"
+          }
+        ],
+        "funded_organization_description": "Scheduling software for independent dental practices in the UK.",
+        "funded_organization_location": [
+          {
+            "uuid": "2219276c-1f13-587f-a0d7-859439ecc0f8",
+            "permalink": "fixture-united-kingdom",
+            "value": "United Kingdom",
+            "entity_def_id": "location"
+          }
+        ],
+        "funded_organization_funding_total": {
+          "value": 6000000,
+          "currency": "USD",
+          "value_usd": 6000000
+        },
+        "funded_organization_funding_stage": "seed",
+        "investor_identifiers": [],
+        "lead_investor_identifiers": [],
+        "num_investors": 0,
+        "post_money_valuation": null,
+        "is_equity": true
+      },
+      {
+        "identifier": {
+          "uuid": "5e5028d1-31a1-516c-8c2d-9ada930d9f90",
+          "permalink": "fixture-round-5-1",
+          "value": "Seed 2 - Fenwicksprout Dental",
+          "entity_def_id": "funding_round"
+        },
+        "url": "https://www.crunchbase.com/funding_round/fixture-round-5-1",
+        "announced_on": "2026-09-10",
+        "investment_type": "seed",
+        "investment_stage": "seed",
+        "money_raised": {
+          "value": 3000000,
+          "currency": "USD",
+          "value_usd": 3000000
+        },
+        "funded_organization_identifier": {
+          "uuid": "fcc4acb0-3687-5589-b4d5-7fb7430988c0",
+          "permalink": "fixture-fenwicksprout-dental",
+          "value": "Fenwicksprout Dental",
+          "entity_def_id": "organization"
+        },
+        "funded_organization_categories": [
+          {
+            "uuid": "f5d10a0c-3fca-5de0-87bd-4d49193b3dca",
+            "permalink": "fixture-dental",
+            "value": "Dental",
+            "entity_def_id": "category"
+          },
+          {
+            "uuid": "67243aed-1ddf-5ff5-9e9d-2c2ca49045ab",
+            "permalink": "fixture-software",
+            "value": "Software",
+            "entity_def_id": "category"
+          }
+        ],
+        "funded_organization_description": "Scheduling software for independent dental practices in the UK.",
+        "funded_organization_location": [
+          {
+            "uuid": "2219276c-1f13-587f-a0d7-859439ecc0f8",
+            "permalink": "fixture-united-kingdom",
+            "value": "United Kingdom",
+            "entity_def_id": "location"
+          }
+        ],
+        "funded_organization_funding_total": {
+          "value": 6000000,
+          "currency": "USD",
+          "value_usd": 6000000
+        },
+        "funded_organization_funding_stage": "seed",
+        "investor_identifiers": [],
+        "lead_investor_identifiers": [],
+        "num_investors": 0,
+        "post_money_valuation": null,
+        "is_equity": true
+      },
+      {
+        "identifier": {
+          "uuid": "c8aba2e9-93f1-55a2-b13a-7cc433432a8b",
+          "permalink": "fixture-round-6-0",
+          "value": "Seed 1 - Gossamervault Dental",
+          "entity_def_id": "funding_round"
+        },
+        "url": "https://www.crunchbase.com/funding_round/fixture-round-6-0",
+        "announced_on": "2025-02-01",
+        "investment_type": "seed",
+        "investment_stage": "seed",
+        "money_raised": {
+          "value": 1500000,
+          "currency": "USD",
+          "value_usd": 1500000
+        },
+        "funded_organization_identifier": {
+          "uuid": "1bbc45c3-70d0-5f97-a23c-cc0ab9e38033",
+          "permalink": "fixture-gossamervault-dental",
+          "value": "Gossamervault Dental",
+          "entity_def_id": "organization"
+        },
+        "funded_organization_categories": [
+          {
+            "uuid": "f5d10a0c-3fca-5de0-87bd-4d49193b3dca",
+            "permalink": "fixture-dental",
+            "value": "Dental",
+            "entity_def_id": "category"
+          },
+          {
+            "uuid": "67243aed-1ddf-5ff5-9e9d-2c2ca49045ab",
+            "permalink": "fixture-software",
+            "value": "Software",
+            "entity_def_id": "category"
+          }
+        ],
+        "funded_organization_description": "Legacy dental software provider; closed.",
+        "funded_organization_location": [
+          {
+            "uuid": "897424e7-be0a-50d6-836d-4ca9a6798d28",
+            "permalink": "fixture-united-states",
+            "value": "United States",
+            "entity_def_id": "location"
+          }
+        ],
+        "funded_organization_funding_total": {
+          "value": 3000000,
+          "currency": "USD",
+          "value_usd": 3000000
+        },
+        "funded_organization_funding_stage": "seed",
+        "investor_identifiers": [],
+        "lead_investor_identifiers": [],
+        "num_investors": 0,
+        "post_money_valuation": null,
+        "is_equity": true
+      },
+      {
+        "identifier": {
+          "uuid": "7368a2aa-9500-5dbe-a143-75cc92c9b507",
+          "permalink": "fixture-round-6-1",
+          "value": "Seed 2 - Gossamervault Dental",
+          "entity_def_id": "funding_round"
+        },
+        "url": "https://www.crunchbase.com/funding_round/fixture-round-6-1",
+        "announced_on": "2026-09-10",
+        "investment_type": "seed",
+        "investment_stage": "seed",
+        "money_raised": {
+          "value": 1500000,
+          "currency": "USD",
+          "value_usd": 1500000
+        },
+        "funded_organization_identifier": {
+          "uuid": "1bbc45c3-70d0-5f97-a23c-cc0ab9e38033",
+          "permalink": "fixture-gossamervault-dental",
+          "value": "Gossamervault Dental",
+          "entity_def_id": "organization"
+        },
+        "funded_organization_categories": [
+          {
+            "uuid": "f5d10a0c-3fca-5de0-87bd-4d49193b3dca",
+            "permalink": "fixture-dental",
+            "value": "Dental",
+            "entity_def_id": "category"
+          },
+          {
+            "uuid": "67243aed-1ddf-5ff5-9e9d-2c2ca49045ab",
+            "permalink": "fixture-software",
+            "value": "Software",
+            "entity_def_id": "category"
+          }
+        ],
+        "funded_organization_description": "Legacy dental software provider; closed.",
+        "funded_organization_location": [
+          {
+            "uuid": "897424e7-be0a-50d6-836d-4ca9a6798d28",
+            "permalink": "fixture-united-states",
+            "value": "United States",
+            "entity_def_id": "location"
+          }
+        ],
+        "funded_organization_funding_total": {
+          "value": 3000000,
+          "currency": "USD",
+          "value_usd": 3000000
+        },
+        "funded_organization_funding_stage": "seed",
+        "investor_identifiers": [],
+        "lead_investor_identifiers": [],
+        "num_investors": 0,
+        "post_money_valuation": null,
+        "is_equity": true
+      },
+      {
+        "identifier": {
+          "uuid": "cc222a18-9ebf-5a4a-a4ea-1f5fa1985db9",
+          "permalink": "fixture-round-7-0",
+          "value": "Seed 1 - Harbormosaic Dental",
+          "entity_def_id": "funding_round"
+        },
+        "url": "https://www.crunchbase.com/funding_round/fixture-round-7-0",
+        "announced_on": "2025-02-01",
+        "investment_type": "seed",
+        "investment_stage": "seed",
+        "money_raised": {
+          "value": 25000000,
+          "currency": "USD",
+          "value_usd": 25000000
+        },
+        "funded_organization_identifier": {
+          "uuid": "3937bd1c-1a4c-5552-9b88-6070429dcf0a",
+          "permalink": "fixture-harbormosaic-dental",
+          "value": "Harbormosaic Dental",
+          "entity_def_id": "organization"
+        },
+        "funded_organization_categories": [
+          {
+            "uuid": "f5d10a0c-3fca-5de0-87bd-4d49193b3dca",
+            "permalink": "fixture-dental",
+            "value": "Dental",
+            "entity_def_id": "category"
+          },
+          {
+            "uuid": "67243aed-1ddf-5ff5-9e9d-2c2ca49045ab",
+            "permalink": "fixture-software",
+            "value": "Software",
+            "entity_def_id": "category"
+          }
+        ],
+        "funded_organization_description": "Publicly traded dental software platform.",
+        "funded_organization_location": [
+          {
+            "uuid": "897424e7-be0a-50d6-836d-4ca9a6798d28",
+            "permalink": "fixture-united-states",
+            "value": "United States",
+            "entity_def_id": "location"
+          }
+        ],
+        "funded_organization_funding_total": {
+          "value": 50000000,
+          "currency": "USD",
+          "value_usd": 50000000
+        },
+        "funded_organization_funding_stage": "seed",
+        "investor_identifiers": [],
+        "lead_investor_identifiers": [],
+        "num_investors": 0,
+        "post_money_valuation": null,
+        "is_equity": true
+      },
+      {
+        "identifier": {
+          "uuid": "fe247746-4a4e-5e49-bb1a-67da44509dd7",
+          "permalink": "fixture-round-7-1",
+          "value": "Seed 2 - Harbormosaic Dental",
+          "entity_def_id": "funding_round"
+        },
+        "url": "https://www.crunchbase.com/funding_round/fixture-round-7-1",
+        "announced_on": "2026-09-10",
+        "investment_type": "seed",
+        "investment_stage": "seed",
+        "money_raised": {
+          "value": 25000000,
+          "currency": "USD",
+          "value_usd": 25000000
+        },
+        "funded_organization_identifier": {
+          "uuid": "3937bd1c-1a4c-5552-9b88-6070429dcf0a",
+          "permalink": "fixture-harbormosaic-dental",
+          "value": "Harbormosaic Dental",
+          "entity_def_id": "organization"
+        },
+        "funded_organization_categories": [
+          {
+            "uuid": "f5d10a0c-3fca-5de0-87bd-4d49193b3dca",
+            "permalink": "fixture-dental",
+            "value": "Dental",
+            "entity_def_id": "category"
+          },
+          {
+            "uuid": "67243aed-1ddf-5ff5-9e9d-2c2ca49045ab",
+            "permalink": "fixture-software",
+            "value": "Software",
+            "entity_def_id": "category"
+          }
+        ],
+        "funded_organization_description": "Publicly traded dental software platform.",
+        "funded_organization_location": [
+          {
+            "uuid": "897424e7-be0a-50d6-836d-4ca9a6798d28",
+            "permalink": "fixture-united-states",
+            "value": "United States",
+            "entity_def_id": "location"
+          }
+        ],
+        "funded_organization_funding_total": {
+          "value": 50000000,
+          "currency": "USD",
+          "value_usd": 50000000
+        },
+        "funded_organization_funding_stage": "seed",
+        "investor_identifiers": [],
+        "lead_investor_identifiers": [],
+        "num_investors": 0,
+        "post_money_valuation": null,
+        "is_equity": true
+      },
+      {
+        "identifier": {
+          "uuid": "27a02db0-8a9a-5ef4-b0a8-f2de4d0b4925",
+          "permalink": "fixture-round-8-0",
+          "value": "Seed 1 - Rivetwillow Cloud",
+          "entity_def_id": "funding_round"
+        },
+        "url": "https://www.crunchbase.com/funding_round/fixture-round-8-0",
+        "announced_on": "2025-02-01",
+        "investment_type": "seed",
+        "investment_stage": "seed",
+        "money_raised": {
+          "value": 1000000,
+          "currency": "USD",
+          "value_usd": 1000000
+        },
+        "funded_organization_identifier": {
+          "uuid": "ce648cbd-cc7b-5439-99a7-841bfe002547",
+          "permalink": "fixture-rivetwillow-cloud",
+          "value": "Rivetwillow Cloud",
+          "entity_def_id": "organization"
+        },
+        "funded_organization_categories": [
+          {
+            "uuid": "67243aed-1ddf-5ff5-9e9d-2c2ca49045ab",
+            "permalink": "fixture-software",
+            "value": "Software",
+            "entity_def_id": "category"
+          }
+        ],
+        "funded_organization_description": "Cloud cost management software.",
+        "funded_organization_location": [
+          {
+            "uuid": "897424e7-be0a-50d6-836d-4ca9a6798d28",
+            "permalink": "fixture-united-states",
+            "value": "United States",
+            "entity_def_id": "location"
+          }
+        ],
+        "funded_organization_funding_total": {
+          "value": 2000000,
+          "currency": "USD",
+          "value_usd": 2000000
+        },
+        "funded_organization_funding_stage": "seed",
+        "investor_identifiers": [],
+        "lead_investor_identifiers": [],
+        "num_investors": 0,
+        "post_money_valuation": null,
+        "is_equity": true
+      },
+      {
+        "identifier": {
+          "uuid": "210632dc-b758-5ece-8c9c-5629a358f1b3",
+          "permalink": "fixture-round-8-1",
+          "value": "Seed 2 - Rivetwillow Cloud",
+          "entity_def_id": "funding_round"
+        },
+        "url": "https://www.crunchbase.com/funding_round/fixture-round-8-1",
+        "announced_on": "2026-09-10",
+        "investment_type": "seed",
+        "investment_stage": "seed",
+        "money_raised": {
+          "value": 1000000,
+          "currency": "USD",
+          "value_usd": 1000000
+        },
+        "funded_organization_identifier": {
+          "uuid": "ce648cbd-cc7b-5439-99a7-841bfe002547",
+          "permalink": "fixture-rivetwillow-cloud",
+          "value": "Rivetwillow Cloud",
+          "entity_def_id": "organization"
+        },
+        "funded_organization_categories": [
+          {
+            "uuid": "67243aed-1ddf-5ff5-9e9d-2c2ca49045ab",
+            "permalink": "fixture-software",
+            "value": "Software",
+            "entity_def_id": "category"
+          }
+        ],
+        "funded_organization_description": "Cloud cost management software.",
+        "funded_organization_location": [
+          {
+            "uuid": "897424e7-be0a-50d6-836d-4ca9a6798d28",
+            "permalink": "fixture-united-states",
+            "value": "United States",
+            "entity_def_id": "location"
+          }
+        ],
+        "funded_organization_funding_total": {
+          "value": 2000000,
+          "currency": "USD",
+          "value_usd": 2000000
+        },
+        "funded_organization_funding_stage": "seed",
+        "investor_identifiers": [],
+        "lead_investor_identifiers": [],
+        "num_investors": 0,
+        "post_money_valuation": null,
+        "is_equity": true
+      },
+      {
+        "identifier": {
+          "uuid": "290f073b-d1e9-54e4-8438-63d7f173b9e5",
+          "permalink": "fixture-round-9-0",
+          "value": "Seed 1 - Rivetwillow Health",
+          "entity_def_id": "funding_round"
+        },
+        "url": "https://www.crunchbase.com/funding_round/fixture-round-9-0",
+        "announced_on": "2025-02-01",
+        "investment_type": "seed",
+        "investment_stage": "seed",
+        "money_raised": {
+          "value": 2500000,
+          "currency": "USD",
+          "value_usd": 2500000
+        },
+        "funded_organization_identifier": {
+          "uuid": "4cb29194-3584-54ae-9972-ee6dcc34e7f8",
+          "permalink": "fixture-rivetwillow-health",
+          "value": "Rivetwillow Health",
+          "entity_def_id": "organization"
+        },
+        "funded_organization_categories": [
+          {
+            "uuid": "f5d10a0c-3fca-5de0-87bd-4d49193b3dca",
+            "permalink": "fixture-dental",
+            "value": "Dental",
+            "entity_def_id": "category"
+          },
+          {
+            "uuid": "67243aed-1ddf-5ff5-9e9d-2c2ca49045ab",
+            "permalink": "fixture-software",
+            "value": "Software",
+            "entity_def_id": "category"
+          }
+        ],
+        "funded_organization_description": "Patient workflow software for independent dental practices.",
+        "funded_organization_location": [
+          {
+            "uuid": "897424e7-be0a-50d6-836d-4ca9a6798d28",
+            "permalink": "fixture-united-states",
+            "value": "United States",
+            "entity_def_id": "location"
+          }
+        ],
+        "funded_organization_funding_total": {
+          "value": 5000000,
+          "currency": "USD",
+          "value_usd": 5000000
+        },
+        "funded_organization_funding_stage": "seed",
+        "investor_identifiers": [],
+        "lead_investor_identifiers": [],
+        "num_investors": 0,
+        "post_money_valuation": null,
+        "is_equity": true
+      },
+      {
+        "identifier": {
+          "uuid": "5e3d5bfe-1a6f-5c32-a00f-c0a845bcfd3d",
+          "permalink": "fixture-round-9-1",
+          "value": "Seed 2 - Rivetwillow Health",
+          "entity_def_id": "funding_round"
+        },
+        "url": "https://www.crunchbase.com/funding_round/fixture-round-9-1",
+        "announced_on": "2026-09-10",
+        "investment_type": "seed",
+        "investment_stage": "seed",
+        "money_raised": {
+          "value": 2500000,
+          "currency": "USD",
+          "value_usd": 2500000
+        },
+        "funded_organization_identifier": {
+          "uuid": "4cb29194-3584-54ae-9972-ee6dcc34e7f8",
+          "permalink": "fixture-rivetwillow-health",
+          "value": "Rivetwillow Health",
+          "entity_def_id": "organization"
+        },
+        "funded_organization_categories": [
+          {
+            "uuid": "f5d10a0c-3fca-5de0-87bd-4d49193b3dca",
+            "permalink": "fixture-dental",
+            "value": "Dental",
+            "entity_def_id": "category"
+          },
+          {
+            "uuid": "67243aed-1ddf-5ff5-9e9d-2c2ca49045ab",
+            "permalink": "fixture-software",
+            "value": "Software",
+            "entity_def_id": "category"
+          }
+        ],
+        "funded_organization_description": "Patient workflow software for independent dental practices.",
+        "funded_organization_location": [
+          {
+            "uuid": "897424e7-be0a-50d6-836d-4ca9a6798d28",
+            "permalink": "fixture-united-states",
+            "value": "United States",
+            "entity_def_id": "location"
+          }
+        ],
+        "funded_organization_funding_total": {
+          "value": 5000000,
+          "currency": "USD",
+          "value_usd": 5000000
+        },
+        "funded_organization_funding_stage": "seed",
+        "investor_identifiers": [],
+        "lead_investor_identifiers": [],
+        "num_investors": 0,
+        "post_money_valuation": null,
+        "is_equity": true
+      },
+      {
+        "identifier": {
+          "uuid": "997e4745-c63c-542a-88a5-8feaa4b91e40",
+          "permalink": "fixture-round-boundary",
+          "value": "Seed boundary - Lumenquill Dental",
+          "entity_def_id": "funding_round"
+        },
+        "url": "https://www.crunchbase.com/funding_round/fixture-round-boundary",
+        "announced_on": "2026-08-31",
+        "investment_type": "seed",
+        "investment_stage": "seed",
+        "money_raised": {
+          "value": 1000000,
+          "currency": "USD",
+          "value_usd": 1000000
+        },
+        "funded_organization_identifier": {
+          "uuid": "c5adddb8-e684-5350-b79d-7fc88f4ecdb4",
+          "permalink": "fixture-lumenquill-dental",
+          "value": "Lumenquill Dental",
+          "entity_def_id": "organization"
+        },
+        "funded_organization_categories": [
+          {
+            "uuid": "f5d10a0c-3fca-5de0-87bd-4d49193b3dca",
+            "permalink": "fixture-dental",
+            "value": "Dental",
+            "entity_def_id": "category"
+          },
+          {
+            "uuid": "67243aed-1ddf-5ff5-9e9d-2c2ca49045ab",
+            "permalink": "fixture-software",
+            "value": "Software",
+            "entity_def_id": "category"
+          }
+        ],
+        "funded_organization_description": "Scheduling and billing software for independent dental practices.",
+        "funded_organization_location": [
+          {
+            "uuid": "897424e7-be0a-50d6-836d-4ca9a6798d28",
+            "permalink": "fixture-united-states",
+            "value": "United States",
+            "entity_def_id": "location"
+          }
+        ],
+        "funded_organization_funding_total": {
+          "value": 4000000,
+          "currency": "USD",
+          "value_usd": 4000000
+        },
+        "funded_organization_funding_stage": "seed",
+        "investor_identifiers": [],
+        "lead_investor_identifiers": [],
+        "num_investors": 0,
+        "post_money_valuation": null,
+        "is_equity": true
+      }
+    ],
+    "categories": [
+      {
+        "identifier": {
+          "uuid": "f5d10a0c-3fca-5de0-87bd-4d49193b3dca",
+          "permalink": "fixture-dental",
+          "value": "Dental",
+          "entity_def_id": "category"
+        },
+        "url": "https://www.crunchbase.com/category/fixture-dental",
+        "aliases": [
+          "dentistry",
+          "dental practices"
+        ]
+      },
+      {
+        "identifier": {
+          "uuid": "67243aed-1ddf-5ff5-9e9d-2c2ca49045ab",
+          "permalink": "fixture-software",
+          "value": "Software",
+          "entity_def_id": "category"
+        },
+        "url": "https://www.crunchbase.com/category/fixture-software",
+        "aliases": [
+          "SaaS"
+        ]
+      },
+      {
+        "identifier": {
+          "uuid": "ba1bb71c-ea28-5c14-9549-d9056b216d22",
+          "permalink": "fixture-climate-software",
+          "value": "Climate Software",
+          "entity_def_id": "category"
+        },
+        "url": "https://www.crunchbase.com/category/fixture-climate-software",
+        "aliases": [
+          "climate"
+        ]
+      }
+    ],
+    "locations": [
+      {
+        "identifier": {
+          "uuid": "897424e7-be0a-50d6-836d-4ca9a6798d28",
+          "permalink": "fixture-united-states",
+          "value": "United States",
+          "entity_def_id": "location"
+        },
+        "url": "https://www.crunchbase.com/location/fixture-united-states",
+        "aliases": [
+          "US",
+          "USA"
+        ]
+      },
+      {
+        "identifier": {
+          "uuid": "2219276c-1f13-587f-a0d7-859439ecc0f8",
+          "permalink": "fixture-united-kingdom",
+          "value": "United Kingdom",
+          "entity_def_id": "location"
+        },
+        "url": "https://www.crunchbase.com/location/fixture-united-kingdom",
+        "aliases": [
+          "UK"
+        ]
+      },
+      {
+        "identifier": {
+          "uuid": "c3147ac7-9771-5b2c-8671-6575a7189ca4",
+          "permalink": "fixture-europe",
+          "value": "Europe",
+          "entity_def_id": "location"
+        },
+        "url": "https://www.crunchbase.com/location/fixture-europe"
+      }
+    ],
+    "people": [
+      {
+        "identifier": {
+          "uuid": "ebacc36a-d143-5935-8e71-a03a3a42691b",
+          "permalink": "fixture-aster-vale",
+          "value": "Aster Vale",
+          "entity_def_id": "person"
+        },
+        "url": "https://www.crunchbase.com/person/fixture-aster-vale",
+        "description": "Fictional founder who previously designed scheduling tools for dental practices.",
+        "primary_job_title": "Founder",
+        "primary_organization": {
+          "uuid": "c5adddb8-e684-5350-b79d-7fc88f4ecdb4",
+          "permalink": "fixture-lumenquill-dental",
+          "value": "Lumenquill Dental",
+          "entity_def_id": "organization"
+        }
+      },
+      {
+        "identifier": {
+          "uuid": "4a0bbbf6-d826-5187-9d36-729509e0ddb9",
+          "permalink": "fixture-tavi-brook",
+          "value": "Tavi Brook",
+          "entity_def_id": "person"
+        },
+        "url": "https://www.crunchbase.com/person/fixture-tavi-brook",
+        "description": "Fictional founder with a background in dental imaging workflow software.",
+        "primary_job_title": "Founder",
+        "primary_organization": {
+          "uuid": "6e9e1cb0-5413-5186-bdb8-04996464a52a",
+          "permalink": "fixture-brambleflux-dental",
+          "value": "Brambleflux Dental",
+          "entity_def_id": "organization"
+        }
+      }
+    ]
+  },
+  "contracts": {
+    "organizations": {
+      "identifier": {
+        "field_type": "identifier",
+        "sortable": true,
+        "operators": [
+          "blank",
+          "eq",
+          "not_eq",
+          "includes",
+          "not_includes",
+          "contains",
+          "not_contains",
+          "starts",
+          "in_list",
+          "not_in_list"
+        ],
+        "value_shape": "UUID or permalink"
+      },
+      "name": {
+        "field_type": "text",
+        "sortable": false,
+        "operators": [
+          "blank",
+          "contains",
+          "not_contains",
+          "starts",
+          "eq",
+          "not_eq"
+        ],
+        "value_shape": "text"
+      },
+      "aliases": {
+        "field_type": "text",
+        "sortable": false,
+        "operators": [
+          "blank",
+          "contains",
+          "not_contains",
+          "starts",
+          "eq",
+          "not_eq"
+        ],
+        "value_shape": "text"
+      },
+      "short_description": {
+        "field_type": "text",
+        "sortable": false,
+        "operators": [
+          "blank",
+          "contains",
+          "not_contains",
+          "starts",
+          "eq",
+          "not_eq"
+        ],
+        "value_shape": "text"
+      },
+      "description": {
+        "field_type": "text",
+        "sortable": false,
+        "operators": [
+          "blank",
+          "contains",
+          "not_contains",
+          "starts",
+          "eq",
+          "not_eq"
+        ],
+        "value_shape": "text"
+      },
+      "website_url": {
+        "field_type": "text",
+        "sortable": false,
+        "operators": [
+          "blank",
+          "contains",
+          "not_contains",
+          "starts",
+          "eq",
+          "not_eq"
+        ],
+        "value_shape": "text"
+      },
+      "categories": {
+        "field_type": "identifier_multi",
+        "sortable": false,
+        "operators": [
+          "blank",
+          "includes",
+          "includes_all",
+          "not_includes",
+          "not_includes_all"
+        ],
+        "value_shape": "UUID or permalink"
+      },
+      "category_groups": {
+        "field_type": "identifier_multi",
+        "sortable": false,
+        "operators": [
+          "blank",
+          "includes",
+          "includes_all",
+          "not_includes",
+          "not_includes_all"
+        ],
+        "value_shape": "UUID or permalink"
+      },
+      "location_identifiers": {
+        "field_type": "identifier_multi",
+        "sortable": false,
+        "operators": [
+          "blank",
+          "includes",
+          "includes_all",
+          "not_includes",
+          "not_includes_all"
+        ],
+        "value_shape": "UUID or permalink"
+      },
+      "facet_ids": {
+        "field_type": "enum_multi",
+        "sortable": false,
+        "operators": [
+          "blank",
+          "includes",
+          "not_includes"
+        ],
+        "value_shape": "enum_multi",
+        "enum_values": [
+          "company",
+          "investor"
+        ]
+      },
+      "status": {
+        "field_type": "enum",
+        "sortable": true,
+        "operators": [
+          "blank",
+          "eq",
+          "not_eq",
+          "includes",
+          "not_includes"
+        ],
+        "value_shape": "enum",
+        "enum_values": [
+          "operating",
+          "closed",
+          "was_acquired",
+          "ipo"
+        ]
+      },
+      "operating_status": {
+        "field_type": "enum",
+        "sortable": true,
+        "operators": [
+          "blank",
+          "eq",
+          "not_eq",
+          "includes",
+          "not_includes"
+        ],
+        "value_shape": "enum",
+        "enum_values": [
+          "operating",
+          "closed"
+        ]
+      },
+      "ipo_status": {
+        "field_type": "enum",
+        "sortable": true,
+        "operators": [
+          "blank",
+          "eq",
+          "not_eq",
+          "includes",
+          "not_includes"
+        ],
+        "value_shape": "enum",
+        "enum_values": [
+          "private",
+          "public",
+          "delisted"
+        ]
+      },
+      "funding_total": {
+        "field_type": "money",
+        "sortable": true,
+        "operators": [
+          "blank",
+          "eq",
+          "not_eq",
+          "gt",
+          "gte",
+          "lt",
+          "lte",
+          "between"
+        ],
+        "value_shape": "USD number"
+      },
+      "equity_funding_total": {
+        "field_type": "money",
+        "sortable": true,
+        "operators": [
+          "blank",
+          "eq",
+          "not_eq",
+          "gt",
+          "gte",
+          "lt",
+          "lte",
+          "between"
+        ],
+        "value_shape": "USD number"
+      },
+      "last_funding_total": {
+        "field_type": "money",
+        "sortable": true,
+        "operators": [
+          "blank",
+          "eq",
+          "not_eq",
+          "gt",
+          "gte",
+          "lt",
+          "lte",
+          "between"
+        ],
+        "value_shape": "USD number"
+      },
+      "last_funding_at": {
+        "field_type": "date",
+        "sortable": true,
+        "operators": [
+          "blank",
+          "eq",
+          "not_eq",
+          "gt",
+          "gte",
+          "lt",
+          "lte",
+          "between"
+        ],
+        "value_shape": "YYYY-MM-DD"
+      },
+      "last_funding_type": {
+        "field_type": "enum",
+        "sortable": true,
+        "operators": [
+          "blank",
+          "eq",
+          "not_eq",
+          "includes",
+          "not_includes"
+        ],
+        "value_shape": "enum",
+        "enum_values": [
+          "pre_seed",
+          "seed",
+          "series_a",
+          "series_b",
+          "series_c",
+          "debt_financing"
+        ]
+      },
+      "last_equity_funding_type": {
+        "field_type": "enum",
+        "sortable": true,
+        "operators": [
+          "blank",
+          "eq",
+          "not_eq",
+          "includes",
+          "not_includes"
+        ],
+        "value_shape": "enum",
+        "enum_values": [
+          "pre_seed",
+          "seed",
+          "series_a",
+          "series_b",
+          "series_c"
+        ]
+      },
+      "funding_stage": {
+        "field_type": "enum",
+        "sortable": true,
+        "operators": [
+          "blank",
+          "eq",
+          "not_eq",
+          "includes",
+          "not_includes"
+        ],
+        "value_shape": "enum",
+        "enum_values": [
+          "seed",
+          "early_stage_venture",
+          "late_stage_venture",
+          "private_equity"
+        ]
+      },
+      "founded_on": {
+        "field_type": "date_precision",
+        "sortable": true,
+        "operators": [
+          "blank",
+          "eq",
+          "not_eq",
+          "gt",
+          "gte",
+          "lt",
+          "lte",
+          "between"
+        ],
+        "value_shape": "YYYY-MM-DD"
+      },
+      "num_employees_enum": {
+        "field_type": "enum",
+        "sortable": true,
+        "operators": [
+          "blank",
+          "eq",
+          "not_eq",
+          "includes",
+          "not_includes"
+        ],
+        "value_shape": "enum",
+        "enum_values": [
+          "c_0001_0010",
+          "c_0011_0050",
+          "c_0051_0100"
+        ]
+      },
+      "rank_org": {
+        "field_type": "integer",
+        "sortable": true,
+        "operators": [
+          "blank",
+          "eq",
+          "not_eq",
+          "gt",
+          "gte",
+          "lt",
+          "lte",
+          "between"
+        ],
+        "value_shape": "integer"
+      },
+      "last_layoff_date": {
+        "field_type": "date",
+        "sortable": true,
+        "operators": [
+          "blank",
+          "eq",
+          "not_eq",
+          "gt",
+          "gte",
+          "lt",
+          "lte",
+          "between"
+        ],
+        "value_shape": "YYYY-MM-DD"
+      },
+      "last_key_employee_change_date": {
+        "field_type": "date",
+        "sortable": true,
+        "operators": [
+          "blank",
+          "eq",
+          "not_eq",
+          "gt",
+          "gte",
+          "lt",
+          "lte",
+          "between"
+        ],
+        "value_shape": "YYYY-MM-DD"
+      },
+      "investor_identifiers": {
+        "field_type": "identifier_multi",
+        "sortable": false,
+        "operators": [
+          "blank",
+          "includes",
+          "includes_all",
+          "not_includes",
+          "not_includes_all"
+        ],
+        "value_shape": "UUID or permalink"
+      },
+      "founder_identifiers": {
+        "field_type": "identifier_multi",
+        "sortable": false,
+        "operators": [
+          "blank",
+          "includes",
+          "includes_all",
+          "not_includes",
+          "not_includes_all"
+        ],
+        "value_shape": "UUID or permalink"
+      }
+    },
+    "funding_rounds": {
+      "identifier": {
+        "field_type": "identifier",
+        "sortable": true,
+        "operators": [
+          "blank",
+          "eq",
+          "not_eq",
+          "includes",
+          "not_includes",
+          "contains",
+          "not_contains",
+          "starts",
+          "in_list",
+          "not_in_list"
+        ],
+        "value_shape": "UUID or permalink"
+      },
+      "announced_on": {
+        "field_type": "date",
+        "sortable": true,
+        "operators": [
+          "blank",
+          "eq",
+          "not_eq",
+          "gt",
+          "gte",
+          "lt",
+          "lte",
+          "between"
+        ],
+        "value_shape": "YYYY-MM-DD"
+      },
+      "investment_type": {
+        "field_type": "enum",
+        "sortable": true,
+        "operators": [
+          "blank",
+          "eq",
+          "not_eq",
+          "includes",
+          "not_includes"
+        ],
+        "value_shape": "enum",
+        "enum_values": [
+          "pre_seed",
+          "seed",
+          "series_a",
+          "series_b",
+          "series_c",
+          "debt_financing"
+        ]
+      },
+      "investment_stage": {
+        "field_type": "enum",
+        "sortable": true,
+        "operators": [
+          "blank",
+          "eq",
+          "not_eq",
+          "includes",
+          "not_includes"
+        ],
+        "value_shape": "enum",
+        "enum_values": [
+          "seed",
+          "early_stage_venture",
+          "late_stage_venture"
+        ]
+      },
+      "money_raised": {
+        "field_type": "money",
+        "sortable": true,
+        "operators": [
+          "blank",
+          "eq",
+          "not_eq",
+          "gt",
+          "gte",
+          "lt",
+          "lte",
+          "between"
+        ],
+        "value_shape": "USD number"
+      },
+      "funded_organization_identifier": {
+        "field_type": "identifier",
+        "sortable": true,
+        "operators": [
+          "blank",
+          "eq",
+          "not_eq",
+          "includes",
+          "not_includes",
+          "contains",
+          "not_contains",
+          "starts",
+          "in_list",
+          "not_in_list"
+        ],
+        "value_shape": "UUID or permalink"
+      },
+      "funded_organization_categories": {
+        "field_type": "identifier_multi",
+        "sortable": false,
+        "operators": [
+          "blank",
+          "includes",
+          "includes_all",
+          "not_includes",
+          "not_includes_all"
+        ],
+        "value_shape": "UUID or permalink"
+      },
+      "funded_organization_description": {
+        "field_type": "text",
+        "sortable": false,
+        "operators": [
+          "blank",
+          "contains",
+          "not_contains",
+          "starts",
+          "eq",
+          "not_eq"
+        ],
+        "value_shape": "text"
+      },
+      "funded_organization_location": {
+        "field_type": "identifier_multi",
+        "sortable": false,
+        "operators": [
+          "blank",
+          "includes",
+          "includes_all",
+          "not_includes",
+          "not_includes_all"
+        ],
+        "value_shape": "UUID or permalink"
+      },
+      "funded_organization_funding_total": {
+        "field_type": "money",
+        "sortable": true,
+        "operators": [
+          "blank",
+          "eq",
+          "not_eq",
+          "gt",
+          "gte",
+          "lt",
+          "lte",
+          "between"
+        ],
+        "value_shape": "USD number"
+      },
+      "funded_organization_funding_stage": {
+        "field_type": "enum",
+        "sortable": true,
+        "operators": [
+          "blank",
+          "eq",
+          "not_eq",
+          "includes",
+          "not_includes"
+        ],
+        "value_shape": "enum",
+        "enum_values": [
+          "seed",
+          "early_stage_venture",
+          "late_stage_venture"
+        ]
+      },
+      "investor_identifiers": {
+        "field_type": "identifier_multi",
+        "sortable": false,
+        "operators": [
+          "blank",
+          "includes",
+          "includes_all",
+          "not_includes",
+          "not_includes_all"
+        ],
+        "value_shape": "UUID or permalink"
+      },
+      "lead_investor_identifiers": {
+        "field_type": "identifier_multi",
+        "sortable": false,
+        "operators": [
+          "blank",
+          "includes",
+          "includes_all",
+          "not_includes",
+          "not_includes_all"
+        ],
+        "value_shape": "UUID or permalink"
+      },
+      "num_investors": {
+        "field_type": "integer",
+        "sortable": true,
+        "operators": [
+          "blank",
+          "eq",
+          "not_eq",
+          "gt",
+          "gte",
+          "lt",
+          "lte",
+          "between"
+        ],
+        "value_shape": "integer"
+      },
+      "post_money_valuation": {
+        "field_type": "money",
+        "sortable": true,
+        "operators": [
+          "blank",
+          "eq",
+          "not_eq",
+          "gt",
+          "gte",
+          "lt",
+          "lte",
+          "between"
+        ],
+        "value_shape": "USD number"
+      },
+      "is_equity": {
+        "field_type": "boolean",
+        "sortable": true,
+        "operators": [
+          "blank",
+          "eq",
+          "not_eq"
+        ],
+        "value_shape": "boolean"
+      }
+    },
+    "categories": {
+      "identifier": {
+        "field_type": "identifier",
+        "sortable": true,
+        "operators": [
+          "blank",
+          "eq",
+          "not_eq",
+          "includes",
+          "not_includes",
+          "contains",
+          "not_contains",
+          "starts",
+          "in_list",
+          "not_in_list"
+        ],
+        "value_shape": "UUID or permalink"
+      },
+      "aliases": {
+        "field_type": "text",
+        "sortable": false,
+        "operators": [
+          "blank",
+          "contains",
+          "not_contains",
+          "starts",
+          "eq",
+          "not_eq"
+        ],
+        "value_shape": "text"
+      }
+    },
+    "locations": {
+      "identifier": {
+        "field_type": "identifier",
+        "sortable": true,
+        "operators": [
+          "blank",
+          "eq",
+          "not_eq",
+          "includes",
+          "not_includes",
+          "contains",
+          "not_contains",
+          "starts",
+          "in_list",
+          "not_in_list"
+        ],
+        "value_shape": "UUID or permalink"
+      },
+      "aliases": {
+        "field_type": "text",
+        "sortable": false,
+        "operators": [
+          "blank",
+          "contains",
+          "not_contains",
+          "starts",
+          "eq",
+          "not_eq"
+        ],
+        "value_shape": "text"
+      }
+    },
+    "people": {
+      "identifier": {
+        "field_type": "identifier",
+        "sortable": true,
+        "operators": [
+          "blank",
+          "eq",
+          "not_eq",
+          "includes",
+          "not_includes",
+          "contains",
+          "not_contains",
+          "starts",
+          "in_list",
+          "not_in_list"
+        ],
+        "value_shape": "UUID or permalink"
+      },
+      "description": {
+        "field_type": "text",
+        "sortable": false,
+        "operators": [
+          "blank",
+          "contains",
+          "not_contains",
+          "starts",
+          "eq",
+          "not_eq"
+        ],
+        "value_shape": "text"
+      },
+      "primary_job_title": {
+        "field_type": "text",
+        "sortable": false,
+        "operators": [
+          "blank",
+          "contains",
+          "not_contains",
+          "starts",
+          "eq",
+          "not_eq"
+        ],
+        "value_shape": "text"
+      },
+      "primary_organization": {
+        "field_type": "identifier",
+        "sortable": true,
+        "operators": [
+          "blank",
+          "eq",
+          "not_eq",
+          "includes",
+          "not_includes",
+          "contains",
+          "not_contains",
+          "starts",
+          "in_list",
+          "not_in_list"
+        ],
+        "value_shape": "UUID or permalink"
+      }
+    }
+  },
+  "card_contracts": {
+    "funding_rounds_list": {
+      "entity_def_id": "funding_round"
+    },
+    "founders_lookup": {
+      "entity_def_id": "person"
+    },
+    "org_similarity_org_list": {
+      "entity_def_id": "organization"
+    },
+    "investors_list": {
+      "entity_def_id": "investment"
+    },
+    "current_employees_image_list": {
+      "entity_def_id": "job"
+    },
+    "key_employee_change_list": {
+      "entity_def_id": "key_employee_change"
+    },
+    "layoff_list": {
+      "entity_def_id": "layoff"
+    },
+    "news_list": {
+      "entity_def_id": "press_reference"
+    },
+    "competitors_list": {
+      "entity_def_id": "org_similarity"
+    }
+  },
+  "cards": {
+    "c5adddb8-e684-5350-b79d-7fc88f4ecdb4": {
+      "funding_rounds_list": [
+        "5dace77a-582b-59a7-91b8-7ab467906a37",
+        "c6377386-0c51-5872-8796-ffef19445a4b",
+        "997e4745-c63c-542a-88a5-8feaa4b91e40"
+      ],
+      "founders_lookup": [
+        "ebacc36a-d143-5935-8e71-a03a3a42691b"
+      ],
+      "org_similarity_org_list": [
+        "6e9e1cb0-5413-5186-bdb8-04996464a52a",
+        "3930ee58-a5cd-5c2e-907d-ea2757bc2118"
+      ]
+    },
+    "6e9e1cb0-5413-5186-bdb8-04996464a52a": {
+      "funding_rounds_list": [
+        "2ec9f5f7-d199-55ca-986b-4aa1ded91ca3",
+        "365f44c1-65ef-57e9-be87-1722369b254f"
+      ],
+      "founders_lookup": [
+        "4a0bbbf6-d826-5187-9d36-729509e0ddb9"
+      ],
+      "org_similarity_org_list": [
+        "c5adddb8-e684-5350-b79d-7fc88f4ecdb4",
+        "3930ee58-a5cd-5c2e-907d-ea2757bc2118"
+      ]
+    },
+    "3930ee58-a5cd-5c2e-907d-ea2757bc2118": {
+      "funding_rounds_list": [
+        "85e0c3d1-0836-5671-86b4-9145b2d88148",
+        "2ae4fa08-aa5e-5e4f-8f66-8a5ad163786d"
+      ],
+      "founders_lookup": [],
+      "org_similarity_org_list": [
+        "c5adddb8-e684-5350-b79d-7fc88f4ecdb4",
+        "6e9e1cb0-5413-5186-bdb8-04996464a52a"
+      ]
+    },
+    "de21bcc2-7ad9-5c3e-9a1d-6607bf735b95": {
+      "funding_rounds_list": [
+        "ad05ef31-9b10-5755-9260-8f19acd77e13",
+        "4d679fcd-1445-5fbe-b3d6-e123b4f79196"
+      ],
+      "founders_lookup": [],
+      "org_similarity_org_list": [
+        "c5adddb8-e684-5350-b79d-7fc88f4ecdb4",
+        "6e9e1cb0-5413-5186-bdb8-04996464a52a",
+        "3930ee58-a5cd-5c2e-907d-ea2757bc2118"
+      ]
+    },
+    "76cf5389-8e35-5c4d-b451-6b7bc3b57948": {
+      "funding_rounds_list": [
+        "2e9ffe2e-5161-5cba-8658-be8a9143c3a1",
+        "467fa0fb-a3f8-5dd2-bb7b-4fb6cca5fab4"
+      ],
+      "founders_lookup": [],
+      "org_similarity_org_list": [
+        "c5adddb8-e684-5350-b79d-7fc88f4ecdb4",
+        "6e9e1cb0-5413-5186-bdb8-04996464a52a",
+        "3930ee58-a5cd-5c2e-907d-ea2757bc2118"
+      ]
+    },
+    "fcc4acb0-3687-5589-b4d5-7fb7430988c0": {
+      "funding_rounds_list": [
+        "f55af6d6-69e9-5fb5-914f-650fe4b38e6c",
+        "5e5028d1-31a1-516c-8c2d-9ada930d9f90"
+      ],
+      "founders_lookup": [],
+      "org_similarity_org_list": [
+        "c5adddb8-e684-5350-b79d-7fc88f4ecdb4",
+        "6e9e1cb0-5413-5186-bdb8-04996464a52a",
+        "3930ee58-a5cd-5c2e-907d-ea2757bc2118"
+      ]
+    },
+    "1bbc45c3-70d0-5f97-a23c-cc0ab9e38033": {
+      "funding_rounds_list": [
+        "c8aba2e9-93f1-55a2-b13a-7cc433432a8b",
+        "7368a2aa-9500-5dbe-a143-75cc92c9b507"
+      ],
+      "founders_lookup": [],
+      "org_similarity_org_list": [
+        "c5adddb8-e684-5350-b79d-7fc88f4ecdb4",
+        "6e9e1cb0-5413-5186-bdb8-04996464a52a",
+        "3930ee58-a5cd-5c2e-907d-ea2757bc2118"
+      ]
+    },
+    "3937bd1c-1a4c-5552-9b88-6070429dcf0a": {
+      "funding_rounds_list": [
+        "cc222a18-9ebf-5a4a-a4ea-1f5fa1985db9",
+        "fe247746-4a4e-5e49-bb1a-67da44509dd7"
+      ],
+      "founders_lookup": [],
+      "org_similarity_org_list": [
+        "c5adddb8-e684-5350-b79d-7fc88f4ecdb4",
+        "6e9e1cb0-5413-5186-bdb8-04996464a52a",
+        "3930ee58-a5cd-5c2e-907d-ea2757bc2118"
+      ]
+    },
+    "ce648cbd-cc7b-5439-99a7-841bfe002547": {
+      "funding_rounds_list": [
+        "27a02db0-8a9a-5ef4-b0a8-f2de4d0b4925",
+        "210632dc-b758-5ece-8c9c-5629a358f1b3"
+      ],
+      "founders_lookup": [],
+      "org_similarity_org_list": [
+        "c5adddb8-e684-5350-b79d-7fc88f4ecdb4",
+        "6e9e1cb0-5413-5186-bdb8-04996464a52a",
+        "3930ee58-a5cd-5c2e-907d-ea2757bc2118"
+      ]
+    },
+    "4cb29194-3584-54ae-9972-ee6dcc34e7f8": {
+      "funding_rounds_list": [
+        "290f073b-d1e9-54e4-8438-63d7f173b9e5",
+        "5e3d5bfe-1a6f-5c32-a00f-c0a845bcfd3d"
+      ],
+      "founders_lookup": [],
+      "org_similarity_org_list": [
+        "c5adddb8-e684-5350-b79d-7fc88f4ecdb4",
+        "6e9e1cb0-5413-5186-bdb8-04996464a52a",
+        "3930ee58-a5cd-5c2e-907d-ea2757bc2118"
+      ]
+    }
+  },
+  "lists": {
+    "c989323f-8668-5198-8c01-82463b79f074": {
+      "name": "Research shortlist",
+      "entity_ids": [
+        "c5adddb8-e684-5350-b79d-7fc88f4ecdb4",
+        "6e9e1cb0-5413-5186-bdb8-04996464a52a"
+      ]
+    },
+    "fe1f0ccd-84fa-5ba2-a4f9-0ce6cf109231": {
+      "name": "Dental watchlist",
+      "entity_ids": [
+        "c5adddb8-e684-5350-b79d-7fc88f4ecdb4",
+        "6e9e1cb0-5413-5186-bdb8-04996464a52a",
+        "3930ee58-a5cd-5c2e-907d-ea2757bc2118",
+        "fcc4acb0-3687-5589-b4d5-7fb7430988c0"
+      ]
+    },
+    "01fda271-e75a-5208-a1c7-91a557893ddd": {
+      "name": "Review - North",
+      "entity_ids": [
+        "c5adddb8-e684-5350-b79d-7fc88f4ecdb4"
+      ]
+    },
+    "8b884a75-33b7-5f0b-a347-8122e2eb915a": {
+      "name": "Review - South",
+      "entity_ids": [
+        "6e9e1cb0-5413-5186-bdb8-04996464a52a"
+      ]
+    }
+  }
+}

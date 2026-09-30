@@ -1,0 +1,14 @@
+interface:
+  display_name: "Crunchbase Capital Intensity"
+  short_description: "Analyze capital across a confirmed universe"
+  icon_small: "./assets/crunchbase-icon-blue.png"
+  icon_large: "./assets/crunchbase-icon-blue.png"
+  brand_color: "#146AFF"
+  default_prompt: "Use $crunchbase-analyze-capital-intensity to analyze funding concentration across my confirmed company set."
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "crunchbase"
+      description: "Crunchbase organization, funding, and saved-list read tools"
+policy:
+  allow_implicit_invocation: true

@@ -1,0 +1,41 @@
+{
+  "name": "crunchbase-vc-sourcing",
+  "version": "1.0.0+codex.20260930201551",
+  "description": "Source and analyze private-market companies with structured Crunchbase workflows.",
+  "author": {
+    "name": "Crunchbase",
+    "url": "https://www.crunchbase.com"
+  },
+  "homepage": "https://www.crunchbase.com",
+  "keywords": [
+    "crunchbase",
+    "venture-capital",
+    "sourcing",
+    "private-markets"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Crunchbase VC Sourcing",
+    "shortDescription": "Crunchbase workflows for VC sourcing",
+    "longDescription": "Review funding signals, build thesis landscapes, prepare company briefs, analyze capital intensity, and monitor saved Crunchbase lists.",
+    "developerName": "Crunchbase",
+    "category": "Business",
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://www.crunchbase.com",
+    "privacyPolicyURL": "https://about.crunchbase.com/terms-of-service/privacy-policy",
+    "termsOfServiceURL": "https://about.crunchbase.com/terms-of-service",
+    "defaultPrompt": [
+      "Review recent seed rounds against my investment criteria.",
+      "Build a landscape of vertical SaaS for dental practices.",
+      "Analyze capital intensity across a confirmed company set."
+    ],
+    "brandColor": "#146AFF",
+    "composerIcon": "./assets/crunchbase-icon-blue.png",
+    "logo": "./assets/crunchbase-icon-blue.png"
+  },
+  "license": "MIT",
+  "repository": "https://github.com/crunchbase/crunchbase-mcp-skills"
+}

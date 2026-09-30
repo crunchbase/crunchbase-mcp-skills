@@ -1,0 +1,14 @@
+interface:
+  display_name: "Crunchbase Thesis Landscape"
+  short_description: "Build thesis-driven Crunchbase landscapes"
+  icon_small: "./assets/crunchbase-icon-blue.png"
+  icon_large: "./assets/crunchbase-icon-blue.png"
+  brand_color: "#146AFF"
+  default_prompt: "Use $crunchbase-build-thesis-landscape to find and segment companies against my investment thesis."
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "crunchbase"
+      description: "Crunchbase structured company discovery and saved-list tools"
+policy:
+  allow_implicit_invocation: true

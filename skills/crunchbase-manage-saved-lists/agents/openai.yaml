@@ -1,0 +1,14 @@
+interface:
+  display_name: "Crunchbase Saved Lists"
+  short_description: "Manage and monitor Crunchbase saved lists"
+  icon_small: "./assets/crunchbase-icon-blue.png"
+  icon_large: "./assets/crunchbase-icon-blue.png"
+  brand_color: "#146AFF"
+  default_prompt: "Use $crunchbase-manage-saved-lists to review the current membership of one of my Crunchbase saved lists."
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "crunchbase"
+      description: "Crunchbase saved-list, entity resolution, and search tools"
+policy:
+  allow_implicit_invocation: true

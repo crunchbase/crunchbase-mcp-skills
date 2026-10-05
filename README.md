@@ -14,7 +14,7 @@ The initial collection covers private-company research, funding analysis, and sa
 | [Analyze capital intensity](skills/crunchbase-analyze-capital-intensity/SKILL.md) | Compare funding within a confirmed company set | Period comparisons, concentration, formation, and explicit denominators |
 | [Manage saved lists](skills/crunchbase-manage-saved-lists/SKILL.md) | Inspect, monitor, or change a list | Current membership or dated events; verified membership after requested changes |
 
-See the [private-company research guide](docs/guides/private-company-research.md) for example requests, workflow boundaries, and how the agent handles missing information.
+See the [private-company research guide](docs/guides/private-company-research.md) for example requests, workflow boundaries, bounded resolver recovery, and calculation verification. Each calculation-enabled skill includes its own runtime and input instructions.
 
 ## Requirements
 

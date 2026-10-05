@@ -41,3 +41,9 @@ Company briefs, funding screens, capital analysis, and list inspection or monito
 A company brief is a meeting-preparation aid, not full commercial, technical, or investment diligence. Funding screens present review priorities; an investment verdict requires a decision rubric supplied by the user.
 
 See [tool requirements](../../MCP-REQUIREMENTS.md) for connection capabilities and calculation input handling.
+
+## Recovery and calculation verification
+
+A resolver-only outage permits one bounded Crunchbase identity fallback sequence. Authentication, permission, and metering failures stop the workflow; ambiguous identities still require a choice. Search failures leave incomplete totals explicitly unfinished. Uncertain authorized list writes require a membership readback before any retry.
+
+Each calculation-enabled skill includes its Python runtime, normalized input example, field mapping, and failure handling in `references/calculation-spec.md`. Before delivery, the agent checks the mandate, links, coverage, dates, and denominators, repairs discrepancies, and rechecks. Formation percentages use valid founding dates; formation coverage uses the full confirmed universe. Verification that requires more retrieval precedes list writes, and successful membership reconciliation ends tool use.

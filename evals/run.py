@@ -405,6 +405,22 @@ def execute_command(command: list[str], prompt: str, directory: Path, workspace:
             "timed_out": timed_out, "spawn_error": spawn_error}
 
 
+def empty_builtin_inventory(item: dict[str, Any]) -> bool:
+    """Allow only completed, empty built-in MCP inventories; no external data."""
+    key = {"list_mcp_resources": "resources", "list_mcp_resource_templates": "resourceTemplates"}.get(item.get("tool"))
+    if item.get("server") != "codex" or key is None or item.get("status") != "completed" or item.get("error"):
+        return False
+    arguments = item.get("arguments")
+    if isinstance(arguments, str):
+        try:
+            arguments = json.loads(arguments)
+        except json.JSONDecodeError:
+            return False
+    if arguments not in ({}, {"server": "crunchbase_replay"}):
+        return False
+    return normalize_tool_result(item.get("result")) == {key: []}
+
+
 def parse_trace(directory: Path, execution: dict[str, Any]) -> dict[str, Any]:
     errors = []
     if execution.get("timed_out"):
@@ -453,9 +469,11 @@ def parse_trace(directory: Path, execution: dict[str, Any]) -> dict[str, Any]:
     stderr = (directory / "stderr.txt").read_text(encoding="utf-8")
     if re.search(r"(?:mcp[^\n]*(?:startup\W+failed|failed to start)|failed to (?:initialize|start)[^\n]*mcp)", stderr, re.I):
         errors.append("Replay MCP server startup failed; see stderr")
+    allowed_inventories = {event["item"].get("id"): event["item"] for event in events if event.get("type") == "item.completed" and empty_builtin_inventory(event.get("item", {}))}
     for event in events:
         item = event.get("item", {})
-        if item.get("type") == "mcp_tool_call" and item.get("server") not in {None, "crunchbase_replay"}:
+        allowed_inventory = (empty_builtin_inventory(item) or (item.get("id") in allowed_inventories and all(item.get(key) == allowed_inventories[item["id"]].get(key) for key in ("server", "tool", "arguments")) and item.get("status") == "in_progress" and item.get("result") is None and item.get("error") is None))
+        if item.get("type") == "mcp_tool_call" and item.get("server") not in {None, "crunchbase_replay"} and not allowed_inventory:
             errors.append(f"Unexpected external MCP server: {item['server']}")
         if item.get("type") == "mcp_tool_call" and item.get("error"):
             error_text = json.dumps(item["error"], ensure_ascii=False)

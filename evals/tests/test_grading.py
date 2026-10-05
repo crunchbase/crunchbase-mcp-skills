@@ -19,6 +19,25 @@ class GradingTests(unittest.TestCase):
     def test_deterministic_pass_does_not_approve_unreviewed_result(self):
         self.assertEqual(grade_case(*sample())["status"], "needs_review")
 
+    def test_empty_runtime_inventory_does_not_consume_task_budget(self):
+        case, trial, _, state = sample()
+        case["checks"] = [{"id": "budget", "kind": "max_calls", "limit": 0}]
+        for arm in ("candidate", "baseline"):
+            trial["arm"] = arm
+            for tool, key in (("list_mcp_resources", "resources"), ("list_mcp_resource_templates", "resourceTemplates")):
+                event = {"turn": 1, "tool": tool, "server": "codex", "status": "completed", "arguments": {}, "result": {key: []}}
+                self.assertEqual(grade_case(case, trial, [event], state)["status"], "passed")
+                for change in ({"server": "external"}, {"status": "failed"}, {"arguments": {"server": "external"}}, {"result": {key: [{"uri": "data"}]}}, {"error": "failure"}, {"tool": "cb_reference", "result": {}}, {"tool": "read_mcp_resource", "result": {}}):
+                    with self.subTest(arm=arm, change=change):
+                        self.assertEqual(grade_case(case, trial, [{**event, **change}], state)["status"], "failed")
+
+    def test_runtime_inventory_remains_in_evidence_and_explicit_tool_checks(self):
+        case, trial, _, state = sample()
+        event = {"turn": 1, "tool": "list_mcp_resources", "server": "codex", "status": "completed", "arguments": {}, "result": {"resources": []}}
+        case["checks"] = [{"id": "explicit", "kind": "not_called", "tools": ["list_mcp_resources"]}]
+        self.assertEqual(grade_case(case, trial, [event], state)["status"], "failed")
+        self.assertNotEqual(evidence_digest(case, trial, [event], state), evidence_digest(case, trial, [], state))
+
     def test_attempted_failed_write_is_still_violation(self):
         case, trial, _, state = sample()
         events = [{"turn": 1, "tool": "mcp__fixture__cb_list_create", "result": {"error": {"code": "AUTH_ERROR"}}}]
@@ -82,6 +101,42 @@ class GradingTests(unittest.TestCase):
 
     def test_failed_tool_status_with_structured_provider_error_is_not_doubled(self):
         server = {"turn": 1, "tool": "cb_entity_get", "arguments": {"entity_id": "a"}, "result": {"error": {"code": "AUTHENTICATION_REQUIRED", "message": "Login required"}}}
+        attempt = {**server, "status": "failed"}
+        self.assertEqual(merge_attempts([server], [attempt]), [server])
+
+    def test_embedded_profile_error_is_reported_and_respects_allowed_codes(self):
+        case, trial, _, state = sample()
+        case["checks"] = [{"id": "errors", "kind": "tool_errors", "max": 0}]
+        events = [{"turn": 1, "tool": "mcp__fixture__cb_expert_resolve_entity", "result": {"disambiguation": {"result_type": "match"}, "entity": {"error": {"code": "AUTHENTICATION_REQUIRED"}}}}]
+        score = grade_case(case, trial, events, state)
+        self.assertEqual(score["observed_tool_errors"], [{"turn": 1, "tool": "cb_expert_resolve_entity", "path": "entity.error", "code": "AUTHENTICATION_REQUIRED"}])
+        self.assertEqual(score["status"], "failed")
+        case["checks"][0]["allowed_codes"] = ["AUTHENTICATION_REQUIRED"]
+        self.assertEqual(grade_case(case, trial, events, state)["status"], "passed")
+
+    def test_embedded_error_diagnostic_does_not_itself_fail_outcome(self):
+        case, trial, _, state = sample()
+        events = [{"turn": 1, "tool": "cb_expert_resolve_entity", "result": {"entity": {"error": {"code": "AUTHENTICATION_REQUIRED"}}}}]
+        score = grade_case(case, trial, events, state)
+        self.assertEqual(score["status"], "needs_review")
+        self.assertEqual(score["checks"][0]["status"], "passed")
+        self.assertEqual(len(score["observed_tool_errors"]), 1)
+
+    def test_record_error_fields_are_not_provider_errors(self):
+        case, trial, _, state = sample()
+        for tool, result in [("cb_entity_get", {"properties": [{"field_id": "error", "value": {"code": "NOT_A_PROVIDER_ERROR"}}]}),
+                             ("cb_entity_get", {"entity": {"error": {"code": "NOT_A_RESOLVER_ERROR"}}}),
+                             ("cb_expert_resolve_entity", {"entity": {"properties": [{"field_id": "error", "value": "Record content"}]}})]:
+            with self.subTest(tool=tool, result=result):
+                self.assertEqual(grade_case(case, trial, [{"tool": tool, "result": result}], state)["observed_tool_errors"], [])
+
+    def test_failed_client_embedded_error_is_not_swallowed_by_success(self):
+        success = {"turn": 1, "tool": "cb_expert_resolve_entity", "arguments": {"name": "Example"}, "result": {"entity": {"properties": []}}}
+        failure = {**success, "result": {"entity": {"error": {"code": "AUTHENTICATION_REQUIRED"}}}}
+        self.assertEqual(merge_attempts([success], [failure, success]), [success, {**failure, "source": "client_attempt"}])
+
+    def test_failed_status_with_embedded_provider_error_is_not_doubled(self):
+        server = {"turn": 1, "tool": "cb_expert_resolve_entity", "arguments": {"name": "Example"}, "result": {"entity": {"error": {"code": "AUTHENTICATION_REQUIRED"}}}}
         attempt = {**server, "status": "failed"}
         self.assertEqual(merge_attempts([server], [attempt]), [server])
 

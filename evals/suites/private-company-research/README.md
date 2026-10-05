@@ -1,6 +1,6 @@
 # Private-company research replay corpus
 
-This first collection has **60 cases**, twelve for each of the five skills: 27 development, 18 regression, and 15 held-out cases. Each case has a distinct identifier and a scenario family. Related clarification and accepted-follow-up cases stay in the same split. Held-out scenarios are reserved for final assessment; do not use their results to tune instructions and then continue calling them unseen holdouts. If exposed for debugging, retire or reclassify those cases and create new held-out families.
+This first collection has **63 cases** across the five skills: 27 development, 28 regression, and 8 held-out cases. Each case has a distinct identifier and a scenario family. Related clarification and accepted-follow-up cases stay in the same split. Held-out scenarios are reserved for final assessment; do not use their results to tune instructions and then continue calling them unseen holdouts. If exposed for debugging, retire or reclassify those cases and create new held-out families.
 
 The holdout is a public, versioned evaluation partition, not a secret benchmark. It shares fictional entities and the provider fixture with other splits. Its separation tests new combinations of behavior within this domain; it does not establish generalization to unseen sectors, accounts, models, or production data. Independent reviewers should add privately authored challenge cases before a broad launch.
 
@@ -33,3 +33,5 @@ During infrastructure pilot calibration on September 30, 2026, a live metadata c
 Earlier pilot runs keep their original frozen fixture and rubric versions; these changes do not erase or retroactively relabel their errors. Full release assessment must use the revised frozen inputs.
 
 Run the corpus alongside separate live read-only compatibility checks. Saved-list mutation scenarios here never write to an actual Crunchbase account.
+
+The October 5 revision retires seven inspected or repaired holdouts into regression and adds three resolver recovery boundary cases. The remaining public partition is not newly sealed evidence. The September 30 frozen suite and scores remain unchanged in their original run artifacts. Interrupted-search fixtures target successful calls on the relevant collection; partial-write fixtures reject a fixed UUID independently of batching.

@@ -259,6 +259,15 @@ class TraceTests(unittest.TestCase):
                     (self.path / "trace.jsonl").write_text('{"type":"turn.started"}\n')
                 self.assertEqual(runner.parse_trace(self.path, self.execution)["status"], "infra_error")
 
+    def test_builtin_inventory_is_narrowly_allowlisted(self):
+        item = {"id": "inventory", "type": "mcp_tool_call", "server": "codex", "tool": "list_mcp_resources", "arguments": {}, "status": "completed", "error": None, "result": {"content": [{"type": "text", "text": '{"resources":[]}'}]}}
+        for changes, expected in [({}, "completed"), ({"tool": "read_mcp_resource"}, "infra_error"), ({"arguments": {"server": "external"}}, "infra_error"), ({"result": {"structured_content": {"resources": [{"uri": "secret"}]}}}, "infra_error"), ({"status": "in_progress", "result": None}, "infra_error")]:
+            with self.subTest(changes=changes):
+                write_trace(self.path)
+                with (self.path / "trace.jsonl").open("a") as output:
+                    output.write(json.dumps({"type": "item.completed", "item": {**item, **changes}}) + "\n")
+                self.assertEqual(runner.parse_trace(self.path, self.execution)["status"], expected)
+
     def test_assistant_claims_do_not_count_as_skill_activation(self):
         rel = "skills/skill-a/SKILL.md"
         body = "An instruction long enough to provide evidence of a real file content read."

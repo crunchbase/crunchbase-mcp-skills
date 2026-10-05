@@ -99,6 +99,7 @@ class Replay:
         self.turn=turn
         self.state=json.loads(self.state_path.read_text()) if self.state_path and self.state_path.exists() else {'lists':copy.deepcopy(self.data['lists']),'call_counts':{},'created_count':0}
         self.state.setdefault('call_counts',{})
+        self.state.setdefault('successful_calls',{})
         self.state.setdefault('created_count',0)
         for collection in self.fixture.get('empty_collections',[]): self.data['entities'][collection]=[]
         for rows in self.data['entities'].values():
@@ -118,11 +119,16 @@ class Replay:
         try:
             if tool not in self.schemas: raise ValidationError(f'Unknown tool: {tool}')
             validate_schema(arguments,self.schemas[tool])
-            injected=next((r for r in self.fixture.get('errors',[]) if r['tool']==tool and (number==r.get('at',1) or r.get('persist') and number>=r.get('at',1))),None)
+            success_key=tool+':'+str(arguments.get('collection_id',''))
+            injected=next((r for r in self.fixture.get('errors',[]) if r['tool']==tool
+                and all(arguments.get(k)==v for k,v in r.get('match',{}).items())
+                and (self.state['successful_calls'].get(success_key,0)>=r['after_successes'] if 'after_successes' in r else (number==r.get('at',1) or r.get('persist') and number>=r.get('at',1)))),None)
             if injected:
                 result=error(injected['code'],injected.get('message','Synthetic service failure'))
             else:
                 result=getattr(self,tool.removeprefix('cb_'))(**arguments)
+                if 'error' not in result:
+                    self.state['successful_calls'][success_key]=self.state['successful_calls'].get(success_key,0)+1
         except (ValidationError,KeyError,ValueError,TypeError) as exc:
             result=error('VALIDATION_ERROR',str(exc))
         self.persist()
@@ -232,7 +238,7 @@ class Replay:
         raw=row.get(field); got=scalar(raw); allvalues=flatten(raw)
         if op in ('in_list','not_in_list'):
             if any(v not in self.state['lists'] for v in values): raise ValidationError('Unknown saved-list UUID')
-            answer=any(uid(row) in self.state['lists'][v]['entity_ids'] for v in values)
+            answer=any(entity_id in self.state['lists'][v]['entity_ids'] for v in values for entity_id in allvalues)
             return not answer if op=='not_in_list' else answer
         if op in ('contains','not_contains','starts'):
             text=' '.join(map(str,allvalues)).casefold()
@@ -288,7 +294,7 @@ class Replay:
         if list_id not in self.state['lists']: return error('NOT_FOUND','Saved list not found')
         valid={uid(r) for r in self.rows('organizations')}
         if any(i not in valid for i in entity_ids): raise ValidationError('entity_ids must be known organization UUIDs')
-        actual=entity_ids[:-1] if self.fixture.get('partial_add') else entity_ids
+        actual=[entity_id for entity_id in entity_ids if entity_id not in self.fixture.get('reject_add_ids',[])]
         self.state['lists'][list_id]['entity_ids']=list(dict.fromkeys(self.state['lists'][list_id]['entity_ids']+actual))
         if self.fixture.get('uncertain_add') and self.state['call_counts'].get('cb_list_add_entities')==1: return error('SERVICE_UNCERTAIN','Connection ended after submission; commit state unknown to caller')
         return {'list_id':list_id,'submitted_entity_ids':entity_ids,'response_status':200}

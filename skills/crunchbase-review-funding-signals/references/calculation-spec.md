@@ -2,6 +2,22 @@
 
 Use these definitions for recency, market, and monitoring metrics. The optional `scripts/derive_metrics.py` helper implements the same rules.
 
+## Run the local helper
+
+Requires Python 3.9 or later; standard library only. From this installed skill directory, run `python3 scripts/derive_metrics.py input.json > metrics.json` (or pipe JSON to the same script without a filename). Paths are relative to this skill, not the repository.
+
+Example normalized input:
+
+```json
+{"as_of":"2026-09-30","rounds":[{"uuid":"round-1","announced_on":"2026-09-10","money_raised_usd":1000000,"investment_type":"seed","company_uuid":"company-1"}],"organizations":[{"uuid":"company-1","founded_on":"2020-01-01","last_funding_at":"2026-09-10"}]}
+```
+
+Map returned identifiers to `uuid`; map `money_raised.value_usd` to `money_raised_usd`. Never substitute raw foreign-currency `value` when `value_usd` is missing. Preserve explicit zero; encode missing values as JSON `null`, not the display dash. Unwrap a returned date object's `value` and retain its `precision` in the evidence notes. Do not manufacture day precision: calculate year-only formation buckets separately when needed, and exclude imprecise dates from day-sensitive calculations unless their placement is unambiguous.
+
+Validate dates before invoking the helper. Exclude and report invalid or future events; omit an invalid round from the calculation, or set an invalid organization date to `null` while retaining the organization in the confirmed universe. Keep excluded-date counts separate from originally missing dates. The helper emits JSON on success; malformed inputs exit with status 2 and an `error:` message on stderr. Correct only evidenced normalization mistakes, then rerun once; otherwise report the unsupported calculation. Never present stale output from a failed invocation.
+
+The helper supports only the fixed trailing windows below. For a custom period, calculate directly from the normalized records under the user's exact boundaries. Inspect numeric-value counts before rendering totals: all-unknown amounts remain unknown even when an empty sum is zero.
+
 ## General rules
 
 - Fix one `as_of` date at the start of the task in the user's timezone.
@@ -57,3 +73,5 @@ Calculate top-three concentration over the agreed window as the sum of the three
 ## Formation
 
 Bucket confirmed organizations by the year component of `founded_on`. Include dates on or before `as_of`; reject later founding dates for review. Omit organizations with no founding date from these buckets. Label the result “formation within the confirmed universe.” Do not extrapolate it to the whole market.
+
+For formation percentages, divide each year bucket by the number of organizations with valid founding dates on or before `as_of`. Separately report coverage as that valid-date count divided by the entire deduplicated confirmed universe, including missing or excluded dates. For example, two valid dates in a three-company universe give 2/3 coverage; one company in each year gives 50% per year, not 33%. With no valid dates, year shares are `n/a`.

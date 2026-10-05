@@ -31,7 +31,7 @@ If the user already explicitly requested the named write and the canonical set i
 
 After reconciliation succeeds, stop calling tools and render the final result immediately. Do not run a post-write audit, discovery query, or enrichment pass.
 
-Do not repeat an add call blindly after an uncertain response. Read the list first, compute the remaining entities, and submit only that remainder.
+Do not repeat an add call blindly after an uncertain response. Read the list first, compute the remaining entities, and submit only that authorized remainder at most once. Read back after that repair; if requested entities are still missing, report actual membership and the unresolved remainder rather than looping. Authentication, permission, or metering failures remain terminal.
 
 ## Remove or replace
 

@@ -21,7 +21,7 @@ Require company names, one selected Crunchbase saved list, or an explicitly conf
 
 ## Operating contract
 
-1. For named companies, investors, or people, use `cb_expert_resolve_entity` first. It is the only allowed expert tool; never call another tool whose basename contains `expert`. Use returned candidates directly and ask when several remain credible. Use `cb_entity_autocomplete` for a named entity only after the resolver errors or returns no usable match or candidates.
+1. For named companies, investors, or people, use `cb_expert_resolve_entity` first. It is the only allowed expert tool; never call another tool whose basename contains `expert`. Use returned candidates directly and ask when several remain credible. Use `cb_entity_autocomplete` for a named entity only after the resolver has a recoverable outage or returns no usable match or candidates.
 2. Use only user-supplied or previously resolved domains. Never invent or infer a domain from model memory.
 3. Before a structured search, resolve the required predicate and order contracts through `cb_reference` unless a successful resolution is already available in the current session. Reuse valid contracts and refresh only the affected metadata once after a validation error, as specified in `references/query-core.md`. Do not resolve projection-only fields.
 4. Deduplicate the confirmed universe by organization UUID. Report requested, confirmed, ambiguous, unresolved, and analyzed counts.
@@ -29,7 +29,7 @@ Require company names, one selected Crunchbase saved list, or an explicitly conf
 6. Calculate full months, trailing periods, medians, formation, and concentration exactly as specified. Exclude `—` amounts from money calculations while reporting their count.
 7. Use neutral record language. Show `—` for a null; the legend is “— indicates no value was returned for that field.” For an empty search, say “No records matched the stated filters.” Disclose observed, decision-relevant limitations as specified in `references/output-contract.md`; never infer that an event did not occur from an absent record.
 8. Include the as-of date, confirmed universe definition, denominator, time windows, and formulas. Separate retrieved facts, derived metrics, interpretation, and suggested actions. Resolve every bundled `references/...` or `scripts/...` path relative to the directory containing this `SKILL.md`. Never mention skill folders, skill or reference files, instruction loading, plugin or package paths, caches, or attempts to locate bundled resources in any user-visible message.
-9. On authentication, permission, metering, or service errors, report the state neutrally and stop. Do not substitute another data source unless requested.
+9. Stop on authentication, permission, or metering errors. A resolver-only outage permits the bounded same-provider fallback; other service failures require an accurate limitation. Do not retry a failed fallback or invent identifiers. Do not substitute another data source unless requested.
 
 ## Procedure
 

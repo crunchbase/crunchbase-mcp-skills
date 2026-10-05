@@ -18,14 +18,14 @@ Prepare a focused company snapshot for meeting preparation. Do not present it as
 ## Operating contract
 
 1. Resolve the named company first with `cb_expert_resolve_entity`, using the narrowest collection, concise situational context, and `cb_entity_get: null` for identity-only resolution. It is the only allowed expert tool; never call another tool whose basename contains `expert`.
-2. Use a confident resolver match directly. When the resolver returns several credible candidates, show linked choices and ask the user to select. Use `cb_entity_autocomplete` only when the resolver errors or returns no usable match or candidates.
+2. Use a confident resolver match directly. When the resolver returns several credible candidates, show linked choices and ask the user to select. Use `cb_entity_autocomplete` only when the resolver has a recoverable outage or returns no usable match or candidates.
 3. Pass a domain only when the user supplied it or it came from a previously resolved record. Never invent or infer a domain from model memory. A supplied domain is identity evidence, not permission to browse it.
 4. Retrieve the profile separately with `cb_entity_get`, explicit top-level fields, and only decision-relevant cards. Never request default cards.
 5. Before a structured search, resolve the required predicate and order contracts through `cb_reference` unless a successful resolution is already available in the current session. Reuse valid contracts and refresh only the affected metadata once after a validation error, as specified in `references/query-core.md`. Do not resolve projection-only fields. Reuse returned similar organizations and search projections; keep the competitor query set bounded to the requested scope.
 6. Keep this skill read-only. Never call a `cb_list_*` write tool.
 7. Use neutral record language. Show `—` for a null; the legend is “— indicates no value was returned for that field.” For an empty search, say “No records matched the stated filters.” Disclose observed, decision-relevant limitations as specified in `references/output-contract.md`; never infer that an event did not occur from an absent record.
 8. Link the canonical company and competitors to organization profile URLs. Include the as-of date and state that the brief is Crunchbase-grounded. Separate facts, interpretation, risks, and questions to test. Resolve every bundled `references/...` path relative to the directory containing this `SKILL.md`. Never mention skill folders, skill or reference files, instruction loading, plugin or package paths, caches, or attempts to locate bundled resources in any user-visible message.
-9. On authentication, permission, metering, or service errors, report the state neutrally and stop. Do not substitute external research unless the user requested it.
+9. Stop on authentication, permission, or metering errors. A resolver-only outage permits one same-provider fallback sequence; other service failures require an accurate limitation. Do not retry a failed fallback or invent identifiers. Do not substitute external research unless the user requested it.
 
 ## Procedure
 

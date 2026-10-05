@@ -17,6 +17,26 @@ def canonical_tool(value):
     return value[index:] if index >= 0 else value
 
 
+def result_errors(tool, result):
+    """Read provider error envelopes, without treating arbitrary record data as errors."""
+    if not isinstance(result, dict):
+        return []
+    errors = [("error", result["error"])] if result.get("error") else []
+    entity = result.get("entity")
+    if canonical_tool(tool) == "cb_expert_resolve_entity" and isinstance(entity, dict) and entity.get("error"):
+        errors.append(("entity.error", entity["error"]))
+    return errors
+
+
+def empty_runtime_inventory(event):
+    """Empty host discovery is not a provider/task call; retain it as evidence."""
+    key = {"list_mcp_resources": "resources", "list_mcp_resource_templates": "resourceTemplates"}.get(event.get("tool"))
+    return (key is not None and event.get("server") == "codex"
+            and event.get("status") == "completed" and not event.get("error")
+            and event.get("arguments") in ({}, {"server": "crunchbase_replay"})
+            and event.get("result") == {key: []})
+
+
 def review_key(trial, check):
     return f"{trial['case_id']}/{trial['arm']}/{trial['trial']}/{check['id']}"
 
@@ -66,15 +86,17 @@ def grade_case(case, trial, events, state, review=None):
                 passed = passed and any(canonical_tool(e.get("tool")) == "cb_list_create" and e.get("arguments", {}).get("name") == check["name"] and not e.get("result", {}).get("error") for e in selected)
             detail = f"Matching lists: {len(candidates)}; expected {sorted(expected)}; observed {sorted(actual)}"
         elif kind == "max_calls":
-            passed, detail = len(selected) <= check["limit"], f"{len(selected)} calls; cap {check['limit']}"
+            counted = [event for event in selected if not empty_runtime_inventory(event)]
+            excluded = len(selected) - len(counted)
+            passed = len(counted) <= check["limit"]
+            detail = f"{len(counted)} task calls; cap {check['limit']}; {excluded} empty runtime inventory calls excluded"
         elif kind == "tool_errors":
             allowed = set(check.get("allowed_codes", []))
             errors = []
             for e in selected:
-                result = e.get("result", {})
-                error = result.get("error") if isinstance(result, dict) else None
-                if error and (not isinstance(error, dict) or error.get("code") not in allowed):
-                    errors.append(error)
+                for _, error in result_errors(e.get("tool"), e.get("result", {})):
+                    if not isinstance(error, dict) or error.get("code") not in allowed:
+                        errors.append(error)
             passed = len(errors) <= check.get("max", 0)
             detail = f"Unexpected tool errors: {errors}"
         elif kind in {"text_contains", "text_excludes"}:
@@ -126,10 +148,8 @@ def grade_case(case, trial, events, state, review=None):
         return "passed"
     tool_errors = []
     for event in events:
-        result = event.get("result", {})
-        error = result.get("error") if isinstance(result, dict) else None
-        if error:
-            tool_errors.append({"turn": event.get("turn"), "tool": canonical_tool(event.get("tool")), "code": error.get("code", "UNKNOWN") if isinstance(error, dict) else "UNKNOWN"})
+        for path, error in result_errors(event.get("tool"), event.get("result", {})):
+            tool_errors.append({"turn": event.get("turn"), "tool": canonical_tool(event.get("tool")), "path": path, "code": error.get("code", "UNKNOWN") if isinstance(error, dict) else "UNKNOWN"})
     return {"case_id": case["id"], "family": case["family"], "split": case["split"], "workflow": case["workflow"], "arm": trial["arm"], "trial": trial["trial"], "status": aggregate(checks), "outcome_status": aggregate(outcome_checks), "checks": checks, "duration_seconds": trial.get("duration_seconds"), "usage": trial.get("usage", {}), "evidence_digest": digest, "error": trial.get("error"), "observed_tool_errors": tool_errors}
 
 
@@ -162,15 +182,13 @@ def merge_attempts(events, attempts):
                     if isinstance(parsed, dict):
                         result = parsed
                         break
-        if not (isinstance(result, dict) and result.get("error")) and (event.get("error") or event.get("status") in {"failed", "cancelled"}):
+        if not result_errors(event.get("tool"), result) and (event.get("error") or event.get("status") in {"failed", "cancelled"}):
             result = {"error": {"code": "CLIENT_TOOL_ERROR", "message": str(event.get("error") or event["status"])}}
         event["result"] = result
         return event
     def key(event):
-        result = event.get("result", {})
-        error = result.get("error") if isinstance(result, dict) else None
-        error_code = error.get("code") if isinstance(error, dict) else str(error) if error else None
-        return (event.get("turn"), canonical_tool(event.get("tool")), json.dumps(event.get("arguments", {}), sort_keys=True), error_code)
+        errors = tuple((path, error.get("code") if isinstance(error, dict) else str(error)) for path, error in result_errors(event.get("tool"), event.get("result", {})))
+        return (event.get("turn"), canonical_tool(event.get("tool")), json.dumps(event.get("arguments", {}), sort_keys=True), errors)
     remaining = Counter(key(event) for event in events)
     merged = list(events)
     for raw_attempt in attempts:

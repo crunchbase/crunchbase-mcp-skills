@@ -6,6 +6,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
+from statistics import median
 
 ROOT=Path(__file__).parents[1]
 spec=importlib.util.spec_from_file_location('replay_server',ROOT/'replay_server.py')
@@ -95,6 +96,36 @@ class ReplayTests(unittest.TestCase):
   self.assertEqual(result['count'],0)
   result=r.call('cb_search_query',{'collection_id':'organizations','predicates':[{'field_id':'funding_total','operator_id':'blank','values':[True]}]})
   self.assertEqual(result['count'],1)
+ def test_money_normalization_case_distinguishes_raw_and_usd(self):
+  suite=json.loads((ROOT/'suites/private-company-research/suite.json').read_text())
+  case=next(c for c in suite['cases'] if c['id']=='funding-money-normalization')
+  r=self.new(**case['fixture'])
+  orgs=r.call('cb_search_query',{'collection_id':'organizations','field_ids':['identifier'],'predicates':[
+   {'field_id':'operating_status','operator_id':'eq','values':['operating']},
+   {'field_id':'ipo_status','operator_id':'eq','values':['private']},
+   {'field_id':'categories','operator_id':'includes','values':['fixture-dental']},
+   {'field_id':'location_identifiers','operator_id':'includes','values':['fixture-united-states']},
+  ]})['entities']
+  rounds=r.call('cb_search_query',{'collection_id':'funding_rounds','field_ids':['identifier','money_raised'],'predicates':[
+   {'field_id':'funded_organization_identifier','operator_id':'includes','values':[o['uuid'] for o in orgs]},
+   {'field_id':'investment_type','operator_id':'eq','values':['seed']},
+   {'field_id':'announced_on','operator_id':'between','values':['2026-09-01','2026-09-30']},
+  ]})['entities']
+  amounts=[row['money_raised'] for row in rounds]
+  normalized=[a['value_usd'] for a in amounts if a is not None and a['value_usd'] is not None]
+  self.assertEqual((len(rounds),len(normalized)),(6,5))
+  self.assertEqual(sorted(normalized),[2500000,3000000,6000000,7500000,10000000])
+  self.assertEqual(median(normalized),6000000)
+  self.assertNotEqual(median(a['value'] for a in amounts if a is not None),median(normalized))
+  unnormalized=[a for a in amounts if a['value_usd'] is None]
+  self.assertEqual(unnormalized,[{'value':10000000,'currency':'EUR','value_usd':None}])
+  self.assertEqual(len([a for a in amounts if a['currency']!='USD' and a['value_usd'] is not None and a['value']!=a['value_usd']]),2)
+  for org_id in ORG[:2]:
+   org=next(o for o in r.data['entities']['organizations'] if o['identifier']['uuid']==org_id)
+   related=[row for row in r.data['entities']['funding_rounds'] if row['funded_organization_identifier']['uuid']==org_id]
+   self.assertEqual(sum(row['money_raised']['value_usd'] for row in related),org['funding_total']['value_usd'])
+   self.assertTrue(all(row['funded_organization_funding_total']==org['funding_total'] for row in related))
+   self.assertEqual(next(row['money_raised'] for row in related if row['announced_on']=='2026-09-10'),org['last_funding_total'])
  def test_predicates_and_queries_exclusive(self):
   self.assertIn('error',self.new().call('cb_search_query',{'collection_id':'organizations','predicates':[],'query':[]}))
  def test_unsupported_subquery_is_explicit(self):
@@ -139,7 +170,7 @@ class ReplayTests(unittest.TestCase):
   self.assertEqual(got['error']['code'],'SERVICE_UNCERTAIN')
   self.assertEqual(r.call('cb_list_get',{'list_id':LIST})['total_count'],3)
  def test_partial_write_and_readback(self):
-  r=self.new(partial_add=True);r.call('cb_list_add_entities',{'list_id':LIST,'entity_ids':[ORG[2],ORG[5]]})
+  r=self.new(reject_add_ids=[ORG[5]]);r.call('cb_list_add_entities',{'list_id':LIST,'entity_ids':[ORG[2],ORG[5]]})
   self.assertEqual(r.state['lists'][LIST]['entity_ids'],ORG[:3])
  def test_state_and_log_survive_restart(self):
   with tempfile.TemporaryDirectory() as d:
@@ -163,8 +194,8 @@ class ReplayTests(unittest.TestCase):
    self.assertEqual(len(results[2]['result']['structuredContent']['company_lists']),4)
  def test_corpus_family_separation_and_semantic_checks(self):
   suite=json.loads((ROOT/'suites/private-company-research/suite.json').read_text());families={}
-  self.assertEqual(len(suite['cases']),60)
-  self.assertEqual(len({c['id'] for c in suite['cases']}),60)
+  self.assertEqual(len(suite['cases']),63)
+  self.assertEqual(len({c['id'] for c in suite['cases']}),63)
   for case in suite['cases']:
    self.assertEqual(families.setdefault(case['family'],case['split']),case['split'])
    self.assertTrue(any(c['kind']=='semantic' for c in case['checks']))

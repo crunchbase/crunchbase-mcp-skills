@@ -1,6 +1,6 @@
 {
   "name": "crunchbase-mcp-skills",
-  "version": "1.0.0+codex.20260930204110",
+  "version": "1.0.1",
   "description": "Reusable skills for researching companies, analyzing markets, and managing Crunchbase workflows.",
   "author": {
     "name": "Crunchbase",

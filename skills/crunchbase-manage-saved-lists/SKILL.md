@@ -17,6 +17,8 @@ Treat saved lists as persistent company universes. Keep membership operations di
 
 ## Operating contract
 
+Tool names below are Crunchbase basenames. Resolve them to the actual fully qualified names exposed by the connected Crunchbase server before calling them; do not guess a host prefix. If a required capability is unavailable, report the missing connection or tool and stop the dependent work.
+
 1. Use `cb_list_query` to identify a list and `cb_list_get` to retrieve or reconcile membership. If similar list names remain credible, show candidates and ask the user to choose.
 2. Monitoring, current-state review, comparison, and proposing changes are read-only. Write only when the user explicitly asks to create a list, save a supplied set, append resolved entities, or update membership.
 3. Resolve every named company first with `cb_expert_resolve_entity`. It is the only allowed expert tool; never call another tool whose basename contains `expert`. Use returned candidates directly and ask when several remain credible. Use `cb_entity_autocomplete` for a named company only after the resolver has a recoverable outage or returns no usable match or candidates.

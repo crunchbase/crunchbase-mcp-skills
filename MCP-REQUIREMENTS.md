@@ -1,6 +1,6 @@
 # Crunchbase MCP requirements
 
-Connect and authenticate Crunchbase through the host agent before invoking a skill. Requirements are specific to each workflow; the repository does not require every skill to use the same tool set. Host-specific tool prefixes may differ, while the tool basenames and capabilities used by a skill must be available.
+Connect and authenticate Crunchbase through the host agent before invoking a skill. Requirements are specific to each workflow; the repository does not require every skill to use the same tool set. Host-specific tool prefixes may differ, while the tool basenames and capabilities used by a skill must be available. Resolve each basename to the actual fully qualified tool name exposed by the connected Crunchbase server; do not guess a server prefix. Host metadata such as `agents/openai.yaml` does not configure Claude’s MCP connection.
 
 ## Current private-company research collection
 
@@ -24,6 +24,6 @@ Authentication, authorization, and usage limits belong to the connector and the 
 
 ## Local helper runtime
 
-Skills that include `scripts/derive_metrics.py` require Python 3. The helper accepts normalized JSON: ISO dates, organization/round UUIDs, and numeric USD values or null. Convert structured connector date and money values into this form before calling it. Preserve any source-date precision in the analysis and do not imply precision the source does not provide.
+Skills that include `scripts/derive_metrics.py` require Python 3.9 or later. The helper accepts normalized JSON: ISO dates, organization/round UUIDs, and numeric USD values or null. Convert structured connector date and money values into this form before calling it. Preserve any source-date precision in the analysis and do not imply precision the source does not provide.
 
 The company-brief skill has no bundled calculation helper. Future skills should document their own runtime and tool requirements here instead of inheriting unrelated requirements from the initial collection.

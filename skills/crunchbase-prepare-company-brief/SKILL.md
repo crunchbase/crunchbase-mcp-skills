@@ -17,6 +17,8 @@ Prepare a focused company snapshot for meeting preparation. Do not present it as
 
 ## Operating contract
 
+Tool names below are Crunchbase basenames. Resolve them to the actual fully qualified names exposed by the connected Crunchbase server before calling them; do not guess a host prefix. If a required capability is unavailable, report the missing connection or tool and stop the dependent work.
+
 1. Resolve the named company first with `cb_expert_resolve_entity`, using the narrowest collection, concise situational context, and `cb_entity_get: null` for identity-only resolution. It is the only allowed expert tool; never call another tool whose basename contains `expert`.
 2. Use a confident resolver match directly. When the resolver returns several credible candidates, show linked choices and ask the user to select. Use `cb_entity_autocomplete` only when the resolver has a recoverable outage or returns no usable match or candidates.
 3. Pass a domain only when the user supplied it or it came from a previously resolved record. Never invent or infer a domain from model memory. A supplied domain is identity evidence, not permission to browse it.

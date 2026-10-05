@@ -17,6 +17,8 @@ Build a reviewed company universe against an explicit thesis. Segment by buyer, 
 
 ## Operating contract
 
+Tool names below are Crunchbase basenames. Resolve them to the actual fully qualified names exposed by the connected Crunchbase server before calling them; do not guess a host prefix. If a required capability is unavailable, report the missing connection or tool and stop the dependent work.
+
 1. Before a structured search, resolve the required predicate and order contracts through `cb_reference` unless a successful resolution is already available in the current session. Reuse valid contracts and refresh only the affected metadata once after a validation error, as specified in `references/query-core.md`. Do not resolve projection-only fields. Prefer one collection-level catalog, then request only details it does not expose.
 2. Resolve categories and locations with `cb_entity_autocomplete`. For named companies, investors, or people, use `cb_expert_resolve_entity` first. It is the only allowed expert tool; never call another tool whose basename contains `expert`. Use autocomplete for a named entity only after the resolver has a recoverable outage or returns no usable match or candidates.
 3. Never invent or infer a domain from model memory. Use only domains supplied by the user or returned by a resolved record.

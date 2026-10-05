@@ -21,6 +21,8 @@ Require company names, one selected Crunchbase saved list, or an explicitly conf
 
 ## Operating contract
 
+Tool names below are Crunchbase basenames. Resolve them to the actual fully qualified names exposed by the connected Crunchbase server before calling them; do not guess a host prefix. If a required capability is unavailable, report the missing connection or tool and stop the dependent work.
+
 1. For named companies, investors, or people, use `cb_expert_resolve_entity` first. It is the only allowed expert tool; never call another tool whose basename contains `expert`. Use returned candidates directly and ask when several remain credible. Use `cb_entity_autocomplete` for a named entity only after the resolver has a recoverable outage or returns no usable match or candidates.
 2. Use only user-supplied or previously resolved domains. Never invent or infer a domain from model memory.
 3. Before a structured search, resolve the required predicate and order contracts through `cb_reference` unless a successful resolution is already available in the current session. Reuse valid contracts and refresh only the affected metadata once after a validation error, as specified in `references/query-core.md`. Do not resolve projection-only fields.

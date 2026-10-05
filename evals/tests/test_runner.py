@@ -351,6 +351,35 @@ class TraceTests(unittest.TestCase):
 
 
 class ManifestTests(unittest.TestCase):
+    def test_manifest_rejects_links_before_snapshotting_either_arm(self):
+        for arm in ("skills", "previous_skills"):
+            for kind in ("file", "directory", "dangling", "root"):
+                with self.subTest(arm=arm, kind=kind), tempfile.TemporaryDirectory() as temporary:
+                    root = Path(temporary)
+                    candidate, previous = root / "candidate", root / "previous"
+                    write_skill(candidate)
+                    write_skill(previous)
+                    external = root / "external"
+                    external.mkdir()
+                    (external / "secret").write_text("must not be copied")
+                    selected = candidate if arm == "skills" else previous
+                    if kind == "root":
+                        link = root / "linked-root"
+                        link.symlink_to(selected, target_is_directory=True)
+                        if arm == "skills":
+                            candidate = link
+                        else:
+                            previous = link
+                    else:
+                        target = external if kind == "directory" else external / ("missing" if kind == "dangling" else "secret")
+                        (selected / "skill-a" / "resource").symlink_to(target)
+                    args = argparse.Namespace(skills=candidate, previous_skills=previous)
+                    run_dir = root / "run"
+                    run_dir.mkdir()
+                    with self.assertRaisesRegex(runner.EvalError, "symlinks"):
+                        runner.create_manifest(args, example_suite(), root / "suite.json", [], "model", "high", {}, run_dir)
+                    self.assertEqual(list(run_dir.iterdir()), [])
+
     def test_inputs_are_frozen_and_full_suite_is_explicit(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)

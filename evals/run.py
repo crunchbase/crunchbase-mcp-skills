@@ -270,6 +270,21 @@ def skill_metadata(path: Path) -> dict[str, str]:
     return fields
 
 
+def validate_skill_tree(skills: Path) -> None:
+    if skills.is_symlink() or any(p.is_symlink() for p in skills.rglob("*")):
+        raise EvalError("Skill snapshots must not contain symlinks")
+    if not skills.is_dir():
+        raise EvalError(f"Skills directory does not exist: {skills}")
+
+
+def copy_skill_tree(source: Path, destination: Path) -> None:
+    validate_skill_tree(source)
+    # Preserve links introduced after validation rather than reading their targets.
+    shutil.copytree(source, destination, symlinks=True,
+                    ignore=shutil.ignore_patterns("__pycache__", "*.pyc", ".DS_Store"))
+    validate_skill_tree(destination)
+
+
 def prepare_workspace(workspace: Path, skills: Path | None, as_of: str, context: str = "") -> dict[str, str]:
     workspace.mkdir(parents=True, exist_ok=True)
     common = f"Current date for this task: {as_of}.\nUse the available tools when they are relevant to the user's request.\n"
@@ -277,11 +292,7 @@ def prepare_workspace(workspace: Path, skills: Path | None, as_of: str, context:
         common += "\n" + context.strip() + "\n"
     contents: dict[str, str] = {}
     if skills is not None:
-        if not skills.is_dir():
-            raise EvalError(f"Skills directory does not exist: {skills}")
-        if any(p.is_symlink() for p in skills.rglob("*")):
-            raise EvalError("Skill snapshots must not contain symlinks")
-        shutil.copytree(skills, workspace / "skills", ignore=shutil.ignore_patterns("__pycache__", "*.pyc", ".DS_Store"))
+        copy_skill_tree(skills, workspace / "skills")
         catalog = []
         for path in sorted((workspace / "skills").glob("*/SKILL.md")):
             metadata = skill_metadata(path)
@@ -671,6 +682,9 @@ def run_trial(job: dict[str, Any], case: dict[str, Any], run_dir: Path, manifest
 
 def create_manifest(args: argparse.Namespace, suite: dict[str, Any], suite_path: Path,
                     jobs: list[dict[str, Any]], model: str, effort: str, source: dict[str, Any], run_dir: Path) -> dict[str, Any]:
+    validate_skill_tree(args.skills)
+    if args.previous_skills is not None:
+        validate_skill_tree(args.previous_skills)
     write_json(run_dir / "suite.json", suite)
     inputs = run_dir / "inputs"
     inputs.mkdir()
@@ -681,9 +695,9 @@ def create_manifest(args: argparse.Namespace, suite: dict[str, Any], suite_path:
     shutil.copy2(ROOT / "evals/replay_server.py", inputs / "replay_server.py")
     candidate = args.skills.resolve()
     previous = args.previous_skills.resolve() if args.previous_skills else None
-    shutil.copytree(candidate, inputs / "candidate-skills", ignore=shutil.ignore_patterns("__pycache__", "*.pyc", ".DS_Store"))
+    copy_skill_tree(candidate, inputs / "candidate-skills")
     if previous:
-        shutil.copytree(previous, inputs / "previous-skills", ignore=shutil.ignore_patterns("__pycache__", "*.pyc", ".DS_Store"))
+        copy_skill_tree(previous, inputs / "previous-skills")
     cli_version = subprocess.run([args.codex, "--version"], capture_output=True, text=True, timeout=30, check=True).stdout.strip()
     harness = {str(p.relative_to(ROOT)): file_hash(p) for p in sorted((ROOT / "evals").glob("*.py"))}
     manifest = {"schema_version": 1, "run_id": run_dir.name, "created_at": utc_now(), "suite_id": suite["id"],

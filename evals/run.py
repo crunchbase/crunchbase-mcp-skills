@@ -565,8 +565,7 @@ def extract_skill_reads(events: list[dict[str, Any]], contents: dict[str, str], 
             if "SKILL.md" in serialized and read_command.search(serialized):
                 uncertain = True
             continue
-        if item.get("exit_code") != 0:
-            continue
+        # A composite command may emit skill content before another operation fails.
         command = item.get("command", "")
         output = item.get("aggregated_output", "")
         if not isinstance(command, str) or not isinstance(output, str) or not read_command.search(command):

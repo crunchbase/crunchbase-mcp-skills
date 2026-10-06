@@ -288,6 +288,19 @@ class TraceTests(unittest.TestCase):
             with self.subTest(command=command):
                 self.assertEqual(runner.extract_skill_reads(events, {rel: body}, self.path), [rel])
 
+    def test_failed_composite_command_preserves_content_backed_read(self):
+        rel = "skills/skill-a/SKILL.md"
+        body = "name: skill-a\nA long instruction that provides concrete evidence of an actual skill read."
+        for command in (f"cat {rel} skills/skill-a/references/missing.md", f"cat {rel} && false"):
+            event = {"type": "item.completed", "item": {"type": "command_execution",
+                     "command": command, "exit_code": 1, "aggregated_output": body + "\nmissing file"}}
+            with self.subTest(command=command):
+                self.assertEqual(runner.extract_skill_reads([event], {rel: body}, self.path), [rel])
+                event["item"]["aggregated_output"] = "cat: file unavailable"
+                self.assertIsNone(runner.extract_skill_reads([event], {rel: body}, self.path))
+        event["item"].update(command="cat unrelated.txt", aggregated_output="cat: file unavailable")
+        self.assertEqual(runner.extract_skill_reads([event], {rel: body}, self.path), [])
+
     def test_opaque_skill_read_is_unknown_not_a_negative_activation_pass(self):
         events = [{"type": "item.completed", "item": {"type": "command_execution", "command": "cat SKILL.md",
             "exit_code": 0, "aggregated_output": "[output truncated]"}}]

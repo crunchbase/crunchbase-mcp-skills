@@ -209,6 +209,48 @@ def merge_attempts(events, attempts):
     return merged
 
 
+def validate_artifact_shapes(trial, events, state):
+    """Reject malformed containers before they reach grading and reporting."""
+    def object_array(value, label):
+        if not isinstance(value, list) or any(not isinstance(item, dict) for item in value):
+            raise ValueError(f"{label} must be an array of objects")
+
+    def snapshot(value):
+        if not isinstance(value, dict) or not isinstance(value.get("lists", {}), dict):
+            raise ValueError("State must be an object with a lists object")
+        for item in value.get("lists", {}).values():
+            if not isinstance(item, dict):
+                raise ValueError("List state must be an object")
+            ids = item.get("entity_ids", [])
+            if not isinstance(ids, list) or any(not isinstance(x, str) for x in ids):
+                raise ValueError("List entity_ids must be an array of strings")
+
+    turns = trial.get("turns", [])
+    object_array(turns, "Trial turns")
+    for turn in turns:
+        if not isinstance(turn.get("final", ""), str):
+            raise ValueError("Turn final must be a string")
+        for field in ("messages", "timeline"):
+            if field in turn:
+                object_array(turn[field], field)
+        if "state_after" in turn:
+            snapshot(turn["state_after"])
+    attempts = trial.get("tool_attempts", [])
+    object_array(attempts, "Tool attempts")
+    for event in events + attempts:
+        if not isinstance(event.get("arguments", {}), dict):
+            raise ValueError("Tool arguments must be an object")
+        if "state_after" in event:
+            snapshot(event["state_after"])
+    usage = trial.get("usage", {})
+    if not isinstance(usage, dict) or any(type(v) not in (int, float) for v in usage.values()):
+        raise ValueError("Trial usage must contain numeric counts")
+    reads = trial.get("skill_reads")
+    if reads is not None and (not isinstance(reads, list) or any(not isinstance(x, str) for x in reads)):
+        raise ValueError("Skill reads must be an array of strings or null")
+    snapshot(state)
+
+
 def load_run(run):
     """Load the frozen suite and every planned trial; missing jobs remain visible."""
     manifest = json.loads((run / "manifest.json").read_text())
@@ -240,14 +282,16 @@ def load_run(run):
                 raise ValueError("Trial artifact must be a JSON object")
             if (trial["case_id"], trial["arm"], trial["trial"]) != key:
                 raise ValueError("Trial identity does not match plan")
+            validate_artifact_shapes(trial, [], {})
             case = cases[job["case_id"]]
             if trial.get("status") == "completed" and len(trial.get("turns", [])) != len(case["turns"]):
                 raise ValueError("Completed trial has missing turns")
             if not (directory / "tools.jsonl").exists() or not (directory / "state.json").exists():
                 raise ValueError("Missing replay evidence")
             events = read_jsonl(directory / "tools.jsonl")
-            events = merge_attempts(events, trial.get("tool_attempts", []))
             state = json.loads((directory / "state.json").read_text())
+            validate_artifact_shapes(trial, events, state)
+            events = merge_attempts(events, trial.get("tool_attempts", []))
         except (OSError, ValueError, KeyError) as exc:
             trial, events, state = fallback, [], {}
             trial["error"] = str(exc)

@@ -230,6 +230,30 @@ class RunIntegrityTests(unittest.TestCase):
                 report, summary = build_report([score], manifest)
                 self.assertEqual(summary["release_gate"], "not_ready")
 
+    def test_nested_corruption_is_retained_as_infrastructure_error(self):
+        mutations = [lambda t, s: t.update(turns=None), lambda t, s: t.update(turns=[None]),
+                     lambda t, s: t.update(tool_attempts=None), lambda t, s: t.update(tool_attempts=[1]),
+                     lambda t, s: t["turns"][0].update(final=None),
+                     lambda t, s: t["turns"][0].update(state_after=[]),
+                     lambda t, s: t.update(usage=None), lambda t, s: t.update(skill_reads=[{}]),
+                     lambda t, s: s.update(lists=[]),
+                     lambda t, s: s.update(lists={"l1": {"entity_ids": None}})]
+        for index, mutate in enumerate(mutations):
+            with self.subTest(index=index), tempfile.TemporaryDirectory() as d:
+                root = Path(d)
+                case, trial, events, state = self.make_run(root)
+                mutate(trial, state)
+                directory = root / "trials/job1"
+                directory.mkdir(parents=True)
+                (directory / "trial.json").write_text(json.dumps(trial))
+                (directory / "state.json").write_text(json.dumps(state))
+                (directory / "tools.jsonl").write_text("")
+                manifest, entries = load_run(root)
+                self.assertEqual(len(entries), 1)
+                score = grade_case(*entries[0])
+                self.assertEqual(score["status"], "infra_error")
+                self.assertEqual(build_report([score], manifest)[1]["release_gate"], "not_ready")
+
     def test_duplicate_plan_rejected(self):
         with tempfile.TemporaryDirectory() as d:
             root = Path(d)

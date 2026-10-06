@@ -28,7 +28,7 @@ When code is useful, prefer a small deterministic helper with a documented input
 
 Update the root `VERSION` file using a stable `major.minor.patch` version, then run `python3 scripts/sync_version.py` to synchronize host manifests. Use the corresponding `v<version>` Git tag for the release and its individual skill archives. Use patch increments for fixes, minor increments for backward-compatible capabilities, and major increments for breaking changes.
 
-Build release downloads with `python3 scripts/build_releases.py`. The builder reads Git-tracked files under `skills/` from the working tree, so stage new skill files before building. It creates one `.zip` and matching `.skill` per skill, embeds `VERSION`, and writes `SHA256SUMS` in `dist/<version>/`. Generated archives stay out of Git; attach them to the matching GitHub release. Build from a clean release checkout for publication.
+Build release downloads with `python3 scripts/build_releases.py`. The builder reads Git-tracked files under `skills/` from the working tree, so stage new skill files before building. It creates one `.zip` and matching `.skill` per skill, embeds `VERSION`, and writes `SHA256SUMS` in `dist/<version>/`. The output directory must be empty; choose a fresh `--output` directory for rebuilding. Generated archives stay out of Git; attach them to the matching GitHub release. Build from a clean release checkout for publication.
 
 ## Validate a change
 

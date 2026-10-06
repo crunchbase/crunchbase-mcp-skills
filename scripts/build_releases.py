@@ -21,6 +21,8 @@ def main():
     if json.loads((ROOT / '.codex-plugin/plugin.json').read_text())['version'] != version:
         parser.error('Run scripts/sync_version.py to synchronize package versions')
     output = args.output or ROOT / 'dist' / version
+    if output.exists() and any(output.iterdir()):
+        parser.error("Output directory must be empty; choose a fresh --output directory")
     output.mkdir(parents=True, exist_ok=True)
     tracked = subprocess.check_output(
         ['git', 'ls-files', '-z', '--', 'skills/'], cwd=ROOT

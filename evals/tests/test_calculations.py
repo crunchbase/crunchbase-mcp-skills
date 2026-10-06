@@ -41,6 +41,15 @@ class CalculationTests(unittest.TestCase):
         self.assertEqual((period["capital_usd"], period["numeric_amount_count"], period["dash_amount_count"]), (0, 1, 1))
         self.assertIsNone(result["top_three_capital_concentration"])
 
+    def test_all_unknown_periods_remain_unknown_and_empty_periods_are_zero(self):
+        result = METRICS.derive_metrics({"as_of": "2026-09-30", "rounds": [
+            round_row("current", "2026-01-01", None), round_row("prior", "2025-01-01", None)]})
+        for key in ("current_12_months", "prior_12_months"):
+            self.assertIsNone(result[key]["capital_usd"])
+            self.assertEqual(result[key]["numeric_amount_count"], 0)
+        empty = METRICS.derive_metrics({"as_of": "2026-09-30", "rounds": []})
+        self.assertEqual(empty["current_12_months"]["capital_usd"], 0)
+
     def test_future_dates_fail_in_each_input_location(self):
         cases = [{"rounds": [round_row("a", "2026-10-01", 5)]}, {"organizations": [{"uuid": "a", "founded_on": "2026-10-01"}]}, {"organizations": [{"uuid": "a", "last_funding_at": "2026-10-01"}]}]
         for case in cases:

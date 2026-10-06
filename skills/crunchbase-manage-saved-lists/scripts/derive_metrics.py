@@ -122,7 +122,7 @@ def period_metrics(rounds: list[dict[str, Any]]) -> dict[str, Any]:
         "round_count": len(rounds),
         "numeric_amount_count": len(numeric),
         "dash_amount_count": len(rounds) - len(numeric),
-        "capital_usd": sum(numeric),
+        "capital_usd": sum(numeric) if numeric or not rounds else None,
         "median_round_usd": statistics.median(numeric) if numeric else None,
         "stage_mix": dict(sorted(stage_mix.items())),
     }

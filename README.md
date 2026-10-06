@@ -94,7 +94,7 @@ Build an individual `.skill` and `.zip` archive for every skill from a local che
 python3 scripts/build_releases.py
 ```
 
-Files are written to `dist/<version>/` with a `SHA256SUMS` checksum file. Each archive includes the complete skill folder and its version. The `.skill` files contain the same ZIP data; use `.zip` for Claude.ai uploads.
+The output directory must be empty; use `--output <fresh-directory>` for another build. Files are written to `dist/<version>/` with a `SHA256SUMS` checksum file. Each archive includes the complete skill folder and its version. The `.skill` files contain the same ZIP data; use `.zip` for Claude.ai uploads.
 
 Prebuilt assets have not yet been published to [GitHub Releases](https://github.com/crunchbase/crunchbase-mcp-skills/releases). The build command packages the files in your checkout.
 

@@ -1,0 +1,42 @@
+{
+  "name": "crunchbase-mcp-skills",
+  "version": "1.0.1",
+  "description": "Reusable skills for researching companies, analyzing markets, and managing Crunchbase workflows.",
+  "author": {
+    "name": "Crunchbase",
+    "url": "https://www.crunchbase.com"
+  },
+  "homepage": "https://www.crunchbase.com",
+  "keywords": [
+    "crunchbase",
+    "mcp",
+    "company-research",
+    "market-analysis",
+    "skills"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Crunchbase MCP Skills",
+    "shortDescription": "Reusable skills for Crunchbase workflows",
+    "longDescription": "Research companies and markets with reusable Crunchbase skills. Current workflows cover company briefs, funding signals, thesis landscapes, capital intensity, and saved lists.",
+    "developerName": "Crunchbase",
+    "category": "Business",
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://www.crunchbase.com",
+    "privacyPolicyURL": "https://about.crunchbase.com/terms-of-service/privacy-policy",
+    "termsOfServiceURL": "https://about.crunchbase.com/terms-of-service",
+    "defaultPrompt": [
+      "Prepare a Crunchbase company brief for my next meeting.",
+      "Build a Crunchbase market landscape using my criteria.",
+      "Help me manage my Crunchbase saved lists."
+    ],
+    "brandColor": "#146AFF",
+    "composerIcon": "./assets/crunchbase-icon-blue.png",
+    "logo": "./assets/crunchbase-icon-blue.png"
+  },
+  "license": "MIT",
+  "repository": "https://github.com/crunchbase/crunchbase-mcp-skills"
+}

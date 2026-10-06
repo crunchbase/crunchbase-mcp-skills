@@ -1,0 +1,19 @@
+.DS_Store
+__pycache__/
+*.py[cod]
+.venv/
+.env
+.env.*
+!.env.example
+
+# Local evaluation state, dependencies, and private/raw recordings
+work/
+.venv-evals/
+evals/artifacts/
+
+# Local evaluation reports
+evals/results/
+docs/validation-status.md
+
+# Generated release downloads
+dist/

@@ -1,0 +1,23 @@
+name: Offline evaluation checks
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  offline:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Check collection and host package versions
+        run: python3 scripts/sync_version.py --check
+      - name: Validate cases and run fixture, grader, and calculator tests
+        run: |
+          python3 evals/run.py validate --split all
+          python3 -m unittest discover -s evals/tests -v

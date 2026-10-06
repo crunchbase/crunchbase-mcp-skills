@@ -214,6 +214,22 @@ class RunIntegrityTests(unittest.TestCase):
             self.assertEqual(len(entries), 1)
             self.assertEqual(grade_case(*entries[0])["status"], "infra_error")
 
+    def test_wrong_shaped_trial_retains_planned_job_in_report(self):
+        for value in ([], [1], None, "invalid", 7, True):
+            with self.subTest(value=value), tempfile.TemporaryDirectory() as d:
+                root = Path(d)
+                self.make_run(root)
+                directory = root / "trials/job1"
+                directory.mkdir(parents=True)
+                (directory / "trial.json").write_text(json.dumps(value))
+                manifest, entries = load_run(root)
+                self.assertEqual(len(entries), 1)
+                self.assertIn("JSON object", entries[0][1]["error"])
+                score = grade_case(*entries[0])
+                self.assertEqual(score["status"], "infra_error")
+                report, summary = build_report([score], manifest)
+                self.assertEqual(summary["release_gate"], "not_ready")
+
     def test_duplicate_plan_rejected(self):
         with tempfile.TemporaryDirectory() as d:
             root = Path(d)

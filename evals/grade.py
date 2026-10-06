@@ -236,6 +236,8 @@ def load_run(run):
         fallback = {"schema_version": 1, "case_id": job["case_id"], "arm": job["arm"], "trial": job["trial"], "status": "infra_error", "error": "Missing or invalid planned trial artifacts", "turns": [], "usage": {}}
         try:
             trial = json.loads((directory / "trial.json").read_text())
+            if not isinstance(trial, dict):
+                raise ValueError("Trial artifact must be a JSON object")
             if (trial["case_id"], trial["arm"], trial["trial"]) != key:
                 raise ValueError("Trial identity does not match plan")
             case = cases[job["case_id"]]

@@ -60,6 +60,36 @@ class GradingTests(unittest.TestCase):
         state["lists"]["l1"]["entity_ids"].append("org-b")
         self.assertEqual(grade_case(case, trial, [], state)["status"], "passed")
 
+    def test_turn_membership_uses_its_snapshot_not_later_state(self):
+        case, trial, _, state = sample()
+        before = {"lists": {"l1": {"name": "Research", "entity_ids": ["a"]}}}
+        after = {"lists": {"l1": {"name": "Research", "entity_ids": ["a", "b"]}}}
+        trial["turns"] = [{"turn": 1, "state_after": before},
+                          {"turn": 2, "state_after": after},
+                          {"turn": 3, "state_after": after}]
+        events = [{"turn": 2, "tool": "cb_list_add_entities", "state_after": after}]
+        for turn, expected in ((1, ["a"]), (2, ["a", "b"]), (3, ["a", "b"])):
+            case["checks"] = [{"id": "members", "kind": "membership", "turn": turn,
+                               "list_id": "l1", "entity_ids": expected}]
+            self.assertEqual(grade_case(case, trial, events, after)["status"], "passed")
+        case["checks"][0].update(turn=1, entity_ids=["a", "b"])
+        self.assertEqual(grade_case(case, trial, events, after)["status"], "failed")
+        changed = copy.deepcopy(trial)
+        changed["turns"][0]["state_after"] = after
+        self.assertNotEqual(evidence_digest(case, trial, events, after), evidence_digest(case, changed, events, after))
+
+    def test_legacy_turn_state_is_unknown_without_a_snapshot(self):
+        case, trial, _, state = sample()
+        state = {"lists": {"l1": {"name": "Research", "entity_ids": ["a"]}}}
+        for kind in ("membership", "list_created"):
+            check = {"id": "state", "kind": kind, "turn": 1, "entity_ids": ["a"]}
+            check.update({"list_id": "l1"} if kind == "membership" else {"name": "Research"})
+            case["checks"] = [check]
+            self.assertEqual(grade_case(case, trial, [], state)["status"], "needs_review")
+        case["checks"] = [{"id": "members", "kind": "membership", "turn": 1, "list_id": "l1", "entity_ids": ["a"]}]
+        events = [{"turn": 1, "state_after": state}]
+        self.assertEqual(grade_case(case, trial, events, state)["status"], "passed")
+
     def test_human_label_requires_matching_evidence(self):
         case, trial, events, state = sample()
         key = review_key(trial, case["checks"][1])

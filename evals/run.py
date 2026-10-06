@@ -620,6 +620,11 @@ def run_trial(job: dict[str, Any], case: dict[str, Any], run_dir: Path, manifest
         frozen_fixture = run_dir / "inputs" / "fixtures" / (case["id"] + ".json")
         write_json(fixture_path, read_json(frozen_fixture) if frozen_fixture.exists() else materialize_fixture(case, suite_path))
         result["manifest"]["fixture_sha256"] = file_hash(fixture_path)
+        # Seed state even when a clarification turn never starts the replay server.
+        write_json(trial_dir / "state.json", {
+            "lists": copy.deepcopy(read_json(fixture_path)["base_data"]["lists"]),
+            "call_counts": {}, "successful_calls": {}, "created_count": 0,
+        })
         (trial_dir / "tools.jsonl").touch()
         with tempfile.TemporaryDirectory(prefix="crunchbase-runtime-") as temporary:
             workspace = Path(temporary).resolve()
@@ -657,6 +662,7 @@ def run_trial(job: dict[str, Any], case: dict[str, Any], run_dir: Path, manifest
                 parsed["thread_id"] = thread_id
                 parsed.update({"turn": turn, "duration_seconds": execution["duration_seconds"], "skill_reads": turn_reads,
                                "returncode": execution["returncode"], "timed_out": execution["timed_out"]})
+                parsed["state_after"] = read_json(trial_dir / "state.json")
                 result["turns"].append(parsed)
                 for key in USAGE_KEYS:
                     result["usage"][key] += parsed["usage"][key]

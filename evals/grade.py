@@ -43,7 +43,7 @@ def review_key(trial, check):
 
 def evidence_digest(case, trial, events, state):
     # Exclude machine-specific paths and evaluator labels from blinded evidence.
-    payload = {"case_contract": case, "turns": [{k: t[k] for k in ("turn", "final", "messages", "timeline") if k in t} for t in trial.get("turns", [])], "events": events, "state": state}
+    payload = {"case_contract": case, "turns": [{k: t[k] for k in ("turn", "final", "messages", "timeline", "state_after") if k in t} for t in trial.get("turns", [])], "events": events, "state": state}
     return hashlib.sha256(json.dumps(payload, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
 
 
@@ -72,9 +72,15 @@ def grade_case(case, trial, events, state, review=None):
         elif kind in {"membership", "list_created"}:
             selected_state = state
             if "turn" in check:
-                snapshots = [e["state_after"] for e in selected if "state_after" in e]
-                selected_state = snapshots[-1] if snapshots else {}
-            lists = selected_state.get("lists", {})
+                snapshots = [t["state_after"] for t in trial.get("turns", [])
+                             if t.get("turn") == check["turn"] and "state_after" in t]
+                if not snapshots:
+                    # Older recordings may have a mutation snapshot in this turn.
+                    snapshots = [e["state_after"] for e in selected if "state_after" in e]
+                selected_state = snapshots[-1] if snapshots else None
+                if selected_state is None:
+                    status = "needs_review"
+            lists = (selected_state or {}).get("lists", {})
             if kind == "membership":
                 candidates = [lists[check["list_id"]]] if check["list_id"] in lists else []
             else:
@@ -84,7 +90,9 @@ def grade_case(case, trial, events, state, review=None):
             passed = len(candidates) == 1 and (expected <= actual if check.get("mode") == "includes" else actual == expected)
             if kind == "list_created":
                 passed = passed and any(canonical_tool(e.get("tool")) == "cb_list_create" and e.get("arguments", {}).get("name") == check["name"] and not e.get("result", {}).get("error") for e in selected)
-            detail = f"Matching lists: {len(candidates)}; expected {sorted(expected)}; observed {sorted(actual)}"
+            detail = ("No state snapshot for the requested turn; historical membership is unknown."
+                      if selected_state is None else
+                      f"Matching lists: {len(candidates)}; expected {sorted(expected)}; observed {sorted(actual)}")
         elif kind == "max_calls":
             counted = [event for event in selected if not empty_runtime_inventory(event)]
             excluded = len(selected) - len(counted)

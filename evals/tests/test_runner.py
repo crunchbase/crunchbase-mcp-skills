@@ -466,6 +466,26 @@ class TrialTests(unittest.TestCase):
         self.assertEqual(result["cost_proxy"]["uncached_input_tokens"], 140)
         self.assertEqual(len(result["turns"]), 2)
 
+    def test_clarification_and_read_only_turns_keep_independent_state(self):
+        self.case = example_case(turns=3)
+        self.case["fixture"]["base_data"]["lists"] = {"l1": {"name": "Research", "entity_ids": ["a"]}}
+        calls = 0
+        def execute(command, prompt, directory, workspace, timeout):
+            nonlocal calls
+            calls += 1
+            if calls == 2:
+                path = directory.parents[1] / "state.json"
+                state = runner.read_json(path)
+                state["lists"]["l1"]["entity_ids"].append("b")
+                runner.write_json(path, state)
+            write_trace(directory)
+            return {"duration_seconds": 0.1, "returncode": 0, "timed_out": False, "spawn_error": None}
+        with patch.object(runner, "execute_command", side_effect=execute):
+            result = self.trial()
+        self.assertEqual(result["status"], "completed")
+        self.assertEqual([t["state_after"]["lists"]["l1"]["entity_ids"] for t in result["turns"]],
+                         [["a"], ["a", "b"], ["a", "b"]])
+
     def test_failure_stops_later_turns_and_is_not_scored_as_success(self):
         def fake_execute(command, prompt, directory, workspace, timeout):
             write_trace(directory, failed=True)

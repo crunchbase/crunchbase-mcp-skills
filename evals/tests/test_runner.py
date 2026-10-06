@@ -420,6 +420,38 @@ class ManifestTests(unittest.TestCase):
             self.assertEqual(manifest["suite_sha256"], runner.file_hash(run_dir / "suite.json"))
             self.assertEqual(manifest["jobs"], jobs)
 
+    def test_nested_output_is_rejected_before_creating_files_or_launching(self):
+        for arm in ("candidate", "previous"):
+            for location in ("same", "child", "symlink"):
+                with self.subTest(arm=arm, location=location), tempfile.TemporaryDirectory() as temporary:
+                    root = Path(temporary)
+                    candidate, previous = root / "candidate", root / "previous"
+                    write_skill(candidate)
+                    write_skill(previous)
+                    source = candidate if arm == "candidate" else previous
+                    output = source if location == "same" else source / "outputs"
+                    if location == "symlink":
+                        alias = root / "alias"
+                        alias.symlink_to(source, target_is_directory=True)
+                        output = alias / "outputs"
+                    suite = root / "suite.json"
+                    runner.write_json(suite, example_suite())
+                    before = set(root.rglob("*"))
+                    with patch.object(runner, "create_manifest") as create, patch.object(runner.sys, "stderr", io.StringIO()):
+                        status = runner.main(["run", "--suite", str(suite), "--skills", str(candidate),
+                            "--previous-skills", str(previous), "--output", str(output),
+                            "--model", "model", "--effort", "high"])
+                    self.assertEqual(status, 2)
+                    create.assert_not_called()
+                    self.assertEqual(set(root.rglob("*")), before)
+
+    def test_disjoint_output_allows_sibling_directories(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            runner.validate_output_location(root / "outputs", root / "skills", root / "previous")
+            with self.assertRaises(runner.EvalError):
+                runner.validate_output_location(root, root / "skills", None)
+
     def test_plan_never_launches_a_model_or_server(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)

@@ -685,8 +685,19 @@ def run_trial(job: dict[str, Any], case: dict[str, Any], run_dir: Path, manifest
     return result
 
 
+def validate_output_location(output: Path, candidate: Path, previous: Path | None) -> None:
+    output = output.resolve()
+    for source in (candidate, previous):
+        if source is None:
+            continue
+        source = source.resolve()
+        if output == source or source in output.parents or output in source.parents:
+            raise EvalError("Evaluation output must be disjoint from candidate and previous skill directories")
+
+
 def create_manifest(args: argparse.Namespace, suite: dict[str, Any], suite_path: Path,
                     jobs: list[dict[str, Any]], model: str, effort: str, source: dict[str, Any], run_dir: Path) -> dict[str, Any]:
+    validate_output_location(run_dir, args.skills, args.previous_skills)
     validate_skill_tree(args.skills)
     if args.previous_skills is not None:
         validate_skill_tree(args.previous_skills)
@@ -780,6 +791,7 @@ def main(argv: list[str] | None = None) -> int:
         server = ROOT / "evals/replay_server.py"
         if not server.exists():
             raise EvalError(f"Missing replay server: {server}")
+        validate_output_location(args.output, args.skills, args.previous_skills)
         run_dir = args.output.resolve() / ("run-" + datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ") + "-" + uuid.uuid4().hex[:8])
         run_dir.mkdir(parents=True, exist_ok=False)
         manifest = create_manifest(args, suite, suite_path, jobs, model, effort, source, run_dir)

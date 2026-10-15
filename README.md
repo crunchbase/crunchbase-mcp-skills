@@ -96,7 +96,17 @@ python3 scripts/build_releases.py
 
 The output directory must be empty; use `--output <fresh-directory>` for another build. Files are written to `dist/<version>/` with a `SHA256SUMS` checksum file. Each archive includes the complete skill folder and its version. The `.skill` files contain the same ZIP data; use `.zip` for Claude.ai uploads.
 
-Prebuilt assets have not yet been published to [GitHub Releases](https://github.com/crunchbase/crunchbase-mcp-skills/releases). The build command packages the files in your checkout.
+Download individual skills from [v1.0.1](https://github.com/crunchbase/crunchbase-mcp-skills/releases/tag/v1.0.1). Use ZIP for Claude.ai uploads.
+
+| Skill | ZIP | .skill |
+| --- | --- | --- |
+| Thesis landscape | [Download](https://github.com/crunchbase/crunchbase-mcp-skills/releases/download/v1.0.1/crunchbase-build-thesis-landscape.zip) | [Download](https://github.com/crunchbase/crunchbase-mcp-skills/releases/download/v1.0.1/crunchbase-build-thesis-landscape.skill) |
+| Funding signals | [Download](https://github.com/crunchbase/crunchbase-mcp-skills/releases/download/v1.0.1/crunchbase-review-funding-signals.zip) | [Download](https://github.com/crunchbase/crunchbase-mcp-skills/releases/download/v1.0.1/crunchbase-review-funding-signals.skill) |
+| Company brief | [Download](https://github.com/crunchbase/crunchbase-mcp-skills/releases/download/v1.0.1/crunchbase-prepare-company-brief.zip) | [Download](https://github.com/crunchbase/crunchbase-mcp-skills/releases/download/v1.0.1/crunchbase-prepare-company-brief.skill) |
+| Capital intensity | [Download](https://github.com/crunchbase/crunchbase-mcp-skills/releases/download/v1.0.1/crunchbase-analyze-capital-intensity.zip) | [Download](https://github.com/crunchbase/crunchbase-mcp-skills/releases/download/v1.0.1/crunchbase-analyze-capital-intensity.skill) |
+| Saved lists | [Download](https://github.com/crunchbase/crunchbase-mcp-skills/releases/download/v1.0.1/crunchbase-manage-saved-lists.zip) | [Download](https://github.com/crunchbase/crunchbase-mcp-skills/releases/download/v1.0.1/crunchbase-manage-saved-lists.skill) |
+
+[SHA-256 checksums](https://github.com/crunchbase/crunchbase-mcp-skills/releases/download/v1.0.1/SHA256SUMS). The build command above packages the files in your checkout.
 
 ## Agent requirements
 

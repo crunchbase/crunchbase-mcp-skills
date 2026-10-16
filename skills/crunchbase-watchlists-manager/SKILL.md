@@ -1,10 +1,10 @@
 ---
-name: crunchbase-manage-saved-lists
+name: crunchbase-watchlists-manager
 description: Inspect, monitor, create, append, replace, or reconcile Crunchbase saved lists and their private-company membership, including asking for the operation or identifiers when an explicit Crunchbase saved-list request omits them. Use when the user explicitly asks to work with a Crunchbase saved list, selects Crunchbase for a saved-list task, or follows up on an active saved-list workflow. Do not use for creating a list as part of a new thesis landscape, capital analysis that merely reads a list as its confirmed universe, recent-round sourcing, single-company briefs, public-equity research, Crunchbase pricing or account support, or generic CRM/list work outside Crunchbase.
 license: MIT
 ---
 
-# Crunchbase Saved Lists
+# Watchlists Manager
 
 Treat saved lists as persistent company universes. Keep membership operations distinct from analysis of organization fields over time.
 

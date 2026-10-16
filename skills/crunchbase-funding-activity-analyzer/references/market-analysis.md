@@ -59,4 +59,4 @@ Describe evidence that supports both greater and lower capital intensity. Give a
 - **Conditional interpretation:** evidence, confidence, and counterinterpretation
 - **Questions for follow-up**
 
-Keep the analysis read-only. If the user also explicitly requests saving or updating the universe, hand that operation to `crunchbase-manage-saved-lists` as a separate workflow, carrying forward the canonical membership and existing authorization. Do not require the user to authorize the same operation again; list preview and persisted-membership verification belong to that workflow.
+Keep the analysis read-only. If the user also explicitly requests saving or updating the universe, hand that operation to `crunchbase-watchlists-manager` as a separate workflow, carrying forward the canonical membership and existing authorization. Do not require the user to authorize the same operation again; list preview and persisted-membership verification belong to that workflow.

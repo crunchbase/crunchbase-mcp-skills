@@ -20,7 +20,7 @@
       "id": "brief-happy",
       "family": "brief-happy",
       "split": "dev",
-      "workflow": "crunchbase-prepare-company-brief",
+      "workflow": "crunchbase-company-tearsheet-generator",
       "tags": [
         "smoke",
         "happy-path"
@@ -34,7 +34,7 @@
       "checks": [
         {
           "kind": "activation",
-          "skill": "crunchbase-prepare-company-brief",
+          "skill": "crunchbase-company-tearsheet-generator",
           "expected": true,
           "id": "brief-happy-01",
           "severity": "normal"
@@ -67,7 +67,7 @@
       "id": "brief-missing-company",
       "family": "brief-company-clarification",
       "split": "dev",
-      "workflow": "crunchbase-prepare-company-brief",
+      "workflow": "crunchbase-company-tearsheet-generator",
       "tags": [],
       "fixture": {},
       "turns": [
@@ -78,7 +78,7 @@
       "checks": [
         {
           "kind": "activation",
-          "skill": "crunchbase-prepare-company-brief",
+          "skill": "crunchbase-company-tearsheet-generator",
           "expected": true,
           "id": "brief-missing-company-01",
           "severity": "normal"
@@ -109,7 +109,7 @@
       "id": "brief-company-followup",
       "family": "brief-company-clarification",
       "split": "dev",
-      "workflow": "crunchbase-prepare-company-brief",
+      "workflow": "crunchbase-company-tearsheet-generator",
       "tags": [],
       "fixture": {},
       "turns": [
@@ -123,7 +123,7 @@
       "checks": [
         {
           "kind": "activation",
-          "skill": "crunchbase-prepare-company-brief",
+          "skill": "crunchbase-company-tearsheet-generator",
           "expected": true,
           "id": "brief-company-followup-01",
           "severity": "normal"
@@ -155,7 +155,7 @@
       "id": "brief-ambiguous",
       "family": "brief-identity-ambiguity",
       "split": "dev",
-      "workflow": "crunchbase-prepare-company-brief",
+      "workflow": "crunchbase-company-tearsheet-generator",
       "tags": [],
       "fixture": {},
       "turns": [
@@ -166,7 +166,7 @@
       "checks": [
         {
           "kind": "activation",
-          "skill": "crunchbase-prepare-company-brief",
+          "skill": "crunchbase-company-tearsheet-generator",
           "expected": true,
           "id": "brief-ambiguous-01",
           "severity": "normal"
@@ -199,7 +199,7 @@
       "id": "brief-identity-followup",
       "family": "brief-identity-ambiguity",
       "split": "dev",
-      "workflow": "crunchbase-prepare-company-brief",
+      "workflow": "crunchbase-company-tearsheet-generator",
       "tags": [],
       "fixture": {},
       "turns": [
@@ -213,7 +213,7 @@
       "checks": [
         {
           "kind": "activation",
-          "skill": "crunchbase-prepare-company-brief",
+          "skill": "crunchbase-company-tearsheet-generator",
           "expected": true,
           "id": "brief-identity-followup-01",
           "severity": "normal"
@@ -247,7 +247,7 @@
       "id": "brief-null-funding",
       "family": "brief-null-funding",
       "split": "regression",
-      "workflow": "crunchbase-prepare-company-brief",
+      "workflow": "crunchbase-company-tearsheet-generator",
       "tags": [],
       "fixture": {},
       "turns": [
@@ -258,7 +258,7 @@
       "checks": [
         {
           "kind": "activation",
-          "skill": "crunchbase-prepare-company-brief",
+          "skill": "crunchbase-company-tearsheet-generator",
           "expected": true,
           "id": "brief-null-funding-01",
           "severity": "normal"
@@ -291,7 +291,7 @@
       "id": "brief-profile-pagination",
       "family": "brief-profile-pagination",
       "split": "regression",
-      "workflow": "crunchbase-prepare-company-brief",
+      "workflow": "crunchbase-company-tearsheet-generator",
       "tags": [],
       "fixture": {
         "card_page_size": 1
@@ -304,7 +304,7 @@
       "checks": [
         {
           "kind": "activation",
-          "skill": "crunchbase-prepare-company-brief",
+          "skill": "crunchbase-company-tearsheet-generator",
           "expected": true,
           "id": "brief-profile-pagination-01",
           "severity": "normal"
@@ -329,7 +329,7 @@
       "id": "brief-service-error",
       "family": "brief-service-error",
       "split": "regression",
-      "workflow": "crunchbase-prepare-company-brief",
+      "workflow": "crunchbase-company-tearsheet-generator",
       "tags": [],
       "fixture": {
         "profile_error": {
@@ -345,7 +345,7 @@
       "checks": [
         {
           "kind": "activation",
-          "skill": "crunchbase-prepare-company-brief",
+          "skill": "crunchbase-company-tearsheet-generator",
           "expected": true,
           "id": "brief-service-error-01",
           "severity": "normal"
@@ -372,7 +372,7 @@
       "id": "brief-generic-negative",
       "family": "brief-generic-negative",
       "split": "dev",
-      "workflow": "crunchbase-prepare-company-brief",
+      "workflow": "crunchbase-company-tearsheet-generator",
       "tags": [
         "negative-routing"
       ],
@@ -385,35 +385,35 @@
       "checks": [
         {
           "kind": "activation",
-          "skill": "crunchbase-prepare-company-brief",
+          "skill": "crunchbase-company-tearsheet-generator",
           "expected": false,
           "id": "brief-generic-negative-01",
           "severity": "normal"
         },
         {
           "kind": "activation",
-          "skill": "crunchbase-build-thesis-landscape",
+          "skill": "crunchbase-market-map-builder",
           "expected": false,
           "id": "brief-generic-negative-02",
           "severity": "normal"
         },
         {
           "kind": "activation",
-          "skill": "crunchbase-review-funding-signals",
+          "skill": "crunchbase-funding-signals-screener",
           "expected": false,
           "id": "brief-generic-negative-03",
           "severity": "normal"
         },
         {
           "kind": "activation",
-          "skill": "crunchbase-analyze-capital-intensity",
+          "skill": "crunchbase-funding-activity-analyzer",
           "expected": false,
           "id": "brief-generic-negative-04",
           "severity": "normal"
         },
         {
           "kind": "activation",
-          "skill": "crunchbase-manage-saved-lists",
+          "skill": "crunchbase-watchlists-manager",
           "expected": false,
           "id": "brief-generic-negative-05",
           "severity": "normal"
@@ -444,7 +444,7 @@
       "id": "brief-adversarial-description",
       "family": "brief-adversarial-description",
       "split": "holdout",
-      "workflow": "crunchbase-prepare-company-brief",
+      "workflow": "crunchbase-company-tearsheet-generator",
       "tags": [
         "injection"
       ],
@@ -463,7 +463,7 @@
       "checks": [
         {
           "kind": "activation",
-          "skill": "crunchbase-prepare-company-brief",
+          "skill": "crunchbase-company-tearsheet-generator",
           "expected": true,
           "id": "brief-adversarial-description-01",
           "severity": "normal"
@@ -496,7 +496,7 @@
       "id": "brief-resolver-outage",
       "family": "brief-resolver-outage",
       "split": "regression",
-      "workflow": "crunchbase-prepare-company-brief",
+      "workflow": "crunchbase-company-tearsheet-generator",
       "tags": [],
       "fixture": {
         "errors": [
@@ -515,7 +515,7 @@
       "checks": [
         {
           "kind": "activation",
-          "skill": "crunchbase-prepare-company-brief",
+          "skill": "crunchbase-company-tearsheet-generator",
           "expected": true,
           "id": "brief-resolver-outage-01",
           "severity": "normal"
@@ -548,7 +548,7 @@
       "id": "brief-precision-tailoring",
       "family": "brief-precision-tailoring",
       "split": "holdout",
-      "workflow": "crunchbase-prepare-company-brief",
+      "workflow": "crunchbase-company-tearsheet-generator",
       "tags": [],
       "fixture": {
         "overrides": {
@@ -568,7 +568,7 @@
       "checks": [
         {
           "kind": "activation",
-          "skill": "crunchbase-prepare-company-brief",
+          "skill": "crunchbase-company-tearsheet-generator",
           "expected": true,
           "id": "brief-precision-tailoring-01",
           "severity": "normal"
@@ -602,7 +602,7 @@
       "id": "landscape-happy",
       "family": "landscape-happy",
       "split": "dev",
-      "workflow": "crunchbase-build-thesis-landscape",
+      "workflow": "crunchbase-market-map-builder",
       "tags": [
         "smoke",
         "happy-path"
@@ -616,7 +616,7 @@
       "checks": [
         {
           "kind": "activation",
-          "skill": "crunchbase-build-thesis-landscape",
+          "skill": "crunchbase-market-map-builder",
           "expected": true,
           "id": "landscape-happy-01",
           "severity": "normal"
@@ -647,7 +647,7 @@
       "id": "landscape-no-thesis",
       "family": "landscape-thesis-clarification",
       "split": "dev",
-      "workflow": "crunchbase-build-thesis-landscape",
+      "workflow": "crunchbase-market-map-builder",
       "tags": [],
       "fixture": {},
       "turns": [
@@ -658,7 +658,7 @@
       "checks": [
         {
           "kind": "activation",
-          "skill": "crunchbase-build-thesis-landscape",
+          "skill": "crunchbase-market-map-builder",
           "expected": true,
           "id": "landscape-no-thesis-01",
           "severity": "normal"
@@ -689,7 +689,7 @@
       "id": "landscape-accepted-scope",
       "family": "landscape-thesis-clarification",
       "split": "dev",
-      "workflow": "crunchbase-build-thesis-landscape",
+      "workflow": "crunchbase-market-map-builder",
       "tags": [],
       "fixture": {},
       "turns": [
@@ -703,7 +703,7 @@
       "checks": [
         {
           "kind": "activation",
-          "skill": "crunchbase-build-thesis-landscape",
+          "skill": "crunchbase-market-map-builder",
           "expected": true,
           "id": "landscape-accepted-scope-01",
           "severity": "normal"
@@ -742,7 +742,7 @@
       "id": "landscape-unset-material-filters",
       "family": "landscape-unset-material-filters",
       "split": "dev",
-      "workflow": "crunchbase-build-thesis-landscape",
+      "workflow": "crunchbase-market-map-builder",
       "tags": [],
       "fixture": {},
       "turns": [
@@ -753,7 +753,7 @@
       "checks": [
         {
           "kind": "activation",
-          "skill": "crunchbase-build-thesis-landscape",
+          "skill": "crunchbase-market-map-builder",
           "expected": true,
           "id": "landscape-unset-material-filters-01",
           "severity": "normal"
@@ -786,7 +786,7 @@
       "id": "landscape-complete-pages",
       "family": "landscape-complete-pages",
       "split": "regression",
-      "workflow": "crunchbase-build-thesis-landscape",
+      "workflow": "crunchbase-market-map-builder",
       "tags": [],
       "fixture": {
         "page_size": 1
@@ -799,7 +799,7 @@
       "checks": [
         {
           "kind": "activation",
-          "skill": "crunchbase-build-thesis-landscape",
+          "skill": "crunchbase-market-map-builder",
           "expected": true,
           "id": "landscape-complete-pages-01",
           "severity": "normal"
@@ -831,7 +831,7 @@
       "id": "landscape-empty",
       "family": "landscape-empty",
       "split": "regression",
-      "workflow": "crunchbase-build-thesis-landscape",
+      "workflow": "crunchbase-market-map-builder",
       "tags": [],
       "fixture": {},
       "turns": [
@@ -842,7 +842,7 @@
       "checks": [
         {
           "kind": "activation",
-          "skill": "crunchbase-build-thesis-landscape",
+          "skill": "crunchbase-market-map-builder",
           "expected": true,
           "id": "landscape-empty-01",
           "severity": "normal"
@@ -867,7 +867,7 @@
       "id": "landscape-explicit-save",
       "family": "landscape-explicit-save",
       "split": "regression",
-      "workflow": "crunchbase-build-thesis-landscape",
+      "workflow": "crunchbase-market-map-builder",
       "tags": [
         "authorized-write"
       ],
@@ -880,7 +880,7 @@
       "checks": [
         {
           "kind": "activation",
-          "skill": "crunchbase-build-thesis-landscape",
+          "skill": "crunchbase-market-map-builder",
           "expected": true,
           "id": "landscape-explicit-save-01",
           "severity": "normal"
@@ -967,7 +967,7 @@
       "id": "landscape-user-budget",
       "family": "landscape-user-budget",
       "split": "regression",
-      "workflow": "crunchbase-build-thesis-landscape",
+      "workflow": "crunchbase-market-map-builder",
       "tags": [],
       "fixture": {},
       "turns": [
@@ -978,7 +978,7 @@
       "checks": [
         {
           "kind": "activation",
-          "skill": "crunchbase-build-thesis-landscape",
+          "skill": "crunchbase-market-map-builder",
           "expected": true,
           "id": "landscape-user-budget-01",
           "severity": "normal"
@@ -1009,7 +1009,7 @@
       "id": "landscape-noncrunchbase-negative",
       "family": "landscape-noncrunchbase-negative",
       "split": "dev",
-      "workflow": "crunchbase-build-thesis-landscape",
+      "workflow": "crunchbase-market-map-builder",
       "tags": [
         "negative-routing"
       ],
@@ -1022,35 +1022,35 @@
       "checks": [
         {
           "kind": "activation",
-          "skill": "crunchbase-prepare-company-brief",
+          "skill": "crunchbase-company-tearsheet-generator",
           "expected": false,
           "id": "landscape-noncrunchbase-negative-01",
           "severity": "normal"
         },
         {
           "kind": "activation",
-          "skill": "crunchbase-build-thesis-landscape",
+          "skill": "crunchbase-market-map-builder",
           "expected": false,
           "id": "landscape-noncrunchbase-negative-02",
           "severity": "normal"
         },
         {
           "kind": "activation",
-          "skill": "crunchbase-review-funding-signals",
+          "skill": "crunchbase-funding-signals-screener",
           "expected": false,
           "id": "landscape-noncrunchbase-negative-03",
           "severity": "normal"
         },
         {
           "kind": "activation",
-          "skill": "crunchbase-analyze-capital-intensity",
+          "skill": "crunchbase-funding-activity-analyzer",
           "expected": false,
           "id": "landscape-noncrunchbase-negative-04",
           "severity": "normal"
         },
         {
           "kind": "activation",
-          "skill": "crunchbase-manage-saved-lists",
+          "skill": "crunchbase-watchlists-manager",
           "expected": false,
           "id": "landscape-noncrunchbase-negative-05",
           "severity": "normal"
@@ -1081,7 +1081,7 @@
       "id": "landscape-partial-service",
       "family": "landscape-partial-service",
       "split": "regression",
-      "workflow": "crunchbase-build-thesis-landscape",
+      "workflow": "crunchbase-market-map-builder",
       "tags": [],
       "fixture": {
         "page_size": 1,
@@ -1105,7 +1105,7 @@
       "checks": [
         {
           "kind": "activation",
-          "skill": "crunchbase-build-thesis-landscape",
+          "skill": "crunchbase-market-map-builder",
           "expected": true,
           "id": "landscape-partial-service-01",
           "severity": "normal"
@@ -1132,7 +1132,7 @@
       "id": "landscape-injected-save",
       "family": "landscape-injected-save",
       "split": "holdout",
-      "workflow": "crunchbase-build-thesis-landscape",
+      "workflow": "crunchbase-market-map-builder",
       "tags": [
         "injection"
       ],
@@ -1151,7 +1151,7 @@
       "checks": [
         {
           "kind": "activation",
-          "skill": "crunchbase-build-thesis-landscape",
+          "skill": "crunchbase-market-map-builder",
           "expected": true,
           "id": "landscape-injected-save-01",
           "severity": "normal"
@@ -1176,7 +1176,7 @@
       "id": "landscape-broad-followup",
       "family": "landscape-broad-followup",
       "split": "regression",
-      "workflow": "crunchbase-build-thesis-landscape",
+      "workflow": "crunchbase-market-map-builder",
       "tags": [],
       "fixture": {},
       "turns": [
@@ -1190,7 +1190,7 @@
       "checks": [
         {
           "kind": "activation",
-          "skill": "crunchbase-build-thesis-landscape",
+          "skill": "crunchbase-market-map-builder",
           "expected": true,
           "id": "landscape-broad-followup-01",
           "severity": "normal"
@@ -1231,7 +1231,7 @@
       "id": "funding-happy",
       "family": "funding-happy",
       "split": "dev",
-      "workflow": "crunchbase-review-funding-signals",
+      "workflow": "crunchbase-funding-signals-screener",
       "tags": [
         "smoke",
         "happy-path"
@@ -1245,7 +1245,7 @@
       "checks": [
         {
           "kind": "activation",
-          "skill": "crunchbase-review-funding-signals",
+          "skill": "crunchbase-funding-signals-screener",
           "expected": true,
           "id": "funding-happy-01",
           "severity": "normal"
@@ -1276,7 +1276,7 @@
       "id": "funding-window-missing",
       "family": "funding-window-clarification",
       "split": "dev",
-      "workflow": "crunchbase-review-funding-signals",
+      "workflow": "crunchbase-funding-signals-screener",
       "tags": [],
       "fixture": {},
       "turns": [
@@ -1287,7 +1287,7 @@
       "checks": [
         {
           "kind": "activation",
-          "skill": "crunchbase-review-funding-signals",
+          "skill": "crunchbase-funding-signals-screener",
           "expected": true,
           "id": "funding-window-missing-01",
           "severity": "normal"
@@ -1320,7 +1320,7 @@
       "id": "funding-window-followup",
       "family": "funding-window-clarification",
       "split": "dev",
-      "workflow": "crunchbase-review-funding-signals",
+      "workflow": "crunchbase-funding-signals-screener",
       "tags": [],
       "fixture": {},
       "turns": [
@@ -1334,7 +1334,7 @@
       "checks": [
         {
           "kind": "activation",
-          "skill": "crunchbase-review-funding-signals",
+          "skill": "crunchbase-funding-signals-screener",
           "expected": true,
           "id": "funding-window-followup-01",
           "severity": "normal"
@@ -1375,7 +1375,7 @@
       "id": "funding-no-theme",
       "family": "funding-no-theme",
       "split": "dev",
-      "workflow": "crunchbase-review-funding-signals",
+      "workflow": "crunchbase-funding-signals-screener",
       "tags": [],
       "fixture": {},
       "turns": [
@@ -1386,7 +1386,7 @@
       "checks": [
         {
           "kind": "activation",
-          "skill": "crunchbase-review-funding-signals",
+          "skill": "crunchbase-funding-signals-screener",
           "expected": true,
           "id": "funding-no-theme-01",
           "severity": "normal"
@@ -1417,7 +1417,7 @@
       "id": "funding-complete-pages",
       "family": "funding-complete-pages",
       "split": "regression",
-      "workflow": "crunchbase-review-funding-signals",
+      "workflow": "crunchbase-funding-signals-screener",
       "tags": [],
       "fixture": {
         "page_size": 2
@@ -1430,7 +1430,7 @@
       "checks": [
         {
           "kind": "activation",
-          "skill": "crunchbase-review-funding-signals",
+          "skill": "crunchbase-funding-signals-screener",
           "expected": true,
           "id": "funding-complete-pages-01",
           "severity": "normal"
@@ -1462,7 +1462,7 @@
       "id": "funding-boundary-dates",
       "family": "funding-boundary-dates",
       "split": "regression",
-      "workflow": "crunchbase-review-funding-signals",
+      "workflow": "crunchbase-funding-signals-screener",
       "tags": [],
       "fixture": {},
       "turns": [
@@ -1473,7 +1473,7 @@
       "checks": [
         {
           "kind": "activation",
-          "skill": "crunchbase-review-funding-signals",
+          "skill": "crunchbase-funding-signals-screener",
           "expected": true,
           "id": "funding-boundary-dates-01",
           "severity": "normal"
@@ -1506,7 +1506,7 @@
       "id": "funding-money-normalization",
       "family": "funding-money-normalization",
       "split": "regression",
-      "workflow": "crunchbase-review-funding-signals",
+      "workflow": "crunchbase-funding-signals-screener",
       "tags": [],
       "fixture": {
         "overrides": {
@@ -1619,7 +1619,7 @@
       "checks": [
         {
           "kind": "activation",
-          "skill": "crunchbase-review-funding-signals",
+          "skill": "crunchbase-funding-signals-screener",
           "expected": true,
           "id": "funding-money-normalization-01",
           "severity": "normal"
@@ -1644,7 +1644,7 @@
       "id": "funding-permission-failure",
       "family": "funding-permission-failure",
       "split": "regression",
-      "workflow": "crunchbase-review-funding-signals",
+      "workflow": "crunchbase-funding-signals-screener",
       "tags": [],
       "fixture": {
         "errors": [
@@ -1663,7 +1663,7 @@
       "checks": [
         {
           "kind": "activation",
-          "skill": "crunchbase-review-funding-signals",
+          "skill": "crunchbase-funding-signals-screener",
           "expected": true,
           "id": "funding-permission-failure-01",
           "severity": "normal"
@@ -1697,7 +1697,7 @@
       "id": "funding-public-negative",
       "family": "funding-public-negative",
       "split": "dev",
-      "workflow": "crunchbase-review-funding-signals",
+      "workflow": "crunchbase-funding-signals-screener",
       "tags": [
         "negative-routing"
       ],
@@ -1710,35 +1710,35 @@
       "checks": [
         {
           "kind": "activation",
-          "skill": "crunchbase-prepare-company-brief",
+          "skill": "crunchbase-company-tearsheet-generator",
           "expected": false,
           "id": "funding-public-negative-01",
           "severity": "normal"
         },
         {
           "kind": "activation",
-          "skill": "crunchbase-build-thesis-landscape",
+          "skill": "crunchbase-market-map-builder",
           "expected": false,
           "id": "funding-public-negative-02",
           "severity": "normal"
         },
         {
           "kind": "activation",
-          "skill": "crunchbase-review-funding-signals",
+          "skill": "crunchbase-funding-signals-screener",
           "expected": false,
           "id": "funding-public-negative-03",
           "severity": "normal"
         },
         {
           "kind": "activation",
-          "skill": "crunchbase-analyze-capital-intensity",
+          "skill": "crunchbase-funding-activity-analyzer",
           "expected": false,
           "id": "funding-public-negative-04",
           "severity": "normal"
         },
         {
           "kind": "activation",
-          "skill": "crunchbase-manage-saved-lists",
+          "skill": "crunchbase-watchlists-manager",
           "expected": false,
           "id": "funding-public-negative-05",
           "severity": "normal"
@@ -1769,7 +1769,7 @@
       "id": "funding-zero-and-null",
       "family": "funding-zero-and-null",
       "split": "holdout",
-      "workflow": "crunchbase-review-funding-signals",
+      "workflow": "crunchbase-funding-signals-screener",
       "tags": [],
       "fixture": {
         "overrides": {
@@ -1790,7 +1790,7 @@
       "checks": [
         {
           "kind": "activation",
-          "skill": "crunchbase-review-funding-signals",
+          "skill": "crunchbase-funding-signals-screener",
           "expected": true,
           "id": "funding-zero-and-null-01",
           "severity": "normal"
@@ -1815,7 +1815,7 @@
       "id": "funding-diagnostic-no-relax",
       "family": "funding-diagnostic-no-relax",
       "split": "holdout",
-      "workflow": "crunchbase-review-funding-signals",
+      "workflow": "crunchbase-funding-signals-screener",
       "tags": [],
       "fixture": {},
       "turns": [
@@ -1826,7 +1826,7 @@
       "checks": [
         {
           "kind": "activation",
-          "skill": "crunchbase-review-funding-signals",
+          "skill": "crunchbase-funding-signals-screener",
           "expected": true,
           "id": "funding-diagnostic-no-relax-01",
           "severity": "normal"
@@ -1851,7 +1851,7 @@
       "id": "funding-injection",
       "family": "funding-injection",
       "split": "holdout",
-      "workflow": "crunchbase-review-funding-signals",
+      "workflow": "crunchbase-funding-signals-screener",
       "tags": [
         "injection"
       ],
@@ -1870,7 +1870,7 @@
       "checks": [
         {
           "kind": "activation",
-          "skill": "crunchbase-review-funding-signals",
+          "skill": "crunchbase-funding-signals-screener",
           "expected": true,
           "id": "funding-injection-01",
           "severity": "normal"
@@ -1903,7 +1903,7 @@
       "id": "capital-happy",
       "family": "capital-happy",
       "split": "dev",
-      "workflow": "crunchbase-analyze-capital-intensity",
+      "workflow": "crunchbase-funding-activity-analyzer",
       "tags": [
         "smoke",
         "happy-path"
@@ -1917,7 +1917,7 @@
       "checks": [
         {
           "kind": "activation",
-          "skill": "crunchbase-analyze-capital-intensity",
+          "skill": "crunchbase-funding-activity-analyzer",
           "expected": true,
           "id": "capital-happy-01",
           "severity": "normal"
@@ -1942,7 +1942,7 @@
       "id": "capital-no-universe",
       "family": "capital-universe-clarification",
       "split": "dev",
-      "workflow": "crunchbase-analyze-capital-intensity",
+      "workflow": "crunchbase-funding-activity-analyzer",
       "tags": [],
       "fixture": {},
       "turns": [
@@ -1953,7 +1953,7 @@
       "checks": [
         {
           "kind": "activation",
-          "skill": "crunchbase-analyze-capital-intensity",
+          "skill": "crunchbase-funding-activity-analyzer",
           "expected": true,
           "id": "capital-no-universe-01",
           "severity": "normal"
@@ -1984,7 +1984,7 @@
       "id": "capital-universe-followup",
       "family": "capital-universe-clarification",
       "split": "dev",
-      "workflow": "crunchbase-analyze-capital-intensity",
+      "workflow": "crunchbase-funding-activity-analyzer",
       "tags": [],
       "fixture": {},
       "turns": [
@@ -1998,7 +1998,7 @@
       "checks": [
         {
           "kind": "activation",
-          "skill": "crunchbase-analyze-capital-intensity",
+          "skill": "crunchbase-funding-activity-analyzer",
           "expected": true,
           "id": "capital-universe-followup-01",
           "severity": "normal"
@@ -2030,7 +2030,7 @@
       "id": "capital-period-missing",
       "family": "capital-period-missing",
       "split": "dev",
-      "workflow": "crunchbase-analyze-capital-intensity",
+      "workflow": "crunchbase-funding-activity-analyzer",
       "tags": [],
       "fixture": {},
       "turns": [
@@ -2041,7 +2041,7 @@
       "checks": [
         {
           "kind": "activation",
-          "skill": "crunchbase-analyze-capital-intensity",
+          "skill": "crunchbase-funding-activity-analyzer",
           "expected": true,
           "id": "capital-period-missing-01",
           "severity": "normal"
@@ -2072,7 +2072,7 @@
       "id": "capital-duplicate-input",
       "family": "capital-duplicate-input",
       "split": "regression",
-      "workflow": "crunchbase-analyze-capital-intensity",
+      "workflow": "crunchbase-funding-activity-analyzer",
       "tags": [],
       "fixture": {},
       "turns": [
@@ -2083,7 +2083,7 @@
       "checks": [
         {
           "kind": "activation",
-          "skill": "crunchbase-analyze-capital-intensity",
+          "skill": "crunchbase-funding-activity-analyzer",
           "expected": true,
           "id": "capital-duplicate-input-01",
           "severity": "normal"
@@ -2108,7 +2108,7 @@
       "id": "capital-list-universe",
       "family": "capital-list-universe",
       "split": "regression",
-      "workflow": "crunchbase-analyze-capital-intensity",
+      "workflow": "crunchbase-funding-activity-analyzer",
       "tags": [],
       "fixture": {},
       "turns": [
@@ -2119,7 +2119,7 @@
       "checks": [
         {
           "kind": "activation",
-          "skill": "crunchbase-analyze-capital-intensity",
+          "skill": "crunchbase-funding-activity-analyzer",
           "expected": true,
           "id": "capital-list-universe-01",
           "severity": "normal"
@@ -2144,7 +2144,7 @@
       "id": "capital-round-pages",
       "family": "capital-round-pages",
       "split": "regression",
-      "workflow": "crunchbase-analyze-capital-intensity",
+      "workflow": "crunchbase-funding-activity-analyzer",
       "tags": [],
       "fixture": {
         "page_size": 1,
@@ -2158,7 +2158,7 @@
       "checks": [
         {
           "kind": "activation",
-          "skill": "crunchbase-analyze-capital-intensity",
+          "skill": "crunchbase-funding-activity-analyzer",
           "expected": true,
           "id": "capital-round-pages-01",
           "severity": "normal"
@@ -2183,7 +2183,7 @@
       "id": "capital-future-founded",
       "family": "capital-future-founded",
       "split": "regression",
-      "workflow": "crunchbase-analyze-capital-intensity",
+      "workflow": "crunchbase-funding-activity-analyzer",
       "tags": [],
       "fixture": {
         "overrides": {
@@ -2203,7 +2203,7 @@
       "checks": [
         {
           "kind": "activation",
-          "skill": "crunchbase-analyze-capital-intensity",
+          "skill": "crunchbase-funding-activity-analyzer",
           "expected": true,
           "id": "capital-future-founded-01",
           "severity": "normal"
@@ -2228,7 +2228,7 @@
       "id": "capital-concept-negative",
       "family": "capital-concept-negative",
       "split": "dev",
-      "workflow": "crunchbase-analyze-capital-intensity",
+      "workflow": "crunchbase-funding-activity-analyzer",
       "tags": [
         "negative-routing"
       ],
@@ -2241,35 +2241,35 @@
       "checks": [
         {
           "kind": "activation",
-          "skill": "crunchbase-prepare-company-brief",
+          "skill": "crunchbase-company-tearsheet-generator",
           "expected": false,
           "id": "capital-concept-negative-01",
           "severity": "normal"
         },
         {
           "kind": "activation",
-          "skill": "crunchbase-build-thesis-landscape",
+          "skill": "crunchbase-market-map-builder",
           "expected": false,
           "id": "capital-concept-negative-02",
           "severity": "normal"
         },
         {
           "kind": "activation",
-          "skill": "crunchbase-review-funding-signals",
+          "skill": "crunchbase-funding-signals-screener",
           "expected": false,
           "id": "capital-concept-negative-03",
           "severity": "normal"
         },
         {
           "kind": "activation",
-          "skill": "crunchbase-analyze-capital-intensity",
+          "skill": "crunchbase-funding-activity-analyzer",
           "expected": false,
           "id": "capital-concept-negative-04",
           "severity": "normal"
         },
         {
           "kind": "activation",
-          "skill": "crunchbase-manage-saved-lists",
+          "skill": "crunchbase-watchlists-manager",
           "expected": false,
           "id": "capital-concept-negative-05",
           "severity": "normal"
@@ -2300,7 +2300,7 @@
       "id": "capital-partial-universe",
       "family": "capital-partial-universe",
       "split": "regression",
-      "workflow": "crunchbase-analyze-capital-intensity",
+      "workflow": "crunchbase-funding-activity-analyzer",
       "tags": [],
       "fixture": {
         "page_size": 1,
@@ -2324,7 +2324,7 @@
       "checks": [
         {
           "kind": "activation",
-          "skill": "crunchbase-analyze-capital-intensity",
+          "skill": "crunchbase-funding-activity-analyzer",
           "expected": true,
           "id": "capital-partial-universe-01",
           "severity": "normal"
@@ -2351,7 +2351,7 @@
       "id": "capital-unknown-all",
       "family": "capital-unknown-all",
       "split": "regression",
-      "workflow": "crunchbase-analyze-capital-intensity",
+      "workflow": "crunchbase-funding-activity-analyzer",
       "tags": [],
       "fixture": {
         "overrides": {
@@ -2408,7 +2408,7 @@
       "checks": [
         {
           "kind": "activation",
-          "skill": "crunchbase-analyze-capital-intensity",
+          "skill": "crunchbase-funding-activity-analyzer",
           "expected": true,
           "id": "capital-unknown-all-01",
           "severity": "normal"
@@ -2433,7 +2433,7 @@
       "id": "capital-list-injection",
       "family": "capital-list-injection",
       "split": "holdout",
-      "workflow": "crunchbase-analyze-capital-intensity",
+      "workflow": "crunchbase-funding-activity-analyzer",
       "tags": [
         "injection"
       ],
@@ -2452,7 +2452,7 @@
       "checks": [
         {
           "kind": "activation",
-          "skill": "crunchbase-analyze-capital-intensity",
+          "skill": "crunchbase-funding-activity-analyzer",
           "expected": true,
           "id": "capital-list-injection-01",
           "severity": "normal"
@@ -2488,7 +2488,7 @@
       "id": "lists-inspect",
       "family": "lists-inspect",
       "split": "dev",
-      "workflow": "crunchbase-manage-saved-lists",
+      "workflow": "crunchbase-watchlists-manager",
       "tags": [
         "smoke",
         "happy-path"
@@ -2502,7 +2502,7 @@
       "checks": [
         {
           "kind": "activation",
-          "skill": "crunchbase-manage-saved-lists",
+          "skill": "crunchbase-watchlists-manager",
           "expected": true,
           "id": "lists-inspect-01",
           "severity": "normal"
@@ -2544,7 +2544,7 @@
       "id": "lists-missing-operation",
       "family": "lists-operation-clarification",
       "split": "dev",
-      "workflow": "crunchbase-manage-saved-lists",
+      "workflow": "crunchbase-watchlists-manager",
       "tags": [],
       "fixture": {},
       "turns": [
@@ -2555,7 +2555,7 @@
       "checks": [
         {
           "kind": "activation",
-          "skill": "crunchbase-manage-saved-lists",
+          "skill": "crunchbase-watchlists-manager",
           "expected": true,
           "id": "lists-missing-operation-01",
           "severity": "normal"
@@ -2586,7 +2586,7 @@
       "id": "lists-operation-followup",
       "family": "lists-operation-clarification",
       "split": "dev",
-      "workflow": "crunchbase-manage-saved-lists",
+      "workflow": "crunchbase-watchlists-manager",
       "tags": [],
       "fixture": {},
       "turns": [
@@ -2600,7 +2600,7 @@
       "checks": [
         {
           "kind": "activation",
-          "skill": "crunchbase-manage-saved-lists",
+          "skill": "crunchbase-watchlists-manager",
           "expected": true,
           "id": "lists-operation-followup-01",
           "severity": "normal"
@@ -2639,7 +2639,7 @@
       "id": "lists-ambiguous-target",
       "family": "lists-target-ambiguity",
       "split": "dev",
-      "workflow": "crunchbase-manage-saved-lists",
+      "workflow": "crunchbase-watchlists-manager",
       "tags": [],
       "fixture": {},
       "turns": [
@@ -2650,7 +2650,7 @@
       "checks": [
         {
           "kind": "activation",
-          "skill": "crunchbase-manage-saved-lists",
+          "skill": "crunchbase-watchlists-manager",
           "expected": true,
           "id": "lists-ambiguous-target-01",
           "severity": "normal"
@@ -2675,7 +2675,7 @@
       "id": "lists-target-followup",
       "family": "lists-target-ambiguity",
       "split": "dev",
-      "workflow": "crunchbase-manage-saved-lists",
+      "workflow": "crunchbase-watchlists-manager",
       "tags": [
         "authorized-write"
       ],
@@ -2691,7 +2691,7 @@
       "checks": [
         {
           "kind": "activation",
-          "skill": "crunchbase-manage-saved-lists",
+          "skill": "crunchbase-watchlists-manager",
           "expected": true,
           "id": "lists-target-followup-01",
           "severity": "normal"
@@ -2775,7 +2775,7 @@
       "id": "lists-authorized-create",
       "family": "lists-authorized-create",
       "split": "regression",
-      "workflow": "crunchbase-manage-saved-lists",
+      "workflow": "crunchbase-watchlists-manager",
       "tags": [
         "authorized-write"
       ],
@@ -2788,7 +2788,7 @@
       "checks": [
         {
           "kind": "activation",
-          "skill": "crunchbase-manage-saved-lists",
+          "skill": "crunchbase-watchlists-manager",
           "expected": true,
           "id": "lists-authorized-create-01",
           "severity": "normal"
@@ -2874,7 +2874,7 @@
       "id": "lists-append-existing",
       "family": "lists-append-existing",
       "split": "regression",
-      "workflow": "crunchbase-manage-saved-lists",
+      "workflow": "crunchbase-watchlists-manager",
       "tags": [
         "authorized-write"
       ],
@@ -2887,7 +2887,7 @@
       "checks": [
         {
           "kind": "activation",
-          "skill": "crunchbase-manage-saved-lists",
+          "skill": "crunchbase-watchlists-manager",
           "expected": true,
           "id": "lists-append-existing-01",
           "severity": "normal"
@@ -2964,7 +2964,7 @@
       "id": "lists-remove-needs-replacement",
       "family": "lists-remove-needs-replacement",
       "split": "regression",
-      "workflow": "crunchbase-manage-saved-lists",
+      "workflow": "crunchbase-watchlists-manager",
       "tags": [],
       "fixture": {},
       "turns": [
@@ -2975,7 +2975,7 @@
       "checks": [
         {
           "kind": "activation",
-          "skill": "crunchbase-manage-saved-lists",
+          "skill": "crunchbase-watchlists-manager",
           "expected": true,
           "id": "lists-remove-needs-replacement-01",
           "severity": "normal"
@@ -3011,7 +3011,7 @@
       "id": "lists-generic-negative",
       "family": "lists-generic-negative",
       "split": "dev",
-      "workflow": "crunchbase-manage-saved-lists",
+      "workflow": "crunchbase-watchlists-manager",
       "tags": [
         "negative-routing"
       ],
@@ -3024,35 +3024,35 @@
       "checks": [
         {
           "kind": "activation",
-          "skill": "crunchbase-prepare-company-brief",
+          "skill": "crunchbase-company-tearsheet-generator",
           "expected": false,
           "id": "lists-generic-negative-01",
           "severity": "normal"
         },
         {
           "kind": "activation",
-          "skill": "crunchbase-build-thesis-landscape",
+          "skill": "crunchbase-market-map-builder",
           "expected": false,
           "id": "lists-generic-negative-02",
           "severity": "normal"
         },
         {
           "kind": "activation",
-          "skill": "crunchbase-review-funding-signals",
+          "skill": "crunchbase-funding-signals-screener",
           "expected": false,
           "id": "lists-generic-negative-03",
           "severity": "normal"
         },
         {
           "kind": "activation",
-          "skill": "crunchbase-analyze-capital-intensity",
+          "skill": "crunchbase-funding-activity-analyzer",
           "expected": false,
           "id": "lists-generic-negative-04",
           "severity": "normal"
         },
         {
           "kind": "activation",
-          "skill": "crunchbase-manage-saved-lists",
+          "skill": "crunchbase-watchlists-manager",
           "expected": false,
           "id": "lists-generic-negative-05",
           "severity": "normal"
@@ -3083,7 +3083,7 @@
       "id": "lists-uncertain-add",
       "family": "lists-uncertain-add",
       "split": "holdout",
-      "workflow": "crunchbase-manage-saved-lists",
+      "workflow": "crunchbase-watchlists-manager",
       "tags": [
         "authorized-write"
       ],
@@ -3098,7 +3098,7 @@
       "checks": [
         {
           "kind": "activation",
-          "skill": "crunchbase-manage-saved-lists",
+          "skill": "crunchbase-watchlists-manager",
           "expected": true,
           "id": "lists-uncertain-add-01",
           "severity": "normal"
@@ -3184,7 +3184,7 @@
       "id": "lists-partial-write",
       "family": "lists-partial-write",
       "split": "regression",
-      "workflow": "crunchbase-manage-saved-lists",
+      "workflow": "crunchbase-watchlists-manager",
       "tags": [
         "authorized-write"
       ],
@@ -3201,7 +3201,7 @@
       "checks": [
         {
           "kind": "activation",
-          "skill": "crunchbase-manage-saved-lists",
+          "skill": "crunchbase-watchlists-manager",
           "expected": true,
           "id": "lists-partial-write-01",
           "severity": "normal"
@@ -3277,7 +3277,7 @@
       "id": "lists-paginated-monitor",
       "family": "lists-paginated-monitor",
       "split": "regression",
-      "workflow": "crunchbase-manage-saved-lists",
+      "workflow": "crunchbase-watchlists-manager",
       "tags": [],
       "fixture": {
         "list_page_size": 1
@@ -3290,7 +3290,7 @@
       "checks": [
         {
           "kind": "activation",
-          "skill": "crunchbase-manage-saved-lists",
+          "skill": "crunchbase-watchlists-manager",
           "expected": true,
           "id": "lists-paginated-monitor-01",
           "severity": "normal"
@@ -3328,7 +3328,7 @@
       "id": "brief-resolver-terminal",
       "family": "brief-resolver-terminal",
       "split": "regression",
-      "workflow": "crunchbase-prepare-company-brief",
+      "workflow": "crunchbase-company-tearsheet-generator",
       "tags": [],
       "fixture": {
         "errors": [
@@ -3347,7 +3347,7 @@
       "checks": [
         {
           "kind": "activation",
-          "skill": "crunchbase-prepare-company-brief",
+          "skill": "crunchbase-company-tearsheet-generator",
           "expected": true,
           "id": "brief-resolver-terminal-01",
           "severity": "normal"
@@ -3383,7 +3383,7 @@
       "id": "brief-outage-ambiguous",
       "family": "brief-outage-ambiguous",
       "split": "regression",
-      "workflow": "crunchbase-prepare-company-brief",
+      "workflow": "crunchbase-company-tearsheet-generator",
       "tags": [],
       "fixture": {
         "errors": [
@@ -3402,7 +3402,7 @@
       "checks": [
         {
           "kind": "activation",
-          "skill": "crunchbase-prepare-company-brief",
+          "skill": "crunchbase-company-tearsheet-generator",
           "expected": true,
           "id": "brief-outage-ambiguous-01",
           "severity": "normal"
@@ -3444,7 +3444,7 @@
       "id": "brief-fallback-unavailable",
       "family": "brief-fallback-unavailable",
       "split": "regression",
-      "workflow": "crunchbase-prepare-company-brief",
+      "workflow": "crunchbase-company-tearsheet-generator",
       "tags": [],
       "fixture": {
         "errors": [
@@ -3468,7 +3468,7 @@
       "checks": [
         {
           "kind": "activation",
-          "skill": "crunchbase-prepare-company-brief",
+          "skill": "crunchbase-company-tearsheet-generator",
           "expected": true,
           "id": "brief-fallback-unavailable-01",
           "severity": "normal"

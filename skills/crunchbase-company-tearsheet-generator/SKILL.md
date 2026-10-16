@@ -1,10 +1,10 @@
 ---
-name: crunchbase-prepare-company-brief
+name: crunchbase-company-tearsheet-generator
 description: Resolve a private-market entity and prepare a concise Crunchbase-grounded pre-meeting company brief or snapshot, including asking for the company when an explicit Crunchbase brief request omits its identity. Use only when the user explicitly asks for Crunchbase, selects Crunchbase as the data source, or follows up on an active Crunchbase company brief. Do not use for broad landscapes, recent-round screens, market-wide capital analysis, saved-list operations, public-equity research, Crunchbase pricing or account support, or generic company research when Crunchbase was not requested.
 license: MIT
 ---
 
-# Crunchbase Company Brief
+# Company Tearsheet Generator
 
 Prepare a focused company snapshot for meeting preparation. Do not present it as full commercial, technical, or investment diligence.
 

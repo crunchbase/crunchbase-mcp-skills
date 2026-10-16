@@ -1,10 +1,10 @@
 ---
-name: crunchbase-build-thesis-landscape
+name: crunchbase-market-map-builder
 description: Discover, segment, screen, and optionally save a Crunchbase company landscape against an investment thesis, including asking for a thesis anchor when an explicit Crunchbase landscape request omits one. Use only when the user explicitly asks to use Crunchbase, selects Crunchbase as the data source, or follows up on an active Crunchbase landscape. This skill owns compound “build and save” requests. Do not use for a single-company brief, analysis of a user-confirmed company universe, operations on an existing saved list, recent-round-only reviews, public-equity research, Crunchbase pricing or account support, or generic landscapes when Crunchbase was not requested.
 license: MIT
 ---
 
-# Crunchbase Thesis Landscape
+# Market Map Builder
 
 Build a reviewed company universe against an explicit thesis. Segment by buyer, product, use case, or business model; do not treat keyword matches as final relevance decisions.
 

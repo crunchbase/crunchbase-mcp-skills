@@ -26,11 +26,11 @@ Skills require the [Crunchbase MCP tools](MCP-REQUIREMENTS.md); installing them 
 
 | Skill | What it does | Example request |
 | --- | --- | --- |
-| [Build thesis landscape](skills/crunchbase-build-thesis-landscape/SKILL.md) | Discover and segment companies against an investment thesis; optionally save the reviewed set. | “Use Crunchbase to map US seed-stage companies building security tools for developers.” |
-| [Review funding signals](skills/crunchbase-review-funding-signals/SKILL.md) | Screen recent funding rounds against your mandate. | “Use Crunchbase to find European fintech companies that announced Series A rounds in the past 90 days.” |
-| [Prepare company brief](skills/crunchbase-prepare-company-brief/SKILL.md) | Prepare a meeting brief covering the business, financing, team, peers, and questions to explore. | “Prepare a Crunchbase brief on Canva for an introductory meeting.” |
-| [Analyze capital intensity](skills/crunchbase-analyze-capital-intensity/SKILL.md) | Compare funding, concentration, and company formation within a confirmed universe. | “Use Crunchbase to compare funding concentration across the companies in my Infrastructure Watchlist.” |
-| [Manage saved lists](skills/crunchbase-manage-saved-lists/SKILL.md) | Inspect a list, review activity, or make explicitly requested membership changes. | “Show the current companies in my Infrastructure Watchlist on Crunchbase.” |
+| [Market Map Builder](skills/crunchbase-market-map-builder/SKILL.md) | Discover and segment companies against an investment thesis; optionally save the reviewed set. | “Use Crunchbase to map US seed-stage companies building security tools for developers.” |
+| [Funding Signals Screener](skills/crunchbase-funding-signals-screener/SKILL.md) | Screen recent funding rounds against your mandate. | “Use Crunchbase to find European fintech companies that announced Series A rounds in the past 90 days.” |
+| [Company Tearsheet Generator](skills/crunchbase-company-tearsheet-generator/SKILL.md) | Prepare a meeting brief covering the business, financing, team, peers, and questions to explore. | “Prepare a Crunchbase brief on Canva for an introductory meeting.” |
+| [Funding Activity Analyzer](skills/crunchbase-funding-activity-analyzer/SKILL.md) | Compare funding, concentration, and company formation within a confirmed universe. | “Use Crunchbase to compare funding concentration across the companies in my Infrastructure Watchlist.” |
+| [Watchlists Manager](skills/crunchbase-watchlists-manager/SKILL.md) | Inspect a list, review activity, or make explicitly requested membership changes. | “Show the current companies in my Infrastructure Watchlist on Crunchbase.” |
 
 The skills instruct the agent to ask for missing inputs and resolve ambiguous company identities before continuing. Research stays read-only unless you explicitly request a supported saved-list change. Write workflows require a preview and membership verification; the preview does not require another approval when the requested action is already clear.
 
@@ -43,14 +43,14 @@ Each folder under `skills/` is independently installable. Keep the complete fold
 <details>
 <summary><strong>Claude Code and Codex: install options</strong></summary>
 
-To install only the company-brief skill for a specific agent:
+To install only Company Tearsheet Generator for a specific agent:
 
 ```sh
 # Claude Code
-npx skills add crunchbase/crunchbase-mcp-skills --skill crunchbase-prepare-company-brief --agent claude-code
+npx skills add crunchbase/crunchbase-mcp-skills --skill crunchbase-company-tearsheet-generator --agent claude-code
 
 # Codex
-npx skills add crunchbase/crunchbase-mcp-skills --skill crunchbase-prepare-company-brief --agent codex
+npx skills add crunchbase/crunchbase-mcp-skills --skill crunchbase-company-tearsheet-generator --agent codex
 ```
 
 These commands use the published default branch, not a pinned release. Add `--global` for a personal installation across projects, or `--list` to inspect available skills without installing.
@@ -74,15 +74,15 @@ The repository also includes optional [Codex plugin packaging](.codex-plugin/plu
 
 Enable code execution in Claude and upload one skill as a ZIP through its skill settings. The archive must contain the named skill folder, with `SKILL.md` inside that folder. See [Anthropic's upload instructions](https://support.claude.com/en/articles/12512198-how-to-create-custom-skills).
 
-Download and extract the [repository source](https://github.com/crunchbase/crunchbase-mcp-skills/archive/refs/heads/main.zip), or clone it with Git. On macOS or Linux, run these commands from the repository root to create a company-brief ZIP:
+Download and extract the [repository source](https://github.com/crunchbase/crunchbase-mcp-skills/archive/refs/heads/main.zip), or clone it with Git. On macOS or Linux, run these commands from the repository root to create a Company Tearsheet Generator ZIP:
 
 ```sh
 cd skills
-zip -r ../crunchbase-prepare-company-brief.zip crunchbase-prepare-company-brief \
+zip -r ../crunchbase-company-tearsheet-generator.zip crunchbase-company-tearsheet-generator \
   -x '*/__pycache__/*' '*.pyc' '*/.DS_Store'
 ```
 
-Upload `crunchbase-prepare-company-brief.zip` from the repository root. Use the corresponding folder name to package another skill; preserve its bundled scripts when present.
+Upload `crunchbase-company-tearsheet-generator.zip` from the repository root. Use the corresponding folder name to package another skill; preserve its bundled scripts when present.
 
 </details>
 
@@ -96,15 +96,15 @@ python3 scripts/build_releases.py
 
 The output directory must be empty; use `--output <fresh-directory>` for another build. Files are written to `dist/<version>/` with a `SHA256SUMS` checksum file. Each archive includes the complete skill folder and its version. The `.skill` files contain the same ZIP data; use `.zip` for Claude.ai uploads.
 
-Download individual skills from [v1.0.1](https://github.com/crunchbase/crunchbase-mcp-skills/releases/tag/v1.0.1). Use ZIP for Claude.ai uploads.
+Download individual skills from [v1.0.1](https://github.com/crunchbase/crunchbase-mcp-skills/releases/tag/v1.0.1). Use ZIP for Claude.ai uploads. These published v1.0.1 archives retain their original skill names; builds from this checkout use the renamed skills.
 
 | Skill | ZIP | .skill |
 | --- | --- | --- |
-| Thesis landscape | [Download](https://github.com/crunchbase/crunchbase-mcp-skills/releases/download/v1.0.1/crunchbase-build-thesis-landscape.zip) | [Download](https://github.com/crunchbase/crunchbase-mcp-skills/releases/download/v1.0.1/crunchbase-build-thesis-landscape.skill) |
-| Funding signals | [Download](https://github.com/crunchbase/crunchbase-mcp-skills/releases/download/v1.0.1/crunchbase-review-funding-signals.zip) | [Download](https://github.com/crunchbase/crunchbase-mcp-skills/releases/download/v1.0.1/crunchbase-review-funding-signals.skill) |
-| Company brief | [Download](https://github.com/crunchbase/crunchbase-mcp-skills/releases/download/v1.0.1/crunchbase-prepare-company-brief.zip) | [Download](https://github.com/crunchbase/crunchbase-mcp-skills/releases/download/v1.0.1/crunchbase-prepare-company-brief.skill) |
-| Capital intensity | [Download](https://github.com/crunchbase/crunchbase-mcp-skills/releases/download/v1.0.1/crunchbase-analyze-capital-intensity.zip) | [Download](https://github.com/crunchbase/crunchbase-mcp-skills/releases/download/v1.0.1/crunchbase-analyze-capital-intensity.skill) |
-| Saved lists | [Download](https://github.com/crunchbase/crunchbase-mcp-skills/releases/download/v1.0.1/crunchbase-manage-saved-lists.zip) | [Download](https://github.com/crunchbase/crunchbase-mcp-skills/releases/download/v1.0.1/crunchbase-manage-saved-lists.skill) |
+| Market Map Builder | [Download](https://github.com/crunchbase/crunchbase-mcp-skills/releases/download/v1.0.1/crunchbase-build-thesis-landscape.zip) | [Download](https://github.com/crunchbase/crunchbase-mcp-skills/releases/download/v1.0.1/crunchbase-build-thesis-landscape.skill) |
+| Funding Signals Screener | [Download](https://github.com/crunchbase/crunchbase-mcp-skills/releases/download/v1.0.1/crunchbase-review-funding-signals.zip) | [Download](https://github.com/crunchbase/crunchbase-mcp-skills/releases/download/v1.0.1/crunchbase-review-funding-signals.skill) |
+| Company Tearsheet Generator | [Download](https://github.com/crunchbase/crunchbase-mcp-skills/releases/download/v1.0.1/crunchbase-prepare-company-brief.zip) | [Download](https://github.com/crunchbase/crunchbase-mcp-skills/releases/download/v1.0.1/crunchbase-prepare-company-brief.skill) |
+| Funding Activity Analyzer | [Download](https://github.com/crunchbase/crunchbase-mcp-skills/releases/download/v1.0.1/crunchbase-analyze-capital-intensity.zip) | [Download](https://github.com/crunchbase/crunchbase-mcp-skills/releases/download/v1.0.1/crunchbase-analyze-capital-intensity.skill) |
+| Watchlists Manager | [Download](https://github.com/crunchbase/crunchbase-mcp-skills/releases/download/v1.0.1/crunchbase-manage-saved-lists.zip) | [Download](https://github.com/crunchbase/crunchbase-mcp-skills/releases/download/v1.0.1/crunchbase-manage-saved-lists.skill) |
 
 [SHA-256 checksums](https://github.com/crunchbase/crunchbase-mcp-skills/releases/download/v1.0.1/SHA256SUMS). The build command above packages the files in your checkout.
 

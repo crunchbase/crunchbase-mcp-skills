@@ -1,10 +1,10 @@
 ---
-name: crunchbase-review-funding-signals
+name: crunchbase-funding-signals-screener
 description: Review recent private-company funding rounds and funded organizations using Crunchbase against an investment mandate or screening criteria, including asking for a mandate when an explicit Crunchbase funding-screen request omits one. Use only when the user explicitly asks to use Crunchbase, selects Crunchbase as the data source, or follows up on an active Crunchbase funding review. Do not use for broad company landscapes, single-company briefs, capital-intensity analysis, saved-list operations, public-equity research, Crunchbase pricing or account support, or generic research when Crunchbase was not requested.
 license: MIT
 ---
 
-# Crunchbase Funding Signals
+# Funding Signals Screener
 
 Review recent rounds as an auditable sourcing screen. Keep retrieved facts, deterministic calculations, professional interpretation, and suggested actions distinct.
 

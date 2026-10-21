@@ -406,7 +406,7 @@
         },
         {
           "kind": "activation",
-          "skill": "crunchbase-funding-activity-analyzer",
+          "skill": "crunchbase-capital-trends-analysis",
           "expected": false,
           "id": "brief-generic-negative-04",
           "severity": "normal"
@@ -1043,7 +1043,7 @@
         },
         {
           "kind": "activation",
-          "skill": "crunchbase-funding-activity-analyzer",
+          "skill": "crunchbase-capital-trends-analysis",
           "expected": false,
           "id": "landscape-noncrunchbase-negative-04",
           "severity": "normal"
@@ -1731,7 +1731,7 @@
         },
         {
           "kind": "activation",
-          "skill": "crunchbase-funding-activity-analyzer",
+          "skill": "crunchbase-capital-trends-analysis",
           "expected": false,
           "id": "funding-public-negative-04",
           "severity": "normal"
@@ -1903,7 +1903,7 @@
       "id": "capital-happy",
       "family": "capital-happy",
       "split": "dev",
-      "workflow": "crunchbase-funding-activity-analyzer",
+      "workflow": "crunchbase-capital-trends-analysis",
       "tags": [
         "smoke",
         "happy-path"
@@ -1917,7 +1917,7 @@
       "checks": [
         {
           "kind": "activation",
-          "skill": "crunchbase-funding-activity-analyzer",
+          "skill": "crunchbase-capital-trends-analysis",
           "expected": true,
           "id": "capital-happy-01",
           "severity": "normal"
@@ -1942,7 +1942,7 @@
       "id": "capital-no-universe",
       "family": "capital-universe-clarification",
       "split": "dev",
-      "workflow": "crunchbase-funding-activity-analyzer",
+      "workflow": "crunchbase-capital-trends-analysis",
       "tags": [],
       "fixture": {},
       "turns": [
@@ -1953,7 +1953,7 @@
       "checks": [
         {
           "kind": "activation",
-          "skill": "crunchbase-funding-activity-analyzer",
+          "skill": "crunchbase-capital-trends-analysis",
           "expected": true,
           "id": "capital-no-universe-01",
           "severity": "normal"
@@ -1984,7 +1984,7 @@
       "id": "capital-universe-followup",
       "family": "capital-universe-clarification",
       "split": "dev",
-      "workflow": "crunchbase-funding-activity-analyzer",
+      "workflow": "crunchbase-capital-trends-analysis",
       "tags": [],
       "fixture": {},
       "turns": [
@@ -1998,7 +1998,7 @@
       "checks": [
         {
           "kind": "activation",
-          "skill": "crunchbase-funding-activity-analyzer",
+          "skill": "crunchbase-capital-trends-analysis",
           "expected": true,
           "id": "capital-universe-followup-01",
           "severity": "normal"
@@ -2030,7 +2030,7 @@
       "id": "capital-period-missing",
       "family": "capital-period-missing",
       "split": "dev",
-      "workflow": "crunchbase-funding-activity-analyzer",
+      "workflow": "crunchbase-capital-trends-analysis",
       "tags": [],
       "fixture": {},
       "turns": [
@@ -2041,7 +2041,7 @@
       "checks": [
         {
           "kind": "activation",
-          "skill": "crunchbase-funding-activity-analyzer",
+          "skill": "crunchbase-capital-trends-analysis",
           "expected": true,
           "id": "capital-period-missing-01",
           "severity": "normal"
@@ -2072,7 +2072,7 @@
       "id": "capital-duplicate-input",
       "family": "capital-duplicate-input",
       "split": "regression",
-      "workflow": "crunchbase-funding-activity-analyzer",
+      "workflow": "crunchbase-capital-trends-analysis",
       "tags": [],
       "fixture": {},
       "turns": [
@@ -2083,7 +2083,7 @@
       "checks": [
         {
           "kind": "activation",
-          "skill": "crunchbase-funding-activity-analyzer",
+          "skill": "crunchbase-capital-trends-analysis",
           "expected": true,
           "id": "capital-duplicate-input-01",
           "severity": "normal"
@@ -2108,7 +2108,7 @@
       "id": "capital-list-universe",
       "family": "capital-list-universe",
       "split": "regression",
-      "workflow": "crunchbase-funding-activity-analyzer",
+      "workflow": "crunchbase-capital-trends-analysis",
       "tags": [],
       "fixture": {},
       "turns": [
@@ -2119,7 +2119,7 @@
       "checks": [
         {
           "kind": "activation",
-          "skill": "crunchbase-funding-activity-analyzer",
+          "skill": "crunchbase-capital-trends-analysis",
           "expected": true,
           "id": "capital-list-universe-01",
           "severity": "normal"
@@ -2144,7 +2144,7 @@
       "id": "capital-round-pages",
       "family": "capital-round-pages",
       "split": "regression",
-      "workflow": "crunchbase-funding-activity-analyzer",
+      "workflow": "crunchbase-capital-trends-analysis",
       "tags": [],
       "fixture": {
         "page_size": 1,
@@ -2158,7 +2158,7 @@
       "checks": [
         {
           "kind": "activation",
-          "skill": "crunchbase-funding-activity-analyzer",
+          "skill": "crunchbase-capital-trends-analysis",
           "expected": true,
           "id": "capital-round-pages-01",
           "severity": "normal"
@@ -2183,7 +2183,7 @@
       "id": "capital-future-founded",
       "family": "capital-future-founded",
       "split": "regression",
-      "workflow": "crunchbase-funding-activity-analyzer",
+      "workflow": "crunchbase-capital-trends-analysis",
       "tags": [],
       "fixture": {
         "overrides": {
@@ -2203,7 +2203,7 @@
       "checks": [
         {
           "kind": "activation",
-          "skill": "crunchbase-funding-activity-analyzer",
+          "skill": "crunchbase-capital-trends-analysis",
           "expected": true,
           "id": "capital-future-founded-01",
           "severity": "normal"
@@ -2228,7 +2228,7 @@
       "id": "capital-concept-negative",
       "family": "capital-concept-negative",
       "split": "dev",
-      "workflow": "crunchbase-funding-activity-analyzer",
+      "workflow": "crunchbase-capital-trends-analysis",
       "tags": [
         "negative-routing"
       ],
@@ -2262,7 +2262,7 @@
         },
         {
           "kind": "activation",
-          "skill": "crunchbase-funding-activity-analyzer",
+          "skill": "crunchbase-capital-trends-analysis",
           "expected": false,
           "id": "capital-concept-negative-04",
           "severity": "normal"
@@ -2300,7 +2300,7 @@
       "id": "capital-partial-universe",
       "family": "capital-partial-universe",
       "split": "regression",
-      "workflow": "crunchbase-funding-activity-analyzer",
+      "workflow": "crunchbase-capital-trends-analysis",
       "tags": [],
       "fixture": {
         "page_size": 1,
@@ -2324,7 +2324,7 @@
       "checks": [
         {
           "kind": "activation",
-          "skill": "crunchbase-funding-activity-analyzer",
+          "skill": "crunchbase-capital-trends-analysis",
           "expected": true,
           "id": "capital-partial-universe-01",
           "severity": "normal"
@@ -2351,7 +2351,7 @@
       "id": "capital-unknown-all",
       "family": "capital-unknown-all",
       "split": "regression",
-      "workflow": "crunchbase-funding-activity-analyzer",
+      "workflow": "crunchbase-capital-trends-analysis",
       "tags": [],
       "fixture": {
         "overrides": {
@@ -2408,7 +2408,7 @@
       "checks": [
         {
           "kind": "activation",
-          "skill": "crunchbase-funding-activity-analyzer",
+          "skill": "crunchbase-capital-trends-analysis",
           "expected": true,
           "id": "capital-unknown-all-01",
           "severity": "normal"
@@ -2433,7 +2433,7 @@
       "id": "capital-list-injection",
       "family": "capital-list-injection",
       "split": "holdout",
-      "workflow": "crunchbase-funding-activity-analyzer",
+      "workflow": "crunchbase-capital-trends-analysis",
       "tags": [
         "injection"
       ],
@@ -2452,7 +2452,7 @@
       "checks": [
         {
           "kind": "activation",
-          "skill": "crunchbase-funding-activity-analyzer",
+          "skill": "crunchbase-capital-trends-analysis",
           "expected": true,
           "id": "capital-list-injection-01",
           "severity": "normal"
@@ -3045,7 +3045,7 @@
         },
         {
           "kind": "activation",
-          "skill": "crunchbase-funding-activity-analyzer",
+          "skill": "crunchbase-capital-trends-analysis",
           "expected": false,
           "id": "lists-generic-negative-04",
           "severity": "normal"

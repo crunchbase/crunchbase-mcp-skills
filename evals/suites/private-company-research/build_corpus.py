@@ -49,7 +49,7 @@ base={'schema_version':1,'synthetic':True,'as_of':'2026-09-30','description':'En
 
 ORG=[o['identifier']['uuid'] for o in orgs]
 L=id_for('list-shortlist'); D=id_for('list-dental'); NORTH=id_for('list-north')
-WF={'brief':'crunchbase-company-tearsheet-generator','landscape':'crunchbase-market-map-builder','funding':'crunchbase-funding-signals-screener','capital':'crunchbase-funding-activity-analyzer','lists':'crunchbase-watchlists-manager'}
+WF={'brief':'crunchbase-company-tearsheet-generator','landscape':'crunchbase-market-map-builder','funding':'crunchbase-funding-signals-screener','capital':'crunchbase-capital-trends-analysis','lists':'crunchbase-watchlists-manager'}
 CASES=[]
 def check(kind,**kwargs): return {'kind':kind,**kwargs}
 def add(w,id,prompt,rubric,*,split='dev',family=None,fixture=None,turns=None,checks=(),tags=(),writes=False,active=True,errors=()):

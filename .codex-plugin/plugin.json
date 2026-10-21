@@ -18,7 +18,7 @@
   "interface": {
     "displayName": "Crunchbase MCP Skills",
     "shortDescription": "Reusable skills for Crunchbase workflows",
-    "longDescription": "Research companies and markets with reusable Crunchbase skills. Skills include Market Map Builder, Funding Signals Screener, Watchlists Manager, Company Tearsheet Generator, and Capital Trends Analysis.",
+    "longDescription": "Research companies and markets with reusable Crunchbase skills. Skills include Market Map Builder, Funding Signals Screener, Watchlists Manager, Company Tearsheet Generator, and Capital Trends Analyzer.",
     "developerName": "Crunchbase",
     "category": "Business",
     "capabilities": [

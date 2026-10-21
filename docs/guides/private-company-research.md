@@ -7,7 +7,7 @@ This guide covers the first collection in Crunchbase MCP Skills. The five workfl
 - **Market Map Builder:** “Use Crunchbase to map software for independent dental practices. Segment companies by the workflow they serve.”
 - **Funding Signals Screener:** “Use Crunchbase to screen European seed rounds in climate software announced in the past 30 days.”
 - **Company Tearsheet Generator:** “Use Crunchbase to prepare a meeting brief on Canva, including financing, team, peers, and questions to test.”
-- **Capital Trends Analysis:** “Use Crunchbase to analyze capital intensity across this confirmed company set: [paste private-company names or Crunchbase URLs]. Compare the trailing 12 months with the preceding 12 months.” Replace the bracketed text with your company set.
+- **Capital Trends Analyzer:** “Use Crunchbase to analyze capital intensity across this confirmed company set: [paste private-company names or Crunchbase URLs]. Compare the trailing 12 months with the preceding 12 months.” Replace the bracketed text with your company set.
 - **Watchlists Manager:** “Use Crunchbase to inspect my ‘Climate software’ list and summarize its current membership.” Replace the example list name with your own.
 
 To save a newly discovered landscape, include “save the reviewed companies to a new list named …” in the landscape request. To append companies to an existing list, name the list and the companies explicitly. The agent previews canonical identities before the write and checks persisted membership afterward.
@@ -21,7 +21,7 @@ These skills activate for an explicit Crunchbase request, a selected Crunchbase 
 | Company Tearsheet Generator | A company name, supplied domain, or previously resolved identity |
 | Market Map Builder | A usable thesis and any choices that materially change the screen |
 | Funding Signals Screener | A theme or explicitly broad screen, a review window, and material screening choices |
-| Capital Trends Analysis | A user-confirmed company universe and any material unresolved analysis scope |
+| Capital Trends Analyzer | A user-confirmed company universe and any material unresolved analysis scope |
 | Watchlists Manager | The intended operation and its required list or company identifiers; explicit intent for writes |
 
 When a missing input would materially change the companies selected, the analysis, or a saved-list action, the agent asks one focused question covering the unresolved essentials. It reuses answers and authorizations already supplied, and offers concrete options when helpful. It asks the user to choose between company or list identities only when credible alternatives remain after minimal resolution.

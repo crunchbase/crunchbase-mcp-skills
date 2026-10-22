@@ -96,17 +96,17 @@ python3 scripts/build_releases.py
 
 The output directory must be empty; use `--output <fresh-directory>` for another build. Files are written to `dist/<version>/` with a `SHA256SUMS` checksum file. Each archive includes the complete skill folder and its version. The `.skill` files contain the same ZIP data; use `.zip` for Claude.ai uploads.
 
-Download individual skills from [v1.0.1](https://github.com/crunchbase/crunchbase-mcp-skills/releases/tag/v1.0.1). Use ZIP for Claude.ai uploads. These published v1.0.1 archives retain their original skill names; builds from this checkout use the renamed skills.
+Download individual skills from [v1.0.3](https://github.com/crunchbase/crunchbase-mcp-skills/releases/tag/v1.0.3). Use ZIP for Claude.ai uploads.
 
 | Skill | ZIP | .skill |
 | --- | --- | --- |
-| Market Map Builder | [Download](https://github.com/crunchbase/crunchbase-mcp-skills/releases/download/v1.0.1/crunchbase-build-thesis-landscape.zip) | [Download](https://github.com/crunchbase/crunchbase-mcp-skills/releases/download/v1.0.1/crunchbase-build-thesis-landscape.skill) |
-| Funding Signals Screener | [Download](https://github.com/crunchbase/crunchbase-mcp-skills/releases/download/v1.0.1/crunchbase-review-funding-signals.zip) | [Download](https://github.com/crunchbase/crunchbase-mcp-skills/releases/download/v1.0.1/crunchbase-review-funding-signals.skill) |
-| Company Tearsheet Generator | [Download](https://github.com/crunchbase/crunchbase-mcp-skills/releases/download/v1.0.1/crunchbase-prepare-company-brief.zip) | [Download](https://github.com/crunchbase/crunchbase-mcp-skills/releases/download/v1.0.1/crunchbase-prepare-company-brief.skill) |
-| Capital Trends Analyzer | [Download](https://github.com/crunchbase/crunchbase-mcp-skills/releases/download/v1.0.1/crunchbase-analyze-capital-intensity.zip) | [Download](https://github.com/crunchbase/crunchbase-mcp-skills/releases/download/v1.0.1/crunchbase-analyze-capital-intensity.skill) |
-| Watchlists Manager | [Download](https://github.com/crunchbase/crunchbase-mcp-skills/releases/download/v1.0.1/crunchbase-manage-saved-lists.zip) | [Download](https://github.com/crunchbase/crunchbase-mcp-skills/releases/download/v1.0.1/crunchbase-manage-saved-lists.skill) |
+| Market Map Builder | [Download](https://github.com/crunchbase/crunchbase-mcp-skills/releases/download/v1.0.3/crunchbase-market-map-builder.zip) | [Download](https://github.com/crunchbase/crunchbase-mcp-skills/releases/download/v1.0.3/crunchbase-market-map-builder.skill) |
+| Funding Signals Screener | [Download](https://github.com/crunchbase/crunchbase-mcp-skills/releases/download/v1.0.3/crunchbase-funding-signals-screener.zip) | [Download](https://github.com/crunchbase/crunchbase-mcp-skills/releases/download/v1.0.3/crunchbase-funding-signals-screener.skill) |
+| Company Tearsheet Generator | [Download](https://github.com/crunchbase/crunchbase-mcp-skills/releases/download/v1.0.3/crunchbase-company-tearsheet-generator.zip) | [Download](https://github.com/crunchbase/crunchbase-mcp-skills/releases/download/v1.0.3/crunchbase-company-tearsheet-generator.skill) |
+| Capital Trends Analyzer | [Download](https://github.com/crunchbase/crunchbase-mcp-skills/releases/download/v1.0.3/crunchbase-capital-trends-analyzer.zip) | [Download](https://github.com/crunchbase/crunchbase-mcp-skills/releases/download/v1.0.3/crunchbase-capital-trends-analyzer.skill) |
+| Watchlists Manager | [Download](https://github.com/crunchbase/crunchbase-mcp-skills/releases/download/v1.0.3/crunchbase-watchlists-manager.zip) | [Download](https://github.com/crunchbase/crunchbase-mcp-skills/releases/download/v1.0.3/crunchbase-watchlists-manager.skill) |
 
-[SHA-256 checksums](https://github.com/crunchbase/crunchbase-mcp-skills/releases/download/v1.0.1/SHA256SUMS). The build command above packages the files in your checkout.
+[SHA-256 checksums](https://github.com/crunchbase/crunchbase-mcp-skills/releases/download/v1.0.3/SHA256SUMS). The build command above packages the files in your checkout.
 
 ## Agent requirements
 

@@ -21,6 +21,10 @@ A supplied company name and domain are joint constraints, not competing hints wi
 
 A verified alias, rebrand, legal name, or equivalent identity relationship may reconcile different wording: proceed when returned evidence establishes that both supplied anchors refer to the same canonical organization, and state the relevant relationship briefly. Mere similarity, resolver confidence/rank, an assumed acquisition, or a domain redirect not established by returned evidence is insufficient. If resolving the discrepancy needs more data, retrieve only the minimum identity evidence; do not expand into downstream research. Reuse an explicit user correction or previously established identity decision. Independent confirmed entities in a multi-entity request may proceed, with the conflicting entity clearly pending; pause aggregate results when that unresolved identity could change their membership or denominator.
 
+## Identity questions in the response
+
+Explain the conflicting facts, not the instructions used to process them. Ask for the missing company identity as task input, not approval to obey a skill. For example: “The supplied name identifies Lumenquill Dental. The website identifies Brambleflux Dental. Which company did you intend?” Link the returned company records when available. Keep accepted scope and settings. Do not add an explanation about a skill requiring permission or quote internal rules. Do not link skill files, reference files or local instruction paths. An identity question is not a request to authorize a new action.
+
 ## Confirmation rules
 
 - Never accept the first resolver or autocomplete candidate solely because it ranks first.

@@ -45,6 +45,22 @@
           "kind": "semantic",
           "severity": "critical",
           "rubric": "Identify that supplied name and domain refer to different organizations, ask the user to select the intended entity, and do not silently prefer the resolver/domain match. Only minimum identity verification may proceed for that entity; no dependent analysis, screening, score or membership write. Independent confirmed entities may proceed transparently, but do not finalize aggregates with an unresolved membership/denominator. Preserve existing authorization rather than asking for unrelated permissions."
+        },
+        {
+          "id": "no-internal-paths",
+          "kind": "text_excludes",
+          "severity": "normal",
+          "phrases": [
+            "SKILL.md",
+            "entity-resolution.md",
+            "skills/crunchbase-"
+          ]
+        },
+        {
+          "id": "user-facing-clarification",
+          "kind": "semantic",
+          "severity": "normal",
+          "rubric": "Explain the factual name/domain conflict and ask which company the user intended. Do not justify the question by citing a skill, internal instruction, local file or permission requirement. Preserve accepted task scope. Provider company-record links are appropriate; internal instruction links are not."
         }
       ],
       "tags": [
@@ -81,6 +97,22 @@
           "kind": "semantic",
           "severity": "critical",
           "rubric": "Identify that supplied name and domain refer to different organizations, ask the user to select the intended entity, and do not silently prefer the resolver/domain match. Only minimum identity verification may proceed for that entity; no dependent analysis, screening, score or membership write. Independent confirmed entities may proceed transparently, but do not finalize aggregates with an unresolved membership/denominator. Preserve existing authorization rather than asking for unrelated permissions."
+        },
+        {
+          "id": "no-internal-paths",
+          "kind": "text_excludes",
+          "severity": "normal",
+          "phrases": [
+            "SKILL.md",
+            "entity-resolution.md",
+            "skills/crunchbase-"
+          ]
+        },
+        {
+          "id": "user-facing-clarification",
+          "kind": "semantic",
+          "severity": "normal",
+          "rubric": "Explain the factual name/domain conflict and ask which company the user intended. Do not justify the question by citing a skill, internal instruction, local file or permission requirement. Preserve accepted task scope. Provider company-record links are appropriate; internal instruction links are not."
         }
       ],
       "tags": [
@@ -117,6 +149,22 @@
           "kind": "semantic",
           "severity": "critical",
           "rubric": "Identify that supplied name and domain refer to different organizations, ask the user to select the intended entity, and do not silently prefer the resolver/domain match. Only minimum identity verification may proceed for that entity; no dependent analysis, screening, score or membership write. Independent confirmed entities may proceed transparently, but do not finalize aggregates with an unresolved membership/denominator. Preserve existing authorization rather than asking for unrelated permissions."
+        },
+        {
+          "id": "no-internal-paths",
+          "kind": "text_excludes",
+          "severity": "normal",
+          "phrases": [
+            "SKILL.md",
+            "entity-resolution.md",
+            "skills/crunchbase-"
+          ]
+        },
+        {
+          "id": "user-facing-clarification",
+          "kind": "semantic",
+          "severity": "normal",
+          "rubric": "Explain the factual name/domain conflict and ask which company the user intended. Do not justify the question by citing a skill, internal instruction, local file or permission requirement. Preserve accepted task scope. Provider company-record links are appropriate; internal instruction links are not."
         }
       ],
       "tags": [
@@ -153,6 +201,22 @@
           "kind": "semantic",
           "severity": "critical",
           "rubric": "Identify that supplied name and domain refer to different organizations, ask the user to select the intended entity, and do not silently prefer the resolver/domain match. Only minimum identity verification may proceed for that entity; no dependent analysis, screening, score or membership write. Independent confirmed entities may proceed transparently, but do not finalize aggregates with an unresolved membership/denominator. Preserve existing authorization rather than asking for unrelated permissions."
+        },
+        {
+          "id": "no-internal-paths",
+          "kind": "text_excludes",
+          "severity": "normal",
+          "phrases": [
+            "SKILL.md",
+            "entity-resolution.md",
+            "skills/crunchbase-"
+          ]
+        },
+        {
+          "id": "user-facing-clarification",
+          "kind": "semantic",
+          "severity": "normal",
+          "rubric": "Explain the factual name/domain conflict and ask which company the user intended. Do not justify the question by citing a skill, internal instruction, local file or permission requirement. Preserve accepted task scope. Provider company-record links are appropriate; internal instruction links are not."
         }
       ],
       "tags": [
@@ -189,6 +253,22 @@
           "kind": "semantic",
           "severity": "critical",
           "rubric": "Identify that supplied name and domain refer to different organizations, ask the user to select the intended entity, and do not silently prefer the resolver/domain match. Only minimum identity verification may proceed for that entity; no dependent analysis, screening, score or membership write. Independent confirmed entities may proceed transparently, but do not finalize aggregates with an unresolved membership/denominator. Preserve existing authorization rather than asking for unrelated permissions."
+        },
+        {
+          "id": "no-internal-paths",
+          "kind": "text_excludes",
+          "severity": "normal",
+          "phrases": [
+            "SKILL.md",
+            "entity-resolution.md",
+            "skills/crunchbase-"
+          ]
+        },
+        {
+          "id": "user-facing-clarification",
+          "kind": "semantic",
+          "severity": "normal",
+          "rubric": "Explain the factual name/domain conflict and ask which company the user intended. Do not justify the question by citing a skill, internal instruction, local file or permission requirement. Preserve accepted task scope. Provider company-record links are appropriate; internal instruction links are not."
         }
       ],
       "tags": [

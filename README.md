@@ -20,7 +20,7 @@ After installation, try:
 
 > Use Crunchbase to prepare a brief on Canva for an introductory meeting. Include financing, relevant peers, and questions to explore.
 
-Skills require the [Crunchbase MCP tools](MCP-REQUIREMENTS.md); installing them does not provide a connection or account access. Research calculation helpers require Python 3.9+. The GTM candidate uses Python 3.10+; CSV/JSON workflows use the standard library, while optional XLSX/XLSM CRM ingestion needs openpyxl.
+Skills require the [Crunchbase MCP tools](MCP-REQUIREMENTS.md); installing them does not provide a connection or account access. Research calculation helpers require Python 3.9+. The GTM skills use Python 3.10+; CSV/JSON workflows use the standard library, while optional XLSX/XLSM CRM ingestion needs openpyxl.
 
 ## Choose a skill
 
@@ -36,11 +36,11 @@ The skills instruct the agent to ask for missing inputs and resolve ambiguous co
 
 See the [workflow guide](docs/guides/private-company-research.md) for more examples and expected outputs.
 
-### GTM release candidate
+### Sales and go-to-market skills
 
-This checkout also contains five GTM skills being evaluated for version 1.1.0. They preserve the same explicit Crunchbase selection, canonical identity, source-grounding, and write-authorization patterns. Release approval is tracked in the [implementation status](docs/gtm-implementation-status.md); the download links below point to the latest published release. The GTM skills are available in this branch and are not yet published. Names are pending marketing approval.
+Use these skills to prepare sales meetings, find prospects, prioritize accounts, review account signals, and compare sales segments.
 
-| Candidate skill | Intended workflow |
+| Skill | What it does |
 | --- | --- |
 | [Account Intel](skills/crunchbase-account-intel/SKILL.md) | Seller-specific meeting preparation and CRM-informed follow-ups |
 | [Prospect Finder](skills/crunchbase-prospect-finder/SKILL.md) | New sales prospects from an ICP or customer look-alikes, with exclusions |

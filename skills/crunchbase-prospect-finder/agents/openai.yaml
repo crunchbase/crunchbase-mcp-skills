@@ -1,0 +1,14 @@
+interface:
+  display_name: "Prospect Finder"
+  short_description: "Find and rank new Crunchbase sales prospects"
+  icon_small: "./assets/crunchbase-icon-blue.png"
+  icon_large: "./assets/crunchbase-icon-blue.png"
+  brand_color: "#146AFF"
+  default_prompt: "Use $crunchbase-prospect-finder to find new sales prospects matching my ICP."
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "crunchbase"
+      description: "Crunchbase structured search and canonical identity tools"
+policy:
+  allow_implicit_invocation: true

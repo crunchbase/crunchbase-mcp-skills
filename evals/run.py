@@ -11,10 +11,13 @@ import concurrent.futures
 import copy
 import hashlib
 import json
+import math
 import os
 import random
 import re
 import shutil
+import shlex
+from functools import lru_cache
 import signal
 import subprocess
 import sys
@@ -32,7 +35,14 @@ ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_SUITE = ROOT / "evals/suites/private-company-research/suite.json"
 ARMS = {"candidate", "baseline", "previous"}
 SPLITS = {"dev", "regression", "holdout"}
-CHECKS = {"no_write", "called", "not_called", "membership", "list_created", "max_calls", "tool_errors", "text_contains", "text_excludes", "semantic", "activation"}
+CHECKS = {"tool_result_contains", "tool_before", "artifact_unchanged", "artifact_json", "artifact_csv", "no_write", "called", "not_called", "membership", "list_created", "max_calls", "tool_errors", "text_contains", "text_excludes", "semantic", "activation"}
+try:
+    from .artifacts_io import safe_relative, stage_attachments, capture_artifacts, MAX_BYTES
+except ImportError:
+    import sys
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    from artifacts_io import safe_relative, stage_attachments, capture_artifacts, MAX_BYTES
+
 SAFE_ID = re.compile(r"^[a-zA-Z0-9][a-zA-Z0-9_.-]*$")
 USAGE_KEYS = ("input_tokens", "output_tokens", "cached_input_tokens")
 
@@ -68,6 +78,11 @@ def tree_hashes(root: Path) -> dict[str, str]:
 
 def validate_check(check: dict[str, Any], case_id: str) -> None:
     specs = {
+        "artifact_unchanged": ({"path", "from_turn"}, set()),
+        "artifact_json": ({"path", "expected"}, set()),
+        "artifact_csv": ({"path"}, {"columns", "key", "values", "rows"}),
+        "tool_before": ({"tool", "before_tools"}, {"argument_contains"}),
+        "tool_result_contains": ({"text"}, set()),
         "no_write": (set(), set()),
         "called": ({"tool"}, {"min", "max"}),
         "not_called": ({"tools"}, set()),
@@ -81,28 +96,51 @@ def validate_check(check: dict[str, Any], case_id: str) -> None:
         "activation": ({"skill", "expected"}, set()),
     }
     required, optional = specs[check["kind"]]
-    common = {"id", "kind", "severity", "turn"}
+    if check['kind'].startswith('artifact_'):
+        try:
+            safe_relative(check.get('path'))
+        except ValueError as exc:
+            raise EvalError(str(exc)) from exc
+        if check['kind'] == 'artifact_unchanged' and (type(check.get('from_turn')) is not int or check['from_turn'] < 1 or check.get('turn', 0) <= check['from_turn']):
+            raise EvalError('Unchanged artifact needs earlier from_turn and later turn')
+        if check['kind'] == 'artifact_csv':
+            if ('key' in check) != ('values' in check):
+                raise EvalError('CSV key and values must appear together')
+            for field in ('columns', 'values'):
+                if field in check and (not isinstance(check[field], list) or any(not isinstance(v, str) for v in check[field]) or len(check[field]) != len(set(check[field]))):
+                    raise EvalError('CSV columns/values must be unique strings')
+            if 'rows' in check and (not isinstance(check['rows'], list) or any(not isinstance(r, dict) or any(type(v) not in (str, int, float) or (type(v) in (int, float) and not math.isfinite(v)) for v in r.values()) for r in check['rows'])):
+                raise EvalError('CSV expected rows must contain strings or finite numbers')
+    common = {"id", "kind", "severity", "turn", "arms"}
+    if "arms" in check and (not isinstance(check["arms"], list) or not check["arms"] or any(a not in {"candidate", "baseline", "previous"} for a in check["arms"]) or len(set(check["arms"])) != len(check["arms"])):
+        raise EvalError("Check arms must be a nonempty unique supported-arm list")
     missing = required - set(check)
     unknown = set(check) - common - required - optional
     if missing or unknown:
         raise EvalError(f"{case_id}/{check['id']}: missing fields {sorted(missing)}; unknown fields {sorted(unknown)}")
-    for key in {"tool", "list_id", "name", "rubric", "skill"} & set(check):
+    for key in {"tool", "list_id", "name", "rubric", "skill", "text"} & set(check):
         if not isinstance(check[key], str) or not check[key].strip():
             raise EvalError(f"{case_id}/{check['id']}: {key} must be a nonempty string")
-    for key in {"tools", "entity_ids", "phrases", "allowed_codes"} & set(check):
+    for key in {"tools", "before_tools", "entity_ids", "phrases", "allowed_codes"} & set(check):
         values = check[key]
         if not isinstance(values, list) or not all(isinstance(v, str) and v for v in values):
             raise EvalError(f"{case_id}/{check['id']}: {key} must be an array of nonempty strings")
-        if key in {"tools", "phrases"} and not values:
+        if key in {"tools", "before_tools", "phrases"} and not values:
             raise EvalError(f"{case_id}/{check['id']}: {key} cannot be empty")
         if len(values) != len(set(values)):
             raise EvalError(f"{case_id}/{check['id']}: {key} contains duplicates")
     for key in {"min", "max", "limit"} & set(check):
         if type(check[key]) is not int or check[key] < 0:
             raise EvalError(f"{case_id}/{check['id']}: {key} must be a nonnegative integer")
-    for key in {"expected", "all"} & set(check):
+    for key in ({"expected", "all"} if check["kind"] == "activation" else {"all"}) & set(check):
         if type(check[key]) is not bool:
             raise EvalError(f"{case_id}/{check['id']}: {key} must be boolean")
+    if check['kind'] == 'tool_before':
+        match = check.get('argument_contains', {})
+        if not isinstance(match, dict) or any(not isinstance(k, str) or not k or not isinstance(v, str) or not v for k, v in match.items()):
+            raise EvalError('argument_contains must contain nonempty string key/value pairs')
+        if check['tool'] in check['before_tools']:
+            raise EvalError('Ordered tool cannot also be a dependent tool')
     if check["kind"] == "called" and "max" in check and check["max"] < check.get("min", 1):
         raise EvalError(f"{case_id}/{check['id']}: max is less than min")
     if "mode" in check and check["mode"] not in {"exact", "includes"}:
@@ -145,11 +183,48 @@ def load_suite(path: Path) -> dict[str, Any]:
             raise EvalError(f"{cid}: fixture must be an object")
         if any(k in case["fixture"] for k in ("checks", "rubric", "reference_answer", "expected_answer")):
             raise EvalError(f"{cid}: answer keys do not belong in the replay fixture")
+        for field in ('attachments', 'artifacts'):
+            items = case.get(field, [])
+            if not isinstance(items, list):
+                raise EvalError(f'{cid}: {field} must be a list')
+            paths = set()
+            for item in items:
+                allowed = {'path', 'content'} if field == 'attachments' else {'path', 'format'}
+                if not isinstance(item, dict) or set(item) != allowed:
+                    raise EvalError(f'{cid}: invalid {field} entry')
+                try:
+                    safe_relative(item['path'])
+                except ValueError as exc:
+                    raise EvalError(str(exc)) from exc
+                if item['path'] in paths:
+                    raise EvalError(f'{cid}: duplicate {field} path')
+                paths.add(item['path'])
+                if field == 'attachments' and (not isinstance(item['content'], str) or len(item['content'].encode()) > MAX_BYTES):
+                    raise EvalError(f'{cid}: invalid attachment content')
+                if field == 'artifacts' and item['format'] not in ('csv', 'json'):
+                    raise EvalError(f'{cid}: invalid artifact format')
         turns = case.get("turns")
         if not isinstance(turns, list) or not turns:
             raise EvalError(f"{cid}: turns must be a nonempty array")
         if any(not isinstance(t, dict) or set(t) != {"user"} or not isinstance(t["user"], str) or not t["user"].strip() for t in turns):
             raise EvalError(f"{cid}: turns contain only actual, nonempty user messages")
+        updates = case.get('fixture_updates', [])
+        if not isinstance(updates, list):
+            raise EvalError(f'{cid}: fixture_updates must be a list')
+        update_turns = set()
+        for update in updates:
+            if not isinstance(update, dict) or set(update) - {'turn', 'as_of', 'fixture'} or not {'turn', 'fixture'} <= set(update):
+                raise EvalError(f'{cid}: invalid fixture update')
+            if type(update['turn']) is not int or not 2 <= update['turn'] <= len(turns) or update['turn'] in update_turns:
+                raise EvalError(f'{cid}: invalid fixture update turn')
+            update_turns.add(update['turn'])
+            if not isinstance(update['fixture'], dict) or set(update['fixture']) - {'overrides', 'errors', 'empty_collections', 'base_data', 'page_size'}:
+                raise EvalError(f'{cid}: unsupported fixture update')
+            if 'as_of' in update:
+                try:
+                    datetime.strptime(update['as_of'], '%Y-%m-%d')
+                except (ValueError, TypeError) as exc:
+                    raise EvalError('Update clock must be YYYY-MM-DD') from exc
         if not isinstance(case.get("checks"), list) or not case["checks"]:
             raise EvalError(f"{cid}: checks must be nonempty")
         check_ids: set[str] = set()
@@ -165,6 +240,8 @@ def load_suite(path: Path) -> dict[str, Any]:
             if "turn" in check and (type(check["turn"]) is not int or not 1 <= check["turn"] <= len(turns)):
                 raise EvalError(f"{cid}/{check_id}: turn is out of range")
             validate_check(check, cid)
+            if check['kind'].startswith('artifact_') and check['path'] not in {a['path'] for a in case.get('artifacts', [])}:
+                raise EvalError(f'{cid}: artifact check path is not captured')
     return suite
 
 
@@ -285,9 +362,58 @@ def copy_skill_tree(source: Path, destination: Path) -> None:
     validate_skill_tree(destination)
 
 
+@lru_cache(maxsize=1)
+def python_runtime_paths() -> tuple[Path, ...]:
+    """Controller's supported interpreter plus its actual non-system linked libraries."""
+    roots = {Path(sys.base_prefix), Path(sys.base_prefix).resolve(), Path(sys.executable).resolve()}
+    if sys.platform == 'darwin':
+        import _hashlib
+        # Resolve dependencies of the executable, framework and SHA implementation.
+        pending = [Path(sys.executable).resolve(), Path(_hashlib.__file__).resolve()]
+        inspected = set()
+        while pending:
+            binary = pending.pop()
+            if binary in inspected:
+                continue
+            inspected.add(binary)
+            output = subprocess.run(['/usr/bin/otool', '-L', str(binary)], capture_output=True, text=True, check=True).stdout
+            for line in output.splitlines()[1:]:
+                name = line.strip().split(' (', 1)[0]
+                if not name.startswith('/') or name.startswith(('/usr/lib/', '/System/Library/')):
+                    continue
+                library = Path(name)
+                if not library.exists():
+                    raise EvalError('Missing Python runtime library: ' + name)
+                roots.update((library, library.resolve()))
+                pending.append(library.resolve())
+    return tuple(sorted(roots))
+
+
+def provision_python(workspace: Path) -> None:
+    binary = workspace / '.eval-bin'
+    binary.mkdir(exist_ok=True)
+    # No site/user imports or inherited PYTHON* settings; local script imports work.
+    wrapper = '#!/bin/sh\nexec ' + shlex.quote(str(Path(sys.executable).resolve())) + ' -E -s -S "$@"\n'
+    for name in ('python', 'python3', f'python{sys.version_info.major}.{sys.version_info.minor}'):
+        path = binary / name
+        path.write_text(wrapper, encoding='utf-8')
+        path.chmod(0o755)
+
+
+def advance_clock(workspace: Path, as_of: str) -> str:
+    """Replace the authoritative workspace clock and notify resumed sessions."""
+    notice = f"Current controlled evaluation date: {as_of}. This supersedes all earlier evaluation dates for this turn."
+    catalog = workspace / 'AGENTS.md'
+    lines = catalog.read_text().splitlines()
+    lines = [line for line in lines if not line.startswith(('Current date for this task:', 'Current controlled evaluation date:'))]
+    catalog.write_text(notice + '\n' + '\n'.join(lines) + '\n')
+    return notice
+
+
 def prepare_workspace(workspace: Path, skills: Path | None, as_of: str, context: str = "") -> dict[str, str]:
     workspace.mkdir(parents=True, exist_ok=True)
-    common = f"Current date for this task: {as_of}.\nUse the available tools when they are relevant to the user's request.\n"
+    provision_python(workspace)
+    common = f"Current controlled evaluation date: {as_of}. This is the initial clock; an explicit controlled-clock notice on a later turn supersedes it.\nUse the available tools when they are relevant to the user's request.\n"
     if context:
         common += "\n" + context.strip() + "\n"
     contents: dict[str, str] = {}
@@ -316,6 +442,78 @@ def toml_value(value: Any) -> str:
     return json.dumps(value, ensure_ascii=False)
 
 
+def native_catalog_names(prompt: list[dict[str, Any]]) -> list[str]:
+    """Read only the native catalog section, never the injected task catalog."""
+    names: set[str] = set()
+    for message in prompt:
+        for block in message.get('content', []):
+            text = block.get('text', '')
+            if '<skills_instructions>' not in text or '### Available skills\n' not in text:
+                continue
+            section = text.split('### Available skills\n', 1)[1].split('</skills_instructions>', 1)[0]
+            for line in section.splitlines():
+                if line.startswith('- '):
+                    match = re.match(r'^- (.+?): ', line)
+                    if not match:
+                        raise EvalError('Cannot parse native skill catalog; isolation is unverified')
+                    names.add(match.group(1))
+    return sorted(names)
+
+
+def render_catalog_probe(cli: str, workspace: Path, disabled: list[str], marker: str) -> list[dict[str, Any]]:
+    # Metadata renderer only: no model turn, tool calls, auth copies or settings writes.
+    command = [cli, 'debug', 'prompt-input', '--disable', 'plugins', '--disable', 'apps', '--disable', 'hooks',
+               '--enable', 'skip_host_skill_discovery', '-c', 'project_doc_max_bytes=0',
+               '-c', 'developer_instructions=' + toml_value(marker), '-c', 'mcp_servers={}',
+               '-c', 'web_search="disabled"', '-c', 'agents.enabled=false',
+               '-c', 'skills.config=' + toml_value([{'name': name, 'enabled': False} for name in disabled]),
+               'Metadata-only evaluation catalog isolation check.']
+    try:
+        probe_env = dict(os.environ)
+        probe_env["CODEX_HOME"] = str(workspace / ".probe-codex-home")
+        result = subprocess.run(command, cwd=workspace, env=probe_env, capture_output=True, text=True, timeout=30)
+        if result.returncode:
+            raise EvalError('Native prompt renderer failed; refusing an unverified evaluation')
+        prompt = json.loads(result.stdout)
+        if not isinstance(prompt, list):
+            raise ValueError('expected prompt list')
+        return prompt
+    except (OSError, subprocess.TimeoutExpired, ValueError) as exc:
+        raise EvalError('Cannot verify native catalog isolation') from exc
+
+
+@lru_cache(maxsize=4)
+def native_skill_isolation(cli: str) -> dict[str, Any]:
+    """One metadata preflight per controller process, shared equally by all arms."""
+    with tempfile.TemporaryDirectory(prefix='crunchbase-catalog-preflight-') as temp:
+        workspace = Path(temp)
+        canary = workspace / '.agents/skills/eval-native-discovery-canary'
+        canary.mkdir(parents=True)
+        (canary / 'SKILL.md').write_text('---\nname: eval-native-discovery-canary\ndescription: EVAL_NATIVE_CANARY_712903\n---\nMetadata probe only.\n')
+        # Mirror only metadata, never user settings, credentials, or helper code.
+        host_skills = Path(os.environ.get('CODEX_HOME', Path.home() / '.codex')) / 'skills'
+        mirror = workspace / '.probe-codex-home/skills'
+        mirror.mkdir(parents=True)
+        if host_skills.is_dir():
+            for entry in host_skills.rglob('SKILL.md'):
+                target = mirror / entry.relative_to(host_skills)
+                target.parent.mkdir(parents=True, exist_ok=True)
+                target.write_bytes(entry.read_bytes())
+        marker = 'EVAL_EXPLICIT_CANDIDATE_CATALOG_712903'
+        original = render_catalog_probe(cli, workspace, [], marker)
+        names = native_catalog_names(original)
+        if 'eval-native-discovery-canary' not in names:
+            raise EvalError('Native discovery canary was not exposed; isolation probe is invalid')
+        isolated = render_catalog_probe(cli, workspace, names, marker)
+        rendered = json.dumps(isolated)
+        if native_catalog_names(isolated) or 'EVAL_NATIVE_CANARY_712903' in rendered or marker not in rendered:
+            raise EvalError('Native catalog isolation failed or explicit candidate catalog was lost')
+        return {'method': 'native prompt-input canary + explicit disabled skill names',
+                'disabled_names': names, 'native_catalog_after': [], 'candidate_injection_preserved': True,
+                'probe_sha256': hashlib.sha256(rendered.encode()).hexdigest(),
+                'limitation': 'Local CLI metadata renderer, not a captured remote inference request; discovery is frozen at controller startup.'}
+
+
 def build_command(*, cli: str, workspace: Path, trial_dir: Path, fixture: Path, server: Path,
                   model: str, effort: str, turn: int, thread_id: str | None, ephemeral: bool,
                   protected_paths: list[Path]) -> list[str]:
@@ -323,11 +521,16 @@ def build_command(*, cli: str, workspace: Path, trial_dir: Path, fixture: Path, 
     # the only registered MCP server, reads synthetic fixtures, and has no
     # upstream implementation. The agent's shell cannot read its inputs/state.
     filesystem: dict[str, Any] = {":minimal": "read", ":workspace_roots": {".": "write"}}
+    for runtime_path in python_runtime_paths():
+        if any(runtime_path == p or runtime_path.is_relative_to(p) or p.is_relative_to(runtime_path) for p in protected_paths):
+            raise EvalError('Python runtime overlaps protected controller inputs')
+        filesystem[str(runtime_path)] = 'read'
     for path in protected_paths:
         if workspace.is_relative_to(path) or path.is_relative_to(workspace):
             raise EvalError("Controller inputs/outputs must be outside the agent workspace")
         filesystem[str(path)] = "deny"
     overrides: dict[str, Any] = {
+        "skills.config": [{"name": name, "enabled": False} for name in native_skill_isolation(cli)["disabled_names"]],
         "model_reasoning_effort": effort,
         "approval_policy": "never",
         "default_permissions": "skill-evaluation",
@@ -336,7 +539,7 @@ def build_command(*, cli: str, workspace: Path, trial_dir: Path, fixture: Path, 
         "allow_login_shell": False,
         "agents.enabled": False,
         "shell_environment_policy.inherit": "none",
-        "shell_environment_policy.set": {"PATH": "/usr/bin:/bin:/usr/sbin:/sbin"},
+        "shell_environment_policy.set": {"PATH": str(workspace / ".eval-bin") + ":/usr/bin:/bin:/usr/sbin:/sbin"},
         "web_search": "disabled",
         "project_doc_max_bytes": 0,
         "developer_instructions": (workspace / "AGENTS.md").read_text(encoding="utf-8"),
@@ -537,6 +740,8 @@ def extract_timeline(events: list[dict[str, Any]], turn: int) -> dict[str, Any]:
                 arguments = json.loads(arguments)
             except json.JSONDecodeError:
                 arguments = {"_unparsed": arguments}
+        if event.get('type') == 'item.completed':
+            attempt['completed_event_index'] = index
         attempt.update({"arguments": arguments, "server": item.get("server"), "status": item.get("status", event.get("type"))})
         if "result" in item:
             attempt["result"] = normalize_tool_result(item["result"])
@@ -590,6 +795,21 @@ def extract_skill_reads(events: list[dict[str, Any]], contents: dict[str, str], 
     return None if uncertain else sorted(reads)
 
 
+def validate_fixture_enums(data: dict[str, Any]) -> None:
+    """Base records must agree with their exposed enum contracts; overrides may inject faults."""
+    for collection, rows in data.get('entities', {}).items():
+        contracts = data.get('contracts', {}).get(collection, {})
+        for row in rows:
+            for field, contract in contracts.items():
+                value = row.get(field)
+                if value is None or 'enum_values' not in contract:
+                    continue
+                values = value if isinstance(value, list) else [value]
+                if any(v not in contract['enum_values'] for v in values):
+                    identity = row.get('identifier', {}).get('uuid', '<unknown>')
+                    raise EvalError(f'Fixture record {collection}/{identity} has {field}={value!r} outside its declared enum')
+
+
 def materialize_fixture(case: dict[str, Any], suite_path: Path) -> dict[str, Any]:
     fixture = copy.deepcopy(case["fixture"])
     if "base_data" not in fixture:
@@ -597,6 +817,7 @@ def materialize_fixture(case: dict[str, Any], suite_path: Path) -> dict[str, Any
         if not base.exists():
             raise EvalError(f"No fixture base_data or sibling base_data.json for {case['id']}")
         fixture["base_data"] = read_json(base)
+    validate_fixture_enums(fixture["base_data"])
     return fixture
 
 
@@ -629,6 +850,7 @@ def run_trial(job: dict[str, Any], case: dict[str, Any], run_dir: Path, manifest
             workspace = Path(temporary).resolve()
             skill_source = candidate if job["arm"] == "candidate" else previous if job["arm"] == "previous" else None
             contents = prepare_workspace(workspace, skill_source, manifest["as_of"], manifest.get("context", ""))
+            result['manifest']['attachment_sha256'] = stage_attachments(workspace, case.get('attachments', []))
             result["manifest"]["runtime_workspace"] = str(workspace)
             result["manifest"]["catalog_sha256"] = file_hash(workspace / "AGENTS.md")
             result["manifest"]["runtime_files"] = tree_hashes(workspace)
@@ -637,10 +859,21 @@ def run_trial(job: dict[str, Any], case: dict[str, Any], run_dir: Path, manifest
             activation_known = True
             for turn, prompt in enumerate(case["turns"], 1):
                 turn_dir = trial_dir / "turns" / str(turn)
+                update = next((u for u in case.get('fixture_updates', []) if u['turn'] == turn), None)
+                clock_notice = ""
+                if update:
+                    fixture = read_json(fixture_path)
+                    fixture.update(copy.deepcopy(update['fixture']))
+                    write_json(fixture_path, fixture)
+                    if 'as_of' in update:
+                        clock_notice = advance_clock(workspace, update['as_of'])
+                turn_dir.mkdir(parents=True, exist_ok=True)
+                write_json(turn_dir / 'fixture-before.json', read_json(fixture_path))
                 command = build_command(cli=cli, workspace=workspace, trial_dir=trial_dir, fixture=fixture_path,
                     server=server, model=manifest["model"], effort=manifest["reasoning_effort"], turn=turn,
                     thread_id=thread_id, ephemeral=len(case["turns"]) == 1, protected_paths=[run_dir, ROOT])
-                execution = execute_command(command, prompt["user"], turn_dir, workspace, timeout)
+                effective_prompt = (clock_notice + "\n\n" if clock_notice else "") + prompt["user"]
+                execution = execute_command(command, effective_prompt, turn_dir, workspace, timeout)
                 parsed = parse_trace(turn_dir, execution)
                 events = parsed.pop("events")
                 turn_reads = extract_skill_reads(events, contents, workspace)
@@ -662,6 +895,8 @@ def run_trial(job: dict[str, Any], case: dict[str, Any], run_dir: Path, manifest
                 parsed.update({"turn": turn, "duration_seconds": execution["duration_seconds"], "skill_reads": turn_reads,
                                "returncode": execution["returncode"], "timed_out": execution["timed_out"]})
                 parsed["state_after"] = read_json(trial_dir / "state.json")
+                parsed['artifacts'] = capture_artifacts(workspace, case.get('artifacts', []), turn_dir / 'artifacts')
+                parsed['fixture_sha256'] = file_hash(turn_dir / 'fixture-before.json')
                 result["turns"].append(parsed)
                 for key in USAGE_KEYS:
                     result["usage"][key] += parsed["usage"][key]
@@ -725,11 +960,13 @@ def create_manifest(args: argparse.Namespace, suite: dict[str, Any], suite_path:
         "replay_server_sha256": file_hash(inputs / "replay_server.py"),
         "effective_fixture_sha256": tree_hashes(inputs / "fixtures"),
         "harness_sha256": harness, "fixture_base_sha256": file_hash(suite_path.parent / "base_data.json") if (suite_path.parent / "base_data.json").exists() else None,
-        "codex_version": cli_version, "python_version": sys.version, "model": model, "reasoning_effort": effort,
+        "codex_version": cli_version, "python_version": sys.version,
+        "agent_python": {"executable": str(Path(sys.executable).resolve()), "sha256": file_hash(Path(sys.executable).resolve()), "read_paths": [str(p) for p in python_runtime_paths()], "flags": ["-E", "-s", "-S"], "arms": "identical"}, "model": model, "reasoning_effort": effort,
         "model_resolution": source, "seed": args.seed, "repeats": args.repeats, "arms": args.arms.split(","),
         "budgets": {"timeout_seconds_per_turn": args.timeout, "jobs": args.jobs}, "jobs": jobs,
         "isolation": {"user_config": "ignored; host project documents disabled; generated catalog injected explicitly", "plugins": "disabled", "apps": "disabled", "hooks": "disabled",
-            "web": "disabled", "shell_network": "disabled", "host_skills": "disabled",
+            "web": "disabled", "shell_network": "disabled", "host_skills": "explicit native-name disables verified by metadata canary",
+            "native_catalog_preflight": native_skill_isolation(args.codex),
             "agent_filesystem": "minimal OS runtime plus per-trial workspace; deny controller repository and run artifacts",
             "mcp": "only synthetic stdio replay server; no live backend", "routing": "all skill descriptions available; no expected skill in prompt",
             "multi_turn": "actual persisted Codex resume, state/log retained; single turns ephemeral",

@@ -20,4 +20,6 @@ jobs:
       - name: Validate cases and run fixture, grader, and calculator tests
         run: |
           python3 evals/run.py validate --split all
+          python3 evals/run.py validate --suite evals/suites/gtm/suite.json --split all
+          python3 evals/run.py validate --suite evals/suites/cross-collection/suite.json --split all
           python3 -m unittest discover -s evals/tests -v

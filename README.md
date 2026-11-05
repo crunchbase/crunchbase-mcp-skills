@@ -1,8 +1,8 @@
 # Crunchbase MCP Skills
 
-Agent skills for company research, funding analysis, and saved lists, powered by Crunchbase MCP.
+Agent skills for company research, sales workflows, funding analysis, and saved lists, powered by Crunchbase MCP.
 
-Build an investment landscape, screen recent funding rounds, prepare for a company meeting, or compare capital across a market. Each skill packages a focused workflow with supporting references and calculation helpers where needed.
+Build an investment landscape, screen funding rounds, prepare a sales meeting, find prospects, or prioritize accounts. Each skill packages a focused workflow with supporting references and calculation helpers where needed.
 
 ## Get started
 
@@ -20,7 +20,7 @@ After installation, try:
 
 > Use Crunchbase to prepare a brief on Canva for an introductory meeting. Include financing, relevant peers, and questions to explore.
 
-Skills require the [Crunchbase MCP tools](MCP-REQUIREMENTS.md); installing them does not provide a connection or account access. Calculation helpers require Python 3.9+ and use only the standard library.
+Skills require the [Crunchbase MCP tools](MCP-REQUIREMENTS.md); installing them does not provide a connection or account access. Research calculation helpers require Python 3.9+. The GTM candidate uses Python 3.10+; CSV/JSON workflows use the standard library, while optional XLSX/XLSM CRM ingestion needs openpyxl.
 
 ## Choose a skill
 
@@ -35,6 +35,20 @@ Skills require the [Crunchbase MCP tools](MCP-REQUIREMENTS.md); installing them 
 The skills instruct the agent to ask for missing inputs and resolve ambiguous company identities before continuing. Research stays read-only unless you explicitly request a supported saved-list change. Write workflows require a preview and membership verification; the preview does not require another approval when the requested action is already clear.
 
 See the [workflow guide](docs/guides/private-company-research.md) for more examples and expected outputs.
+
+### GTM release candidate
+
+This checkout also contains five GTM skills being evaluated for version 1.1.0. They preserve the same explicit Crunchbase selection, canonical identity, source-grounding, and write-authorization patterns. Release approval is tracked in the [implementation status](docs/gtm-implementation-status.md); the download links below point to the latest published release. The GTM skills are available in this branch and are not yet published. Names are pending marketing approval.
+
+| Candidate skill | Intended workflow |
+| --- | --- |
+| [Account Intel](skills/crunchbase-account-intel/SKILL.md) | Seller-specific meeting preparation and CRM-informed follow-ups |
+| [Prospect Finder](skills/crunchbase-prospect-finder/SKILL.md) | New sales prospects from an ICP or customer look-alikes, with exclusions |
+| [Prioritize Accounts](skills/crunchbase-prioritize-accounts/SKILL.md) | Reproducible scoring and tiering of an established account book |
+| [Account Pulse](skills/crunchbase-account-pulse/SKILL.md) | Dated signals, ranked review priorities, plays and recurring comparisons |
+| [Market Radar](skills/crunchbase-market-radar/SKILL.md) | Segment momentum, account territories and prospecting handoffs |
+
+See the [GTM workflow guide](docs/guides/gtm-workflows.md) for examples, runtime requirements, and portability limits. CRM outputs are local artifacts, not automatic CRM updates. Recurring operation depends on the host's supported scheduling and persistence capabilities.
 
 ## Installation options
 

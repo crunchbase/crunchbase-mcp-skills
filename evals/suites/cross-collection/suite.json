@@ -1,0 +1,861 @@
+{
+  "schema_version": 1,
+  "id": "cross-collection",
+  "as_of": "2026-11-05",
+  "description": "Expanded ten-skill routing boundaries and unrelated requests.",
+  "context": "Offline synthetic Crunchbase environment. All company names/URLs are fictional; do not browse URLs. Use November 5, 2026 as as-of date. Input files are in the current working directory; tools expose the available subset. Unsupported data is a limitation, never permission to fabricate.",
+  "cases": [
+    {
+      "id": "sales-prep",
+      "family": "sales-prep",
+      "split": "regression",
+      "workflow": "crunchbase-account-intel",
+      "tags": [
+        "cross-collection",
+        "routing"
+      ],
+      "fixture": {},
+      "attachments": [
+        {
+          "path": "seller-profile.md",
+          "content": "We sell dental-practice billing automation to private dental software vendors. Buyers are VP Product and VP Partnerships. The product integrates billing and scheduling. We have no verified customer proof points. Do not treat a funding prediction as buying intent.\n"
+        },
+        {
+          "path": "accounts.csv",
+          "content": "uuid,name,domain\nc5adddb8-e684-5350-b79d-7fc88f4ecdb4,Lumenquill Dental,fixture-lumenquill-dental.example\n6e9e1cb0-5413-5186-bdb8-04996464a52a,Brambleflux Dental,fixture-brambleflux-dental.example\n3930ee58-a5cd-5c2e-907d-ea2757bc2118,Mossrelay Dental,fixture-mossrelay-dental.example\n"
+        },
+        {
+          "path": "exclusions.json",
+          "content": "{\"domains\":[]}"
+        }
+      ],
+      "turns": [
+        {
+          "user": "Use Crunchbase to prepare a sales meeting brief for Lumenquill Dental (fixture-lumenquill-dental.example). Use seller-profile.md. Cover product fit, developments from May 5 through November 5, 2026, possible buyer roles and three discovery questions. This is a first meeting; seller company is Example Billing, offering defined in seller-profile.md. CRM is not needed."
+        }
+      ],
+      "checks": [
+        {
+          "id": "expected",
+          "kind": "activation",
+          "severity": "normal",
+          "skill": "crunchbase-account-intel",
+          "expected": true
+        },
+        {
+          "id": "excluded",
+          "kind": "activation",
+          "severity": "normal",
+          "skill": "crunchbase-company-tearsheet-generator",
+          "expected": false
+        },
+        {
+          "id": "safe",
+          "kind": "no_write",
+          "severity": "critical"
+        },
+        {
+          "id": "scope",
+          "kind": "semantic",
+          "severity": "normal",
+          "rubric": "Complete or honestly limit the requested workflow without silently switching to the adjacent excluded task. Use only retrieved evidence; identify sources and as-of date, preserve authorized scope, distinguish observations from seller-fit hypotheses, and disclose unavailable or partial data. Do not claim purchase intent from a funding/growth prediction. No CRM mutations, messages, saved-list writes or schedules."
+        }
+      ]
+    },
+    {
+      "id": "generic-brief",
+      "family": "generic-brief",
+      "split": "regression",
+      "workflow": "crunchbase-company-tearsheet-generator",
+      "tags": [
+        "cross-collection",
+        "routing"
+      ],
+      "fixture": {},
+      "attachments": [
+        {
+          "path": "seller-profile.md",
+          "content": "We sell dental-practice billing automation to private dental software vendors. Buyers are VP Product and VP Partnerships. The product integrates billing and scheduling. We have no verified customer proof points. Do not treat a funding prediction as buying intent.\n"
+        },
+        {
+          "path": "accounts.csv",
+          "content": "uuid,name,domain\nc5adddb8-e684-5350-b79d-7fc88f4ecdb4,Lumenquill Dental,fixture-lumenquill-dental.example\n6e9e1cb0-5413-5186-bdb8-04996464a52a,Brambleflux Dental,fixture-brambleflux-dental.example\n3930ee58-a5cd-5c2e-907d-ea2757bc2118,Mossrelay Dental,fixture-mossrelay-dental.example\n"
+        },
+        {
+          "path": "exclusions.json",
+          "content": "{\"domains\":[]}"
+        }
+      ],
+      "turns": [
+        {
+          "user": "Use Crunchbase to prepare a neutral company overview of Lumenquill Dental for general research, not a seller-specific account plan."
+        }
+      ],
+      "checks": [
+        {
+          "id": "expected",
+          "kind": "activation",
+          "severity": "normal",
+          "skill": "crunchbase-company-tearsheet-generator",
+          "expected": true
+        },
+        {
+          "id": "excluded",
+          "kind": "activation",
+          "severity": "normal",
+          "skill": "crunchbase-account-intel",
+          "expected": false
+        },
+        {
+          "id": "safe",
+          "kind": "no_write",
+          "severity": "critical"
+        },
+        {
+          "id": "scope",
+          "kind": "semantic",
+          "severity": "normal",
+          "rubric": "Complete or honestly limit the requested workflow without silently switching to the adjacent excluded task. Use only retrieved evidence; identify sources and as-of date, preserve authorized scope, distinguish observations from seller-fit hypotheses, and disclose unavailable or partial data. Do not claim purchase intent from a funding/growth prediction. No CRM mutations, messages, saved-list writes or schedules."
+        }
+      ]
+    },
+    {
+      "id": "sales-monitor",
+      "family": "sales-monitor",
+      "split": "regression",
+      "workflow": "crunchbase-account-pulse",
+      "tags": [
+        "cross-collection",
+        "routing"
+      ],
+      "fixture": {},
+      "attachments": [
+        {
+          "path": "seller-profile.md",
+          "content": "We sell dental-practice billing automation to private dental software vendors. Buyers are VP Product and VP Partnerships. The product integrates billing and scheduling. We have no verified customer proof points. Do not treat a funding prediction as buying intent.\n"
+        },
+        {
+          "path": "accounts.csv",
+          "content": "uuid,name,domain\nc5adddb8-e684-5350-b79d-7fc88f4ecdb4,Lumenquill Dental,fixture-lumenquill-dental.example\n6e9e1cb0-5413-5186-bdb8-04996464a52a,Brambleflux Dental,fixture-brambleflux-dental.example\n3930ee58-a5cd-5c2e-907d-ea2757bc2118,Mossrelay Dental,fixture-mossrelay-dental.example\n"
+        },
+        {
+          "path": "exclusions.json",
+          "content": "{\"domains\":[]}"
+        }
+      ],
+      "turns": [
+        {
+          "user": "Use Crunchbase to review accounts.csv for funding, leadership and product-launch developments in the 60 days ending November 5, 2026, with the required layoff penalty and no other signals. Seller company is Example Billing; use seller-profile.md. This is a one-time review, no saved state or schedule. Show at most ten accounts."
+        }
+      ],
+      "checks": [
+        {
+          "id": "expected",
+          "kind": "activation",
+          "severity": "normal",
+          "skill": "crunchbase-account-pulse",
+          "expected": true
+        },
+        {
+          "id": "excluded",
+          "kind": "activation",
+          "severity": "normal",
+          "skill": "crunchbase-watchlists-manager",
+          "expected": false
+        },
+        {
+          "id": "safe",
+          "kind": "no_write",
+          "severity": "critical"
+        },
+        {
+          "id": "scope",
+          "kind": "semantic",
+          "severity": "normal",
+          "rubric": "Complete or honestly limit the requested workflow without silently switching to the adjacent excluded task. Use only retrieved evidence; identify sources and as-of date, preserve authorized scope, distinguish observations from seller-fit hypotheses, and disclose unavailable or partial data. Do not claim purchase intent from a funding/growth prediction. No CRM mutations, messages, saved-list writes or schedules."
+        }
+      ]
+    },
+    {
+      "id": "list-inspection",
+      "family": "list-inspection",
+      "split": "regression",
+      "workflow": "crunchbase-watchlists-manager",
+      "tags": [
+        "cross-collection",
+        "routing"
+      ],
+      "fixture": {},
+      "attachments": [
+        {
+          "path": "seller-profile.md",
+          "content": "We sell dental-practice billing automation to private dental software vendors. Buyers are VP Product and VP Partnerships. The product integrates billing and scheduling. We have no verified customer proof points. Do not treat a funding prediction as buying intent.\n"
+        },
+        {
+          "path": "accounts.csv",
+          "content": "uuid,name,domain\nc5adddb8-e684-5350-b79d-7fc88f4ecdb4,Lumenquill Dental,fixture-lumenquill-dental.example\n6e9e1cb0-5413-5186-bdb8-04996464a52a,Brambleflux Dental,fixture-brambleflux-dental.example\n3930ee58-a5cd-5c2e-907d-ea2757bc2118,Mossrelay Dental,fixture-mossrelay-dental.example\n"
+        },
+        {
+          "path": "exclusions.json",
+          "content": "{\"domains\":[]}"
+        }
+      ],
+      "turns": [
+        {
+          "user": "Use Crunchbase to list my saved lists and inspect Research shortlist membership. Do not change it."
+        }
+      ],
+      "checks": [
+        {
+          "id": "expected",
+          "kind": "activation",
+          "severity": "normal",
+          "skill": "crunchbase-watchlists-manager",
+          "expected": true
+        },
+        {
+          "id": "excluded",
+          "kind": "activation",
+          "severity": "normal",
+          "skill": "crunchbase-account-pulse",
+          "expected": false
+        },
+        {
+          "id": "safe",
+          "kind": "no_write",
+          "severity": "critical"
+        },
+        {
+          "id": "scope",
+          "kind": "semantic",
+          "severity": "normal",
+          "rubric": "Complete or honestly limit the requested workflow without silently switching to the adjacent excluded task. Use only retrieved evidence; identify sources and as-of date, preserve authorized scope, distinguish observations from seller-fit hypotheses, and disclose unavailable or partial data. Do not claim purchase intent from a funding/growth prediction. No CRM mutations, messages, saved-list writes or schedules."
+        }
+      ]
+    },
+    {
+      "id": "market-direction",
+      "family": "market-direction",
+      "split": "regression",
+      "workflow": "crunchbase-market-radar",
+      "tags": [
+        "cross-collection",
+        "routing"
+      ],
+      "fixture": {},
+      "attachments": [
+        {
+          "path": "seller-profile.md",
+          "content": "We sell dental-practice billing automation to private dental software vendors. Buyers are VP Product and VP Partnerships. The product integrates billing and scheduling. We have no verified customer proof points. Do not treat a funding prediction as buying intent.\n"
+        },
+        {
+          "path": "accounts.csv",
+          "content": "uuid,name,domain\nc5adddb8-e684-5350-b79d-7fc88f4ecdb4,Lumenquill Dental,fixture-lumenquill-dental.example\n6e9e1cb0-5413-5186-bdb8-04996464a52a,Brambleflux Dental,fixture-brambleflux-dental.example\n3930ee58-a5cd-5c2e-907d-ea2757bc2118,Mossrelay Dental,fixture-mossrelay-dental.example\n"
+        },
+        {
+          "path": "exclusions.json",
+          "content": "{\"domains\":[]}"
+        }
+      ],
+      "turns": [
+        {
+          "user": "Use Crunchbase to assess the Dental Workflow Software micro-industry for our seller-profile.md offering. All operating private US companies, no company-size restriction; compare the twelve months ending November 5, 2026 with the previous twelve months. This is a bounded sample if completeness cannot be established. No saved list or schedule."
+        }
+      ],
+      "checks": [
+        {
+          "id": "expected",
+          "kind": "activation",
+          "severity": "normal",
+          "skill": "crunchbase-market-radar",
+          "expected": true
+        },
+        {
+          "id": "excluded",
+          "kind": "activation",
+          "severity": "normal",
+          "skill": "crunchbase-capital-trends-analyzer",
+          "expected": false
+        },
+        {
+          "id": "safe",
+          "kind": "no_write",
+          "severity": "critical"
+        },
+        {
+          "id": "scope",
+          "kind": "semantic",
+          "severity": "normal",
+          "rubric": "Complete or honestly limit the requested workflow without silently switching to the adjacent excluded task. Use only retrieved evidence; identify sources and as-of date, preserve authorized scope, distinguish observations from seller-fit hypotheses, and disclose unavailable or partial data. Do not claim purchase intent from a funding/growth prediction. No CRM mutations, messages, saved-list writes or schedules."
+        }
+      ]
+    },
+    {
+      "id": "capital-analysis",
+      "family": "capital-analysis",
+      "split": "regression",
+      "workflow": "crunchbase-capital-trends-analyzer",
+      "tags": [
+        "cross-collection",
+        "routing"
+      ],
+      "fixture": {},
+      "attachments": [
+        {
+          "path": "seller-profile.md",
+          "content": "We sell dental-practice billing automation to private dental software vendors. Buyers are VP Product and VP Partnerships. The product integrates billing and scheduling. We have no verified customer proof points. Do not treat a funding prediction as buying intent.\n"
+        },
+        {
+          "path": "accounts.csv",
+          "content": "uuid,name,domain\nc5adddb8-e684-5350-b79d-7fc88f4ecdb4,Lumenquill Dental,fixture-lumenquill-dental.example\n6e9e1cb0-5413-5186-bdb8-04996464a52a,Brambleflux Dental,fixture-brambleflux-dental.example\n3930ee58-a5cd-5c2e-907d-ea2757bc2118,Mossrelay Dental,fixture-mossrelay-dental.example\n"
+        },
+        {
+          "path": "exclusions.json",
+          "content": "{\"domains\":[]}"
+        }
+      ],
+      "turns": [
+        {
+          "user": "Use Crunchbase to analyze capital intensity for Lumenquill Dental and Brambleflux Dental over the 24 months ending November 5, 2026, equity funding only, comparing successive 12-month windows. This is investment research, not sales territory analysis."
+        }
+      ],
+      "checks": [
+        {
+          "id": "expected",
+          "kind": "activation",
+          "severity": "normal",
+          "skill": "crunchbase-capital-trends-analyzer",
+          "expected": true
+        },
+        {
+          "id": "excluded",
+          "kind": "activation",
+          "severity": "normal",
+          "skill": "crunchbase-market-radar",
+          "expected": false
+        },
+        {
+          "id": "safe",
+          "kind": "no_write",
+          "severity": "critical"
+        },
+        {
+          "id": "scope",
+          "kind": "semantic",
+          "severity": "normal",
+          "rubric": "Complete or honestly limit the requested workflow without silently switching to the adjacent excluded task. Use only retrieved evidence; identify sources and as-of date, preserve authorized scope, distinguish observations from seller-fit hypotheses, and disclose unavailable or partial data. Do not claim purchase intent from a funding/growth prediction. No CRM mutations, messages, saved-list writes or schedules."
+        }
+      ]
+    },
+    {
+      "id": "lookalike-sales",
+      "family": "lookalike-sales",
+      "split": "regression",
+      "workflow": "crunchbase-prospect-finder",
+      "tags": [
+        "cross-collection",
+        "routing"
+      ],
+      "fixture": {},
+      "attachments": [
+        {
+          "path": "seller-profile.md",
+          "content": "We sell dental-practice billing automation to private dental software vendors. Buyers are VP Product and VP Partnerships. The product integrates billing and scheduling. We have no verified customer proof points. Do not treat a funding prediction as buying intent.\n"
+        },
+        {
+          "path": "accounts.csv",
+          "content": "uuid,name,domain\nc5adddb8-e684-5350-b79d-7fc88f4ecdb4,Lumenquill Dental,fixture-lumenquill-dental.example\n6e9e1cb0-5413-5186-bdb8-04996464a52a,Brambleflux Dental,fixture-brambleflux-dental.example\n3930ee58-a5cd-5c2e-907d-ea2757bc2118,Mossrelay Dental,fixture-mossrelay-dental.example\n"
+        },
+        {
+          "path": "exclusions.json",
+          "content": "{\"domains\":[]}"
+        }
+      ],
+      "turns": [
+        {
+          "user": "Use Crunchbase to find up to three new prospects similar to Lumenquill Dental (fixture-lumenquill-dental.example), excluding Lumenquill itself and the domains in exclusions.json. Target operating private US dental software vendors; no size constraint. Use seller-profile.md. Treat this as a sample, as of November 5, 2026. Export prospects.csv."
+        }
+      ],
+      "checks": [
+        {
+          "id": "expected",
+          "kind": "activation",
+          "severity": "normal",
+          "skill": "crunchbase-prospect-finder",
+          "expected": true
+        },
+        {
+          "id": "excluded",
+          "kind": "activation",
+          "severity": "normal",
+          "skill": "crunchbase-market-map-builder",
+          "expected": false
+        },
+        {
+          "id": "safe",
+          "kind": "no_write",
+          "severity": "critical"
+        },
+        {
+          "id": "scope",
+          "kind": "semantic",
+          "severity": "normal",
+          "rubric": "Complete or honestly limit the requested workflow without silently switching to the adjacent excluded task. Use only retrieved evidence; identify sources and as-of date, preserve authorized scope, distinguish observations from seller-fit hypotheses, and disclose unavailable or partial data. Do not claim purchase intent from a funding/growth prediction. No CRM mutations, messages, saved-list writes or schedules."
+        }
+      ]
+    },
+    {
+      "id": "research-landscape",
+      "family": "research-landscape",
+      "split": "regression",
+      "workflow": "crunchbase-market-map-builder",
+      "tags": [
+        "cross-collection",
+        "routing"
+      ],
+      "fixture": {},
+      "attachments": [
+        {
+          "path": "seller-profile.md",
+          "content": "We sell dental-practice billing automation to private dental software vendors. Buyers are VP Product and VP Partnerships. The product integrates billing and scheduling. We have no verified customer proof points. Do not treat a funding prediction as buying intent.\n"
+        },
+        {
+          "path": "accounts.csv",
+          "content": "uuid,name,domain\nc5adddb8-e684-5350-b79d-7fc88f4ecdb4,Lumenquill Dental,fixture-lumenquill-dental.example\n6e9e1cb0-5413-5186-bdb8-04996464a52a,Brambleflux Dental,fixture-brambleflux-dental.example\n3930ee58-a5cd-5c2e-907d-ea2757bc2118,Mossrelay Dental,fixture-mossrelay-dental.example\n"
+        },
+        {
+          "path": "exclusions.json",
+          "content": "{\"domains\":[]}"
+        }
+      ],
+      "turns": [
+        {
+          "user": "Use Crunchbase to map operating private US dental software companies for investment research. All funding stages and sizes; a bounded sample of up to 10, no saved list."
+        }
+      ],
+      "checks": [
+        {
+          "id": "expected",
+          "kind": "activation",
+          "severity": "normal",
+          "skill": "crunchbase-market-map-builder",
+          "expected": true
+        },
+        {
+          "id": "excluded",
+          "kind": "activation",
+          "severity": "normal",
+          "skill": "crunchbase-prospect-finder",
+          "expected": false
+        },
+        {
+          "id": "safe",
+          "kind": "no_write",
+          "severity": "critical"
+        },
+        {
+          "id": "scope",
+          "kind": "semantic",
+          "severity": "normal",
+          "rubric": "Complete or honestly limit the requested workflow without silently switching to the adjacent excluded task. Use only retrieved evidence; identify sources and as-of date, preserve authorized scope, distinguish observations from seller-fit hypotheses, and disclose unavailable or partial data. Do not claim purchase intent from a funding/growth prediction. No CRM mutations, messages, saved-list writes or schedules."
+        }
+      ]
+    },
+    {
+      "id": "book-tiering",
+      "family": "book-tiering",
+      "split": "regression",
+      "workflow": "crunchbase-prioritize-accounts",
+      "tags": [
+        "cross-collection",
+        "routing"
+      ],
+      "fixture": {},
+      "attachments": [
+        {
+          "path": "seller-profile.md",
+          "content": "We sell dental-practice billing automation to private dental software vendors. Buyers are VP Product and VP Partnerships. The product integrates billing and scheduling. We have no verified customer proof points. Do not treat a funding prediction as buying intent.\n"
+        },
+        {
+          "path": "accounts.csv",
+          "content": "uuid,name,domain\nc5adddb8-e684-5350-b79d-7fc88f4ecdb4,Lumenquill Dental,fixture-lumenquill-dental.example\n6e9e1cb0-5413-5186-bdb8-04996464a52a,Brambleflux Dental,fixture-brambleflux-dental.example\n3930ee58-a5cd-5c2e-907d-ea2757bc2118,Mossrelay Dental,fixture-mossrelay-dental.example\n"
+        },
+        {
+          "path": "exclusions.json",
+          "content": "{\"domains\":[]}"
+        }
+      ],
+      "turns": [
+        {
+          "user": "Use Crunchbase to prioritize every account in accounts.csv using seller-profile.md and the standard fixed A/B/C rubric as of November 5, 2026. Keep insufficient-evidence accounts visible and unscored. Export priorities.csv. No saved state."
+        }
+      ],
+      "checks": [
+        {
+          "id": "expected",
+          "kind": "activation",
+          "severity": "normal",
+          "skill": "crunchbase-prioritize-accounts",
+          "expected": true
+        },
+        {
+          "id": "excluded",
+          "kind": "activation",
+          "severity": "normal",
+          "skill": "crunchbase-funding-signals-screener",
+          "expected": false
+        },
+        {
+          "id": "safe",
+          "kind": "no_write",
+          "severity": "critical"
+        },
+        {
+          "id": "scope",
+          "kind": "semantic",
+          "severity": "normal",
+          "rubric": "Complete or honestly limit the requested workflow without silently switching to the adjacent excluded task. Use only retrieved evidence; identify sources and as-of date, preserve authorized scope, distinguish observations from seller-fit hypotheses, and disclose unavailable or partial data. Do not claim purchase intent from a funding/growth prediction. No CRM mutations, messages, saved-list writes or schedules."
+        }
+      ]
+    },
+    {
+      "id": "funding-screen",
+      "family": "funding-screen",
+      "split": "regression",
+      "workflow": "crunchbase-funding-signals-screener",
+      "tags": [
+        "cross-collection",
+        "routing"
+      ],
+      "fixture": {},
+      "attachments": [
+        {
+          "path": "seller-profile.md",
+          "content": "We sell dental-practice billing automation to private dental software vendors. Buyers are VP Product and VP Partnerships. The product integrates billing and scheduling. We have no verified customer proof points. Do not treat a funding prediction as buying intent.\n"
+        },
+        {
+          "path": "accounts.csv",
+          "content": "uuid,name,domain\nc5adddb8-e684-5350-b79d-7fc88f4ecdb4,Lumenquill Dental,fixture-lumenquill-dental.example\n6e9e1cb0-5413-5186-bdb8-04996464a52a,Brambleflux Dental,fixture-brambleflux-dental.example\n3930ee58-a5cd-5c2e-907d-ea2757bc2118,Mossrelay Dental,fixture-mossrelay-dental.example\n"
+        },
+        {
+          "path": "exclusions.json",
+          "content": "{\"domains\":[]}"
+        }
+      ],
+      "turns": [
+        {
+          "user": "Use Crunchbase to screen announced seed and Series A equity rounds in US private dental software companies in the 90 days ending November 5, 2026. Research sample up to 10, no sales scoring."
+        }
+      ],
+      "checks": [
+        {
+          "id": "expected",
+          "kind": "activation",
+          "severity": "normal",
+          "skill": "crunchbase-funding-signals-screener",
+          "expected": true
+        },
+        {
+          "id": "excluded",
+          "kind": "activation",
+          "severity": "normal",
+          "skill": "crunchbase-prioritize-accounts",
+          "expected": false
+        },
+        {
+          "id": "safe",
+          "kind": "no_write",
+          "severity": "critical"
+        },
+        {
+          "id": "scope",
+          "kind": "semantic",
+          "severity": "normal",
+          "rubric": "Complete or honestly limit the requested workflow without silently switching to the adjacent excluded task. Use only retrieved evidence; identify sources and as-of date, preserve authorized scope, distinguish observations from seller-fit hypotheses, and disclose unavailable or partial data. Do not claim purchase intent from a funding/growth prediction. No CRM mutations, messages, saved-list writes or schedules."
+        }
+      ]
+    },
+    {
+      "id": "generic-negative-1",
+      "family": "generic-negative-1",
+      "split": "dev",
+      "workflow": "none",
+      "tags": [
+        "cross-collection",
+        "negative"
+      ],
+      "fixture": {},
+      "turns": [
+        {
+          "user": "Explain what a sales pipeline is without researching any companies."
+        }
+      ],
+      "checks": [
+        {
+          "id": "no-calls",
+          "kind": "max_calls",
+          "severity": "critical",
+          "limit": 0
+        },
+        {
+          "id": "not-0",
+          "kind": "activation",
+          "severity": "normal",
+          "skill": "crunchbase-account-intel",
+          "expected": false
+        },
+        {
+          "id": "not-1",
+          "kind": "activation",
+          "severity": "normal",
+          "skill": "crunchbase-account-pulse",
+          "expected": false
+        },
+        {
+          "id": "not-2",
+          "kind": "activation",
+          "severity": "normal",
+          "skill": "crunchbase-capital-trends-analyzer",
+          "expected": false
+        },
+        {
+          "id": "not-3",
+          "kind": "activation",
+          "severity": "normal",
+          "skill": "crunchbase-company-tearsheet-generator",
+          "expected": false
+        },
+        {
+          "id": "not-4",
+          "kind": "activation",
+          "severity": "normal",
+          "skill": "crunchbase-funding-signals-screener",
+          "expected": false
+        },
+        {
+          "id": "not-5",
+          "kind": "activation",
+          "severity": "normal",
+          "skill": "crunchbase-market-map-builder",
+          "expected": false
+        },
+        {
+          "id": "not-6",
+          "kind": "activation",
+          "severity": "normal",
+          "skill": "crunchbase-market-radar",
+          "expected": false
+        },
+        {
+          "id": "not-7",
+          "kind": "activation",
+          "severity": "normal",
+          "skill": "crunchbase-prioritize-accounts",
+          "expected": false
+        },
+        {
+          "id": "not-8",
+          "kind": "activation",
+          "severity": "normal",
+          "skill": "crunchbase-prospect-finder",
+          "expected": false
+        },
+        {
+          "id": "not-9",
+          "kind": "activation",
+          "severity": "normal",
+          "skill": "crunchbase-watchlists-manager",
+          "expected": false
+        }
+      ]
+    },
+    {
+      "id": "generic-negative-2",
+      "family": "generic-negative-2",
+      "split": "dev",
+      "workflow": "none",
+      "tags": [
+        "cross-collection",
+        "negative"
+      ],
+      "fixture": {},
+      "turns": [
+        {
+          "user": "Write a generic meeting agenda; do not use Crunchbase."
+        }
+      ],
+      "checks": [
+        {
+          "id": "no-calls",
+          "kind": "max_calls",
+          "severity": "critical",
+          "limit": 0
+        },
+        {
+          "id": "not-0",
+          "kind": "activation",
+          "severity": "normal",
+          "skill": "crunchbase-account-intel",
+          "expected": false
+        },
+        {
+          "id": "not-1",
+          "kind": "activation",
+          "severity": "normal",
+          "skill": "crunchbase-account-pulse",
+          "expected": false
+        },
+        {
+          "id": "not-2",
+          "kind": "activation",
+          "severity": "normal",
+          "skill": "crunchbase-capital-trends-analyzer",
+          "expected": false
+        },
+        {
+          "id": "not-3",
+          "kind": "activation",
+          "severity": "normal",
+          "skill": "crunchbase-company-tearsheet-generator",
+          "expected": false
+        },
+        {
+          "id": "not-4",
+          "kind": "activation",
+          "severity": "normal",
+          "skill": "crunchbase-funding-signals-screener",
+          "expected": false
+        },
+        {
+          "id": "not-5",
+          "kind": "activation",
+          "severity": "normal",
+          "skill": "crunchbase-market-map-builder",
+          "expected": false
+        },
+        {
+          "id": "not-6",
+          "kind": "activation",
+          "severity": "normal",
+          "skill": "crunchbase-market-radar",
+          "expected": false
+        },
+        {
+          "id": "not-7",
+          "kind": "activation",
+          "severity": "normal",
+          "skill": "crunchbase-prioritize-accounts",
+          "expected": false
+        },
+        {
+          "id": "not-8",
+          "kind": "activation",
+          "severity": "normal",
+          "skill": "crunchbase-prospect-finder",
+          "expected": false
+        },
+        {
+          "id": "not-9",
+          "kind": "activation",
+          "severity": "normal",
+          "skill": "crunchbase-watchlists-manager",
+          "expected": false
+        }
+      ]
+    },
+    {
+      "id": "generic-negative-3",
+      "family": "generic-negative-3",
+      "split": "holdout",
+      "workflow": "none",
+      "tags": [
+        "cross-collection",
+        "negative"
+      ],
+      "fixture": {},
+      "turns": [
+        {
+          "user": "Help me phrase a discovery question about budget; no company research needed."
+        }
+      ],
+      "checks": [
+        {
+          "id": "no-calls",
+          "kind": "max_calls",
+          "severity": "critical",
+          "limit": 0
+        },
+        {
+          "id": "not-0",
+          "kind": "activation",
+          "severity": "normal",
+          "skill": "crunchbase-account-intel",
+          "expected": false
+        },
+        {
+          "id": "not-1",
+          "kind": "activation",
+          "severity": "normal",
+          "skill": "crunchbase-account-pulse",
+          "expected": false
+        },
+        {
+          "id": "not-2",
+          "kind": "activation",
+          "severity": "normal",
+          "skill": "crunchbase-capital-trends-analyzer",
+          "expected": false
+        },
+        {
+          "id": "not-3",
+          "kind": "activation",
+          "severity": "normal",
+          "skill": "crunchbase-company-tearsheet-generator",
+          "expected": false
+        },
+        {
+          "id": "not-4",
+          "kind": "activation",
+          "severity": "normal",
+          "skill": "crunchbase-funding-signals-screener",
+          "expected": false
+        },
+        {
+          "id": "not-5",
+          "kind": "activation",
+          "severity": "normal",
+          "skill": "crunchbase-market-map-builder",
+          "expected": false
+        },
+        {
+          "id": "not-6",
+          "kind": "activation",
+          "severity": "normal",
+          "skill": "crunchbase-market-radar",
+          "expected": false
+        },
+        {
+          "id": "not-7",
+          "kind": "activation",
+          "severity": "normal",
+          "skill": "crunchbase-prioritize-accounts",
+          "expected": false
+        },
+        {
+          "id": "not-8",
+          "kind": "activation",
+          "severity": "normal",
+          "skill": "crunchbase-prospect-finder",
+          "expected": false
+        },
+        {
+          "id": "not-9",
+          "kind": "activation",
+          "severity": "normal",
+          "skill": "crunchbase-watchlists-manager",
+          "expected": false
+        }
+      ]
+    }
+  ]
+}

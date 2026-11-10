@@ -37,6 +37,6 @@
     "composerIcon": "./assets/crunchbase-icon-blue.png",
     "logo": "./assets/crunchbase-icon-blue.png"
   },
-  "license": "MIT",
+  "license": "LicenseRef-Crunchbase-Skills-Source-Available-1.0",
   "repository": "https://github.com/crunchbase/crunchbase-mcp-skills"
 }

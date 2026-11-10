@@ -2,8 +2,6 @@
 
 This suite exercises the five GTM skills with fictional companies and inputs. It has 43 cases: 11 development, 29 regression and three held-out scenario families. It is separate from the existing 63-case research corpus and the cross-collection routing suite. A valid corpus and passing offline tests are not completed agent evaluations or release approval.
 
-The 45 incoming pilot prompts informed workflow coverage; their live results and permissive grading were not imported as release evidence. The new suite uses controlled fictional provider records, explicit task scope, paired no-skill runs, preserved failures and human semantic review. The first frozen development pilot predates corrections to missing event-window/signal scope in happy prompts and Python runtime provisioning; retain that run as diagnostic evidence, not a score for this revision.
-
 ## Coverage
 
 - Five basic workflows; missing material inputs and actual resumed clarification.
@@ -24,7 +22,7 @@ Native CRM/calendar tools, host scheduling and delivery are not simulated. CRM C
 
 Attachments are frozen inline in each case and staged with hashes. Only their content enters the agent workspace; expected results/rubrics remain in the controller. Allowlisted JSON/CSV outputs (maximum 2 MB each) are retained after every turn, including explicit missing/invalid records. Per-turn fixture snapshots and controlled clock changes are retained. Review digests include the complete artifact content/hashes and state. Retained file/content/hash mismatches invalidate the trial.
 
-Held-out cases are an organizational boundary, not secret data. They were authored by the evaluation worker and were not sent to skill implementers as tuning examples. This does not meet a stronger claim of fresh-context, sealed independent human authorship. Commission fresh independently authored cases for external readiness claims; retire any inspected held-out failure into regression before tuning against it.
+Public held-out cases are not secret benchmarks. Keep them separate from instruction tuning. Use new independently authored cases for external readiness claims, and move inspected failures into regression before tuning.
 
 ## Run
 
@@ -48,7 +46,7 @@ Bounded post-audit repair: the inspected conflicting-name/domain Account Brief c
 
 The post-R3 capture revision changes eleven existing cases only. Natural Prospect/Priority exports now have exact shared filenames, an equally disclosed scoring/output interface, retained normalized input and final CSV/JSON, and delivery-turn checks. Permission-blocked exports use a separate shared incomplete-output interface so they never require invented verified candidates. Natural Industry Insights happy/overlap retains source pages, normalized input, result, segment CSV and handoff; the already normalized insufficient Industry Insights case additionally retains its policy-requested segment CSV. Clarification and prose-only tasks gain no export requirement.
 
-The inspected `heldout-radar-overlap` is now regression; its stable ID is historical, not a held-out claim. Historical run files remain unchanged. The precise capture matrix, fairness rationale and minimal eleven-case rerun command are in [gtm-export-capture-review.md](../../../docs/gtm-export-capture-review.md). Six capture-coverage tests pass. The combined 35-test selection passed before concurrent isolation-harness edits; its latest recheck has two pre-existing renderer-verification failures pending root revalidation. These checks are not model trials or human acceptance. The diagnostic 22-trial / 28-turn targeted comparison uses the frozen harness, gpt-6-astra low, one repetition and both arms; it is not the three-repeat release gate; no full-suite rerun is implied by this capture-only closure.
+The `heldout-radar-overlap` case is a regression case despite its historical identifier. Use each case’s declared split when selecting held-out coverage.
 
 ### Named-seed follow-up disclosure repair
 

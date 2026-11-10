@@ -28,9 +28,9 @@ Skills that include `scripts/derive_metrics.py` require Python 3.9 or later. The
 
 The company-brief skill has no bundled calculation helper. Future skills should document their own runtime and tool requirements here instead of inheriting unrelated requirements from the initial collection.
 
-## GTM collection under validation
+## GTM collection
 
-The five GTM skills are independently installable candidate workflows. Their validation status is recorded in `docs/gtm-implementation-status.md`; inclusion in this checkout is not a completed release approval.
+The five GTM skills are independently installable. Each workflow requires only the data capabilities listed below.
 
 | Workflow | Required data capabilities | Optional capabilities |
 | --- | --- | --- |

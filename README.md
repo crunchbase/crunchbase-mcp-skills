@@ -102,14 +102,6 @@ Upload `crunchbase-company-tearsheet-generator.zip` from the repository root. Us
 
 ### Downloads
 
-Build an individual `.skill` and `.zip` archive for every skill from a local checkout:
-
-```sh
-python3 scripts/build_releases.py
-```
-
-The output directory must be empty; use `--output <fresh-directory>` for another build. Files are written to `dist/<version>/` with a `SHA256SUMS` checksum file. Each archive includes the complete skill folder and its version. The `.skill` files contain the same ZIP data; use `.zip` for Claude.ai uploads.
-
 Download individual skills from [the latest release](https://github.com/crunchbase/crunchbase-mcp-skills/releases/latest). Use ZIP for Claude.ai uploads.
 
 | Skill | ZIP | .skill |
@@ -120,7 +112,7 @@ Download individual skills from [the latest release](https://github.com/crunchba
 | Capital Trends Analyzer | [Download](https://github.com/crunchbase/crunchbase-mcp-skills/releases/latest/download/crunchbase-capital-trends-analyzer.zip) | [Download](https://github.com/crunchbase/crunchbase-mcp-skills/releases/latest/download/crunchbase-capital-trends-analyzer.skill) |
 | Watchlists Manager | [Download](https://github.com/crunchbase/crunchbase-mcp-skills/releases/latest/download/crunchbase-watchlists-manager.zip) | [Download](https://github.com/crunchbase/crunchbase-mcp-skills/releases/latest/download/crunchbase-watchlists-manager.skill) |
 
-[SHA-256 checksums](https://github.com/crunchbase/crunchbase-mcp-skills/releases/latest/download/SHA256SUMS). The build command above packages the files in your checkout.
+[SHA-256 checksums](https://github.com/crunchbase/crunchbase-mcp-skills/releases/latest/download/SHA256SUMS).
 
 ## Agent requirements
 

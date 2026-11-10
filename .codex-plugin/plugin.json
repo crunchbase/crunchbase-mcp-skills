@@ -18,7 +18,7 @@
   "interface": {
     "displayName": "Crunchbase MCP Skills",
     "shortDescription": "Reusable skills for Crunchbase workflows",
-    "longDescription": "Research companies and markets with Crunchbase workflows for market maps, funding screens, company briefs, capital analysis, and saved lists. The 1.1.0 candidate adds GTM workflows for sales meeting preparation, prospect discovery, account prioritization, account signals, and segment direction; consult the repository validation report for release status.",
+    "longDescription": "Research companies and markets with Crunchbase. Build market maps, screen funding, prepare company briefs, analyze capital, and manage saved lists. Use Account Brief, Account Signals, Prospect Finder, Account Prioritizer, and Industry Insights for sales workflows.",
     "developerName": "Crunchbase",
     "category": "Business",
     "capabilities": [

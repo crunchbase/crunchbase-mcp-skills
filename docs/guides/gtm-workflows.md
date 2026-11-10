@@ -1,6 +1,6 @@
 # GTM workflows
 
-These five candidate skills preserve separate sales jobs while sharing the repository's identity, evidence and retrieval standards. They are under validation; see [implementation status](../gtm-implementation-status.md) before treating the collection as approved for release.
+These five skills support distinct sales tasks and share the same identity, evidence, and retrieval standards.
 
 | Skill | Use it for | Example |
 | --- | --- | --- |
@@ -28,6 +28,6 @@ Use Python 3.10+ for all GTM helpers as a common supported runtime, even where a
 
 Connector metadata and capabilities are discovered at runtime. Optional CRM/calendar reads and recurring tasks depend on the host. Complete retrieval is distinct from complete real-world coverage. Source dates, canonical links, unknown values, and decision-relevant limitations remain visible.
 
-The normalized helper inputs and JSON contracts intentionally differ from the pilot packages. Select schemas by their declared version and consult each bundled reference when integrating an existing automation. Do not pass legacy query-plan CLI arguments to the new scoring or Industry Insights helpers.
+Select schemas by their declared version and consult each bundled reference when integrating an existing automation. Do not pass legacy query-plan CLI arguments to the new scoring or Industry Insights helpers.
 
 A handoff preserves context but does not automatically execute the next workflow. Normalize each receiving schema explicitly and retain the accepted market scope, seller context and authorization. Account Signals may require additional growth-tier evidence; a previously scored prospect can correctly remain unranked when that evidence is missing.

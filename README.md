@@ -36,17 +36,17 @@ The skills instruct the agent to ask for missing inputs and resolve ambiguous co
 
 See the [workflow guide](docs/guides/private-company-research.md) for more examples and expected outputs.
 
-### Sales and go-to-market skills
+### GTM Skills Collection
 
 Use these skills to prepare sales meetings, find prospects, prioritize accounts, review account signals, and compare sales segments.
 
 | Skill | What it does |
 | --- | --- |
-| [Account Intel](skills/crunchbase-account-intel/SKILL.md) | Seller-specific meeting preparation and CRM-informed follow-ups |
-| [Prospect Finder](skills/crunchbase-prospect-finder/SKILL.md) | New sales prospects from an ICP or customer look-alikes, with exclusions |
-| [Prioritize Accounts](skills/crunchbase-prioritize-accounts/SKILL.md) | Reproducible scoring and tiering of an established account book |
-| [Account Pulse](skills/crunchbase-account-pulse/SKILL.md) | Dated signals, ranked review priorities, plays and recurring comparisons |
-| [Market Radar](skills/crunchbase-market-radar/SKILL.md) | Segment momentum, account territories and prospecting handoffs |
+| [Account Brief](skills/crunchbase-account-brief/SKILL.md) | Prepares seller-specific account research for meetings and outreach, including company developments, relevant context, and potential sales talking points. |
+| [Account Signals](skills/crunchbase-account-signals/SKILL.md) | Monitors an existing account book for funding, leadership changes, product launches, and other developments to help sellers identify accounts worth reviewing. |
+| [Prospect Finder](skills/crunchbase-prospect-finder/SKILL.md) | Finds new sales prospects using an ideal customer profile, market segments, or company lookalikes, with exclusions and evidence-based prioritization. |
+| [Account Prioritizer](skills/crunchbase-account-prioritizer/SKILL.md) | Scores and tiers an existing account book, explains each ranking, and exports results for sales planning. |
+| [Industry Insights](skills/crunchbase-industry-insights/SKILL.md) | Compares market segments using funding, company formation, and growth signals to support market selection and territory planning. |
 
 See the [GTM workflow guide](docs/guides/gtm-workflows.md) for examples, runtime requirements, and portability limits. CRM outputs are local artifacts, not automatic CRM updates. Recurring operation depends on the host's supported scheduling and persistence capabilities.
 

@@ -1,9 +1,0 @@
-# Recurring comparisons
-
-Only configure recurring work when requested through an available host capability. Inspect that capability rather than claiming a task is configured after drafting a prompt. Record market/ICP, selected segment IDs, timezone, cadence, delivery destination, and the state location in the task. If any material input is unavailable in an unattended run, report the blocking input without guessing.
-
-Each run retrieves the complete same universe under the confirmed filters and invokes the helper with the actual as-of date. Pass `--state PATH` to compare and `--write-state` to commit the next baseline for an authorized recurring task. The state is written atomically only after outputs succeed and at least three eligible peers exist. A failed retrieval or invalid input must never advance state. Do not recover a damaged state by reconstructing exact values from a prose summary.
-
-State binds the scope, segment set, watch set, and rule version. A changed scope starts a new baseline and must not be described as a direction change. First runs establish the baseline. An unchanged successful run can remain quiet unless the user requested status messages. Notify on meaningful direction changes, a Crunchbase call moving to/from declining, or an actionable failure. A missing prior observation is not a change. Do not label data newly discovered in an old event as a same-day event.
-
-Template: “Use Crunchbase Market Radar on [confirmed market and filters], comparing [confirmed segment set] with the stated two twelve-month windows. Reuse state [location]. Report meaningful changes since the last successful comparable run; stay quiet when unchanged. Report incomplete retrieval or unavailable state without advancing the baseline. Do not change lists, CRM records, or send outreach.”

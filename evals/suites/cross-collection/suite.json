@@ -9,7 +9,7 @@
       "id": "sales-prep",
       "family": "sales-prep",
       "split": "regression",
-      "workflow": "crunchbase-account-intel",
+      "workflow": "crunchbase-account-brief",
       "tags": [
         "cross-collection",
         "routing"
@@ -39,7 +39,7 @@
           "id": "expected",
           "kind": "activation",
           "severity": "normal",
-          "skill": "crunchbase-account-intel",
+          "skill": "crunchbase-account-brief",
           "expected": true
         },
         {
@@ -103,7 +103,7 @@
           "id": "excluded",
           "kind": "activation",
           "severity": "normal",
-          "skill": "crunchbase-account-intel",
+          "skill": "crunchbase-account-brief",
           "expected": false
         },
         {
@@ -123,7 +123,7 @@
       "id": "sales-monitor",
       "family": "sales-monitor",
       "split": "regression",
-      "workflow": "crunchbase-account-pulse",
+      "workflow": "crunchbase-account-signals",
       "tags": [
         "cross-collection",
         "routing"
@@ -153,7 +153,7 @@
           "id": "expected",
           "kind": "activation",
           "severity": "normal",
-          "skill": "crunchbase-account-pulse",
+          "skill": "crunchbase-account-signals",
           "expected": true
         },
         {
@@ -217,7 +217,7 @@
           "id": "excluded",
           "kind": "activation",
           "severity": "normal",
-          "skill": "crunchbase-account-pulse",
+          "skill": "crunchbase-account-signals",
           "expected": false
         },
         {
@@ -237,7 +237,7 @@
       "id": "market-direction",
       "family": "market-direction",
       "split": "regression",
-      "workflow": "crunchbase-market-radar",
+      "workflow": "crunchbase-industry-insights",
       "tags": [
         "cross-collection",
         "routing"
@@ -267,7 +267,7 @@
           "id": "expected",
           "kind": "activation",
           "severity": "normal",
-          "skill": "crunchbase-market-radar",
+          "skill": "crunchbase-industry-insights",
           "expected": true
         },
         {
@@ -331,7 +331,7 @@
           "id": "excluded",
           "kind": "activation",
           "severity": "normal",
-          "skill": "crunchbase-market-radar",
+          "skill": "crunchbase-industry-insights",
           "expected": false
         },
         {
@@ -465,7 +465,7 @@
       "id": "book-tiering",
       "family": "book-tiering",
       "split": "regression",
-      "workflow": "crunchbase-prioritize-accounts",
+      "workflow": "crunchbase-account-prioritizer",
       "tags": [
         "cross-collection",
         "routing"
@@ -495,7 +495,7 @@
           "id": "expected",
           "kind": "activation",
           "severity": "normal",
-          "skill": "crunchbase-prioritize-accounts",
+          "skill": "crunchbase-account-prioritizer",
           "expected": true
         },
         {
@@ -559,7 +559,7 @@
           "id": "excluded",
           "kind": "activation",
           "severity": "normal",
-          "skill": "crunchbase-prioritize-accounts",
+          "skill": "crunchbase-account-prioritizer",
           "expected": false
         },
         {
@@ -601,14 +601,14 @@
           "id": "not-0",
           "kind": "activation",
           "severity": "normal",
-          "skill": "crunchbase-account-intel",
+          "skill": "crunchbase-account-brief",
           "expected": false
         },
         {
           "id": "not-1",
           "kind": "activation",
           "severity": "normal",
-          "skill": "crunchbase-account-pulse",
+          "skill": "crunchbase-account-signals",
           "expected": false
         },
         {
@@ -643,14 +643,14 @@
           "id": "not-6",
           "kind": "activation",
           "severity": "normal",
-          "skill": "crunchbase-market-radar",
+          "skill": "crunchbase-industry-insights",
           "expected": false
         },
         {
           "id": "not-7",
           "kind": "activation",
           "severity": "normal",
-          "skill": "crunchbase-prioritize-accounts",
+          "skill": "crunchbase-account-prioritizer",
           "expected": false
         },
         {
@@ -695,14 +695,14 @@
           "id": "not-0",
           "kind": "activation",
           "severity": "normal",
-          "skill": "crunchbase-account-intel",
+          "skill": "crunchbase-account-brief",
           "expected": false
         },
         {
           "id": "not-1",
           "kind": "activation",
           "severity": "normal",
-          "skill": "crunchbase-account-pulse",
+          "skill": "crunchbase-account-signals",
           "expected": false
         },
         {
@@ -737,14 +737,14 @@
           "id": "not-6",
           "kind": "activation",
           "severity": "normal",
-          "skill": "crunchbase-market-radar",
+          "skill": "crunchbase-industry-insights",
           "expected": false
         },
         {
           "id": "not-7",
           "kind": "activation",
           "severity": "normal",
-          "skill": "crunchbase-prioritize-accounts",
+          "skill": "crunchbase-account-prioritizer",
           "expected": false
         },
         {
@@ -789,14 +789,14 @@
           "id": "not-0",
           "kind": "activation",
           "severity": "normal",
-          "skill": "crunchbase-account-intel",
+          "skill": "crunchbase-account-brief",
           "expected": false
         },
         {
           "id": "not-1",
           "kind": "activation",
           "severity": "normal",
-          "skill": "crunchbase-account-pulse",
+          "skill": "crunchbase-account-signals",
           "expected": false
         },
         {
@@ -831,14 +831,14 @@
           "id": "not-6",
           "kind": "activation",
           "severity": "normal",
-          "skill": "crunchbase-market-radar",
+          "skill": "crunchbase-industry-insights",
           "expected": false
         },
         {
           "id": "not-7",
           "kind": "activation",
           "severity": "normal",
-          "skill": "crunchbase-prioritize-accounts",
+          "skill": "crunchbase-account-prioritizer",
           "expected": false
         },
         {

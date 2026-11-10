@@ -261,7 +261,7 @@ def run(data, workflow):
         selected = [r for r in rows if r['uuid'] in chosen]
     scope = {'scope_id':run['scope_id'], 'definition':data.get('definition'), 'exclude':{k:sorted(set(v)) for k,v in ex.items()},
              'seeds':sorted(seeds), 'mode':run.get('mode')}
-    if workflow == 'prioritize-accounts': scope['book'] = sorted(r['uuid'] for r in rows)
+    if workflow == 'account-prioritizer': scope['book'] = sorted(r['uuid'] for r in rows)
     return {'schema_version':1, 'rubric_version':RUBRIC_VERSION, 'workflow':workflow, 'as_of':today.isoformat(),
             'scope_id':run['scope_id'], 'scope':scope, 'rubric':config, 'complete':True, 'input_count':len(candidates),
             'excluded_uuids':removed, 'eligible_count':len(rows), 'shown':len(selected),

@@ -83,7 +83,7 @@ class EvidenceTests(unittest.TestCase):
         radar = cases['radar-complete-normalized']
         self.assertIn('radar-input-contract.md', radar['turns'][0]['user'])
         self.assertTrue(any(a['path'] == 'radar-input-contract.md' and 'organization_uuid' in a['content'] for a in radar['attachments']))
-        for cid in ('account-pulse-missing', 'prioritize-accounts-missing', 'prospect-finder-missing', 'market-radar-missing'):
+        for cid in ('account-signals-missing', 'account-prioritizer-missing', 'prospect-finder-missing', 'industry-insights-missing'):
             case = cases[cid]
             self.assertFalse({'accounts.csv', 'accounts.json'} & {a['path'] for a in case['attachments']})
             self.assertEqual(next(c for c in case['checks'] if c['id'] == 'no-data')['arms'], ['candidate'])
@@ -101,7 +101,7 @@ class EvidenceTests(unittest.TestCase):
             case = next(c for c in suite['cases'] if c['id'] == cid)
             contract = next(a['content'] for a in case['attachments'] if a['path'] == 'radar-input-contract.md')
             self.assertIn('radar-input-contract.md', case['turns'][0]['user'])
-            for field in ('schema_version="crunchbase-gtm-radar/1"', 'coverage', 'organizations', 'rounds', 'complete:boolean', 'reported_count', 'organization_uuid', 'segment_ids', 'announced_on', 'money_raised_usd'):
+            for field in ('schema_version="crunchbase-industry-insights/1"', 'coverage', 'organizations', 'rounds', 'complete:boolean', 'reported_count', 'organization_uuid', 'segment_ids', 'announced_on', 'money_raised_usd'):
                 self.assertIn(field, contract, (cid, field))
 
     def test_targeted_empty_fixture_and_injection_exposure(self):
@@ -284,7 +284,7 @@ class EvidenceTests(unittest.TestCase):
     def test_happy_scoring_cases_preserve_complete_evidence_and_shared_contract(self):
         path = Path(__file__).parents[1] / 'suites/gtm/suite.json'
         suite = run.load_suite(path)
-        for cid, result in (('prospect-finder-happy', 'prospects'), ('prioritize-accounts-happy', 'priorities')):
+        for cid, result in (('prospect-finder-happy', 'prospects'), ('account-prioritizer-happy', 'priorities')):
             case = next(c for c in suite['cases'] if c['id'] == cid)
             with self.subTest(case=cid):
                 self.assertTrue({'candidates.json', result+'.json', result+'.csv'} <= {a['path'] for a in case['artifacts']})

@@ -4,7 +4,7 @@ Thirteen cases exercise the expanded catalog: ten paired workflow boundaries (re
 
 Boundaries cover seller-specific meeting prep versus a neutral tearsheet, account signals versus saved-list membership, sales market direction versus capital analysis, prospect discovery versus research mapping, and account tiering versus funding screening. Generic requests should neither activate Crunchbase skills nor call task tools.
 
-This is routing/task-boundary coverage, not proof of the complete Radar → Prospect Finder → Prioritize → Pulse artifact handoff chain. That chain and live discovery in supported hosts require separate evidence. The fixture shares the GTM synthetic contract and limits documented in `../gtm/README.md`. Research behavior must also be rerun using the existing 63-case corpus with the expanded catalog and, when available, the pre-change skill tree as a `previous` arm.
+This is routing/task-boundary coverage, not proof of the complete Industry Insights → Prospect Finder → Prioritize → Account Signals artifact handoff chain. That chain and live discovery in supported hosts require separate evidence. The fixture shares the GTM synthetic contract and limits documented in `../gtm/README.md`. Research behavior must also be rerun using the existing 63-case corpus with the expanded catalog and, when available, the pre-change skill tree as a `previous` arm.
 
 ```sh
 python3.12 evals/run.py validate --suite evals/suites/cross-collection/suite.json --split all

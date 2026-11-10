@@ -2,7 +2,7 @@
 
 ## Current branch status
 
-The `codex/gtm-skills-1.1.0` branch adds all five GTM skills on top of production identity-fix PR #8 (1.0.4). Collection and plugin versions are 1.1.0. Names remain provisional pending marketing review. The production PR must merge before this branch is integrated.
+The `codex/gtm-skills-1.1.0` branch adds all five GTM skills on top of production identity-fix PR #8 (1.0.4). Collection and plugin versions are 1.1.0. Approved skill names are Account Brief, Account Signals, Prospect Finder, Account Prioritizer and Industry Insights. The production PR must merge before this branch is integrated.
 
 Reviewer-feedback fixes, metadata corrections and the shared identity/presentation rules are included. See [reviewer feedback](gtm-reviewer-feedback-retest.md) and [identity-rule checks](identity-conflict-standardization.md). Historical results below describe earlier snapshots; they do not certify this branch for release. Earlier archives predate the final edits and must not be used as release artifacts.
 
@@ -22,7 +22,7 @@ Completed implementation and requested testing/reporting on November 5, 2026, on
 | Packages | Final 1.1.0 candidate built reproducibly; 20 archives, checksums, 14 CLI and 2 library-load smokes |
 | Release approval/publication | Not approved or published |
 
-The last Intel and fixture repairs have targeted evidence, not a newly completed full comparison. The inspected identity-conflict holdout is now regression; four public GTM holdouts remain. The independent ten-case challenge was not run. No failed or incomplete historical run was relabeled as passed.
+The last Account Brief and fixture repairs have targeted evidence, not a newly completed full comparison. The inspected identity-conflict holdout is now regression; four public GTM holdouts remain. The independent ten-case challenge was not run. No failed or incomplete historical run was relabeled as passed.
 
 See the [full validation report](gtm-validation-report.md) for results, limitations, source links and next steps; [draft release notes](gtm-release-notes.md) and [workflow guide](guides/gtm-workflows.md) are ready for review. Raw evidence and packages are local ignored artifacts and must be preserved separately from Git.
 

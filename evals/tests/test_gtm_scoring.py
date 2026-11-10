@@ -41,14 +41,14 @@ class GtmScoringTests(unittest.TestCase):
     def test_default_math_and_pair_parity(self):
         data = payload()
         a = score.run(data, 'prospect-finder')['rows'][0]
-        b = score.run(data, 'prioritize-accounts')['rows'][0]
+        b = score.run(data, 'account-prioritizer')['rows'][0]
         self.assertEqual((a['score'], a['tier']), (80, 'A'))
         self.assertEqual(a, b)
-        self.assertEqual((SCRIPTS/'scoring.py').read_bytes(), (SKILLS/'crunchbase-prioritize-accounts/scripts/scoring.py').read_bytes())
+        self.assertEqual((SCRIPTS/'scoring.py').read_bytes(), (SKILLS/'crunchbase-account-prioritizer/scripts/scoring.py').read_bytes())
 
     def test_unknown_is_not_zero(self):
-        unknown = score.run(payload(company(growth_score=None)), 'prioritize-accounts')['rows'][0]
-        zero = score.run(payload(company(growth_score=0)), 'prioritize-accounts')['rows'][0]
+        unknown = score.run(payload(company(growth_score=None)), 'account-prioritizer')['rows'][0]
+        zero = score.run(payload(company(growth_score=0)), 'account-prioritizer')['rows'][0]
         self.assertIsNone(unknown['score']); self.assertIsNone(unknown['tier'])
         self.assertEqual(unknown['coverage']['missing'], ['growth'])
         self.assertEqual(zero['score'], 48)
@@ -79,14 +79,14 @@ class GtmScoringTests(unittest.TestCase):
 
     def test_custom_weights_fixed_tiers_public_and_investor(self):
         data=payload();data['rubric']={'weights':{'growth':2,'heat':0,'funding':0},'tiers':[85,80],'customer_bonus':0}
-        row=score.run(data,'prioritize-accounts')['rows'][0]
+        row=score.run(data,'account-prioritizer')['rows'][0]
         self.assertEqual((row['score'],row['tier']),(80,'B'))
         data['candidates'][0]['heat_score']=None
-        self.assertEqual(score.run(data,'prioritize-accounts')['rows'][0]['score'],80)
+        self.assertEqual(score.run(data,'account-prioritizer')['rows'][0]['score'],80)
         self.assertEqual(score.run(payload(company(ipo_status='public')),'prospect-finder')['rows'][0]['score'],65)
         self.assertEqual(score.run(payload(company(last_funding_at=None,last_fund_at='2026-10-01')),'prospect-finder')['rows'][0]['score'],80)
         data['rubric']['weights']={'growth':0}
-        with self.assertRaises(ValueError):score.run(data,'prioritize-accounts')
+        with self.assertRaises(ValueError):score.run(data,'account-prioritizer')
 
     def test_dedupe_identity_exclusions_and_order(self):
         c=company();d=company(uuid='org-2',permalink='fictional-two',name='Fictional Two',domain='two.example')
@@ -112,7 +112,7 @@ class GtmScoringTests(unittest.TestCase):
         with self.assertRaises(ValueError):score.state_diff(r,{'schema_version':1})
 
     def test_cli_standalone_csv_and_failure_preserves_state(self):
-        for slug,script in [('prospect-finder','score_prospects.py'),('prioritize-accounts','prioritize.py')]:
+        for slug,script in [('prospect-finder','score_prospects.py'),('account-prioritizer','account_prioritizer.py')]:
             with self.subTest(skill=slug), tempfile.TemporaryDirectory() as td:
                 path=Path(td);inp=path/'input.json';out=path/'out.csv';state=path/'state.json'
                 inp.write_text(json.dumps(payload(company(name='=1+1'))))
@@ -128,7 +128,7 @@ class GtmScoringTests(unittest.TestCase):
 
     def test_failed_stdout_delivery_preserves_monitoring_state(self):
         for skill, script in [('crunchbase-prospect-finder','score_prospects.py'),
-                              ('crunchbase-prioritize-accounts','prioritize.py')]:
+                              ('crunchbase-account-prioritizer','account_prioritizer.py')]:
             with self.subTest(skill=skill), tempfile.TemporaryDirectory() as td:
                 folder=Path(td); inp=folder/'input.json'; state=folder/'state.json'
                 inp.write_text(json.dumps(payload()))
@@ -175,15 +175,15 @@ class GtmScoringTests(unittest.TestCase):
         with self.assertRaises(ValueError):score.run([], 'prospect-finder')
         data=payload();data['run']['complete']=False
         with self.assertRaises(ValueError):score.run(data,'prospect-finder')
-        r=score.run(payload(),'prioritize-accounts');_,state=score.state_diff(r,None)
+        r=score.run(payload(),'account-prioritizer');_,state=score.state_diff(r,None)
         state['accounts']['org-1']['tier']='invented'
         with self.assertRaises(ValueError):score.state_diff(r,state)
         state['accounts']['org-1']['tier']='A';state['accounts']['org-1']['score']=None
         with self.assertRaises(ValueError):score.state_diff(r,state)
 
     def test_prioritization_book_change_is_new_baseline(self):
-        first=score.run(payload(),'prioritize-accounts');_,state=score.state_diff(first,None)
-        second=score.run(payload(company(),company(uuid='org-2',permalink='two',name='Two')),'prioritize-accounts')
+        first=score.run(payload(),'account-prioritizer');_,state=score.state_diff(first,None)
+        second=score.run(payload(company(),company(uuid='org-2',permalink='two',name='Two')),'account-prioritizer')
         self.assertTrue(score.state_diff(second,state)[0]['baseline'])
 
     def test_reject_wrong_profile_url_and_unaccepted_similarity(self):
@@ -195,7 +195,7 @@ class GtmScoringTests(unittest.TestCase):
         self.assertEqual(len(score.run(data,'prospect-finder')['rows']),1)
 
     def test_destination_export_headers_preserve_crm_id(self):
-        row=score.run(payload(company(crm_accounts=[{'crm_id':'crm-123'}])),'prioritize-accounts')['rows']
+        row=score.run(payload(company(crm_accounts=[{'crm_id':'crm-123'}])),'account-prioritizer')['rows']
         for mode, id_column in [('clay','CRM ID'),('crm','Id'),('hubspot','Record ID')]:
             with self.subTest(mode=mode),tempfile.TemporaryDirectory() as td:
                 path=Path(td)/'out.csv';score.write_csv(path,row,mode)
@@ -217,7 +217,7 @@ class GtmScoringTests(unittest.TestCase):
                     crm = next(csv.DictReader(fh))
                 normalized = {key: crm.get(header, '') for key, header in score.CRM_COLUMNS.items()}
                 normalized['crm_name'] = crm['Account']
-                for workflow in ('prospect-finder', 'prioritize-accounts'):
+                for workflow in ('prospect-finder', 'account-prioritizer'):
                     result = score.run(payload(company(crm_accounts=[normalized])), workflow)
                     self.assertEqual(result['rows'][0]['crm_accounts'][0]['open_amount_status'], status)
                     for fmt in ('csv', 'clay', 'crm', 'hubspot'):
@@ -231,7 +231,7 @@ class GtmScoringTests(unittest.TestCase):
     def test_crm_passthrough_preserves_distinct_ids_and_escapes(self):
         c=company(crm_accounts=[{'crm_id':'crm-1','owner':'=FORMULA','deal_stage':'Qualification'},
                                 {'crm_id':'crm-2','owner':'Sarah','next_step':'Recorded next step'}])
-        result=score.run(payload(c),'prioritize-accounts')
+        result=score.run(payload(c),'account-prioritizer')
         with tempfile.TemporaryDirectory() as td:
             path=Path(td)/'output.csv';score.write_csv(path,result['rows'])
             with path.open(encoding='utf-8-sig') as fh:rows=list(csv.DictReader(fh))
@@ -241,9 +241,9 @@ class GtmScoringTests(unittest.TestCase):
         self.assertEqual(rows[1]['Next step'],'Recorded next step')
         other=company(uuid='org-2',permalink='other',crm_accounts=[{'crm_id':'crm-1'}])
         with self.assertRaisesRegex(ValueError,'conflicting canonical'):
-            score.run(payload(c,other),'prioritize-accounts')
+            score.run(payload(c,other),'account-prioritizer')
         with self.assertRaises(ValueError):
-            score.run(payload(company(crm_accounts=[{'crm_id':'crm-1','email':'private@example.com'}])),'prioritize-accounts')
+            score.run(payload(company(crm_accounts=[{'crm_id':'crm-1','email':'private@example.com'}])),'account-prioritizer')
 
     def test_crm_does_not_merge_names_or_distinct_ids_and_escapes(self):
         with tempfile.TemporaryDirectory() as td:

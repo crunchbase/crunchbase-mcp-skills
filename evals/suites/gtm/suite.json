@@ -6,13 +6,13 @@
   "context": "Offline synthetic Crunchbase environment. All company names/URLs are fictional; do not browse URLs. Use the controlled evaluation clock; an explicit later-turn clock notice supersedes earlier dates. Input files are in the current working directory; tools expose the available subset. Unsupported data is a limitation, never permission to fabricate.",
   "cases": [
     {
-      "id": "account-intel-happy",
-      "family": "account-intel-happy",
+      "id": "account-brief-happy",
+      "family": "account-brief-happy",
       "split": "dev",
-      "workflow": "crunchbase-account-intel",
+      "workflow": "crunchbase-account-brief",
       "tags": [
         "gtm",
-        "account-intel"
+        "account-brief"
       ],
       "fixture": {},
       "turns": [
@@ -40,7 +40,7 @@
           "id": "route",
           "kind": "activation",
           "severity": "normal",
-          "skill": "crunchbase-account-intel",
+          "skill": "crunchbase-account-brief",
           "expected": true
         },
         {
@@ -52,13 +52,13 @@
       ]
     },
     {
-      "id": "account-pulse-happy",
-      "family": "account-pulse-happy",
+      "id": "account-signals-happy",
+      "family": "account-signals-happy",
       "split": "dev",
-      "workflow": "crunchbase-account-pulse",
+      "workflow": "crunchbase-account-signals",
       "tags": [
         "gtm",
-        "account-pulse"
+        "account-signals"
       ],
       "fixture": {},
       "turns": [
@@ -86,7 +86,7 @@
           "id": "route",
           "kind": "activation",
           "severity": "normal",
-          "skill": "crunchbase-account-pulse",
+          "skill": "crunchbase-account-signals",
           "expected": true
         },
         {
@@ -98,13 +98,13 @@
       ]
     },
     {
-      "id": "market-radar-happy",
-      "family": "market-radar-happy",
+      "id": "industry-insights-happy",
+      "family": "industry-insights-happy",
       "split": "dev",
-      "workflow": "crunchbase-market-radar",
+      "workflow": "crunchbase-industry-insights",
       "tags": [
         "gtm",
-        "market-radar"
+        "industry-insights"
       ],
       "fixture": {},
       "turns": [
@@ -123,11 +123,11 @@
         },
         {
           "path": "radar-policy.md",
-          "content": "Accepted Radar rule and output interface:\nUse adjacent12-month periods ending as_of and the preceding12 months, boundary dates current=(as_of minus12 calendar months,as_of],prior=(as_of minus24 months,as_of minus12 months]. A segment is eligible only with >=15 unique companies,>=12 combined rounds,>=5 prior rounds, full observed growth tiers and founding dates. Need>=3 eligible peers. Per segment N=company count,VL=p100_positive_high count,Y=founded within36 months,Rc/Rp=current/prior round counts. change=Rc/Rp-1; relative=change-peer median change; expected=Rp*(1+median change); z=(Rc-expected)/sqrt(expected),0 if expected0. Growth/youth ratios compare VL/N and Y/N with peer medians; zero/zero ratio1,positive/zero ratio2. First matching rule: declining if relative<=-.20 and z<=-1.5; declining if relative<=-.10 and z<=-1 and growth ratio<1; emerging if youth ratio>=1.5,relative>=0,Y>=5; growing if relative>=.10 and z>=1; growing if relative>=0 and growth ratio>=1.25; otherwise steady. Unknown evidence stays unclassified. Funding predictions affect ordering only when every eligible peer has complete observations. Sources of market insights do not override computed labels. Focus contains up to3 emerging/growing segments only. Overlap makes totals nonadditive.\nWrite result.json with schema_version=\"crunchbase-gtm-radar/1\",as_of,status=\"complete\" when comparison possible (else \"insufficient_comparable_segments\"),peer_count,scope,coverage,segments,focus_segments. Write segments.csv columns uuid,name,status,label,score,companies,rounds_current,rounds_prior,growth_known,founding_known,growth_share,young_share,raise_share. Write handoff.json schema_version=\"crunchbase-gtm-handoff/1\",as_of,scope,coverage,segment_uuids (focus IDs),requires_scope_confirmation:true. Fixed rules are descriptive, not statistically calibrated demand.\n"
+          "content": "Accepted Industry Insights rule and output interface:\nUse adjacent12-month periods ending as_of and the preceding12 months, boundary dates current=(as_of minus12 calendar months,as_of],prior=(as_of minus24 months,as_of minus12 months]. A segment is eligible only with >=15 unique companies,>=12 combined rounds,>=5 prior rounds, full observed growth tiers and founding dates. Need>=3 eligible peers. Per segment N=company count,VL=p100_positive_high count,Y=founded within36 months,Rc/Rp=current/prior round counts. change=Rc/Rp-1; relative=change-peer median change; expected=Rp*(1+median change); z=(Rc-expected)/sqrt(expected),0 if expected0. Growth/youth ratios compare VL/N and Y/N with peer medians; zero/zero ratio1,positive/zero ratio2. First matching rule: declining if relative<=-.20 and z<=-1.5; declining if relative<=-.10 and z<=-1 and growth ratio<1; emerging if youth ratio>=1.5,relative>=0,Y>=5; growing if relative>=.10 and z>=1; growing if relative>=0 and growth ratio>=1.25; otherwise steady. Unknown evidence stays unclassified. Funding predictions affect ordering only when every eligible peer has complete observations. Sources of market insights do not override computed labels. Focus contains up to3 emerging/growing segments only. Overlap makes totals nonadditive.\nWrite result.json with schema_version=\"crunchbase-industry-insights/1\",as_of,status=\"complete\" when comparison possible (else \"insufficient_comparable_segments\"),peer_count,scope,coverage,segments,focus_segments. Write segments.csv columns uuid,name,status,label,score,companies,rounds_current,rounds_prior,growth_known,founding_known,growth_share,young_share,raise_share. Write handoff.json schema_version=\"crunchbase-gtm-handoff/1\",as_of,scope,coverage,segment_uuids (focus IDs),requires_scope_confirmation:true. Fixed rules are descriptive, not statistically calibrated demand.\n"
         },
         {
           "path": "radar-input-contract.md",
-          "content": "Normalized input schema: schema_version=\"crunchbase-gtm-radar/1\"; as_of is the reference date; scope is the accepted universe. coverage has segments,organizations,rounds entries with complete:boolean and reported_count. segments[] supplies uuid,name. organizations[] supplies uuid,name,url,segment_ids (canonical segment UUIDs),founded_on (YYYY-MM-DD),growth_tier (p100_positive_high is very likely growth),funding_tier (null means unknown). rounds[] supplies uuid,organization_uuid (canonical company link),announced_on (YYYY-MM-DD),money_raised_usd (number or null). Join rounds to organizations through organization_uuid and organizations to segments through segment_ids. Do not assume raw provider field names in this already-normalized export. Unknown fields stay unknown; a missing prediction is not a negative prediction. Use radar-policy.md for the disclosed math and output interface.\n"
+          "content": "Normalized input schema: schema_version=\"crunchbase-industry-insights/1\"; as_of is the reference date; scope is the accepted universe. coverage has segments,organizations,rounds entries with complete:boolean and reported_count. segments[] supplies uuid,name. organizations[] supplies uuid,name,url,segment_ids (canonical segment UUIDs),founded_on (YYYY-MM-DD),growth_tier (p100_positive_high is very likely growth),funding_tier (null means unknown). rounds[] supplies uuid,organization_uuid (canonical company link),announced_on (YYYY-MM-DD),money_raised_usd (number or null). Join rounds to organizations through organization_uuid and organizations to segments through segment_ids. Do not assume raw provider field names in this already-normalized export. Unknown fields stay unknown; a missing prediction is not a negative prediction. Use radar-policy.md for the disclosed math and output interface.\n"
         }
       ],
       "checks": [
@@ -140,7 +140,7 @@
           "id": "route",
           "kind": "activation",
           "severity": "normal",
-          "skill": "crunchbase-market-radar",
+          "skill": "crunchbase-industry-insights",
           "expected": true
         },
         {
@@ -156,7 +156,7 @@
           "path": "radar-input.json",
           "turn": 1,
           "expected": {
-            "schema_version": "crunchbase-gtm-radar/1"
+            "schema_version": "crunchbase-industry-insights/1"
           }
         },
         {
@@ -176,7 +176,7 @@
           "path": "radar-out/result.json",
           "turn": 1,
           "expected": {
-            "schema_version": "crunchbase-gtm-radar/1",
+            "schema_version": "crunchbase-industry-insights/1",
             "as_of": "2026-11-05"
           }
         },
@@ -278,7 +278,7 @@
         },
         {
           "path": "scoring-artifact-contract.md",
-          "content": "Shared normalized input and final output contract for this task (both implementations):\nSave the exact normalized scoring input as candidates.json. Input schema_version=1; run includes today=\"2026-11-05\", complete (truthful retrieval coverage), scope_id (accepted scope identifier), mode (lookalike/icp/book as appropriate), and count (requested output limit, not a retrieved total). candidates is an array of canonical accounts with uuid,permalink,name,url,domain and only observed scoring values: growth_tier,growth_score,heat_score,heat_delta,last_funding_at,last_funding_type,last_funding_usd,funding_tier,ipo_status,operating_status. Map provider heat_score_delta_d90 to heat_delta, returned prediction tiers to growth_tier/funding_tier, and money.value_usd to last_funding_usd. Preserve null/unknown; do not invent scores, dates, provenance or zero observations. Preserve actual retrieved source values and identifiers. Deduplicate canonical accounts before scoring and retain accepted seeds/exclusions and source scope. The attached accepted-scoring-policy.md defines the complete formula and fixed tiers. No expected answers are supplied.\nSave the lossless final result JSON with schema_version=1,rubric_version=\"gtm-1\",workflow=\"prospect-finder\" or \"prioritize-accounts\",as_of,scope_id,complete,rows,list_uuids. Rows preserve normalized canonical identity and source values plus score,tier,status,rank,coverage (observed/required/missing),points and source URL. Score ties sort by name then UUID. Prioritization retains the complete confirmed book; prospect output applies exclusions before the requested maximum. No zero replacement for unknown factors. Round display scores to the nearest whole point using ordinary Python round; retain component points so the result remains auditable.\nThe final CSV must correspond to the final JSON rows and preserve UUID,Permalink,Name,Domain,Tier,Score,Status,Rank,Coverage,Missing factors,Crunchbase profile columns. Additional sourced CRM context or clearly labeled seller hypotheses may be appended without changing scores/order/identity. Unknown score/tier/rank cells are blank. Quoting/BOM are allowed. Do not claim a global best list from a sampled pool. Final files must match any assertions in the answer; keep the normalized input for review.\n"
+          "content": "Shared normalized input and final output contract for this task (both implementations):\nSave the exact normalized scoring input as candidates.json. Input schema_version=1; run includes today=\"2026-11-05\", complete (truthful retrieval coverage), scope_id (accepted scope identifier), mode (lookalike/icp/book as appropriate), and count (requested output limit, not a retrieved total). candidates is an array of canonical accounts with uuid,permalink,name,url,domain and only observed scoring values: growth_tier,growth_score,heat_score,heat_delta,last_funding_at,last_funding_type,last_funding_usd,funding_tier,ipo_status,operating_status. Map provider heat_score_delta_d90 to heat_delta, returned prediction tiers to growth_tier/funding_tier, and money.value_usd to last_funding_usd. Preserve null/unknown; do not invent scores, dates, provenance or zero observations. Preserve actual retrieved source values and identifiers. Deduplicate canonical accounts before scoring and retain accepted seeds/exclusions and source scope. The attached accepted-scoring-policy.md defines the complete formula and fixed tiers. No expected answers are supplied.\nSave the lossless final result JSON with schema_version=1,rubric_version=\"gtm-1\",workflow=\"prospect-finder\" or \"account-prioritizer\",as_of,scope_id,complete,rows,list_uuids. Rows preserve normalized canonical identity and source values plus score,tier,status,rank,coverage (observed/required/missing),points and source URL. Score ties sort by name then UUID. Prioritization retains the complete confirmed book; prospect output applies exclusions before the requested maximum. No zero replacement for unknown factors. Round display scores to the nearest whole point using ordinary Python round; retain component points so the result remains auditable.\nThe final CSV must correspond to the final JSON rows and preserve UUID,Permalink,Name,Domain,Tier,Score,Status,Rank,Coverage,Missing factors,Crunchbase profile columns. Additional sourced CRM context or clearly labeled seller hypotheses may be appended without changing scores/order/identity. Unknown score/tier/rank cells are blank. Quoting/BOM are allowed. Do not claim a global best list from a sampled pool. Final files must match any assertions in the answer; keep the normalized input for review.\n"
         }
       ],
       "checks": [
@@ -383,13 +383,13 @@
       ]
     },
     {
-      "id": "prioritize-accounts-happy",
-      "family": "prioritize-accounts-happy",
+      "id": "account-prioritizer-happy",
+      "family": "account-prioritizer-happy",
       "split": "dev",
-      "workflow": "crunchbase-prioritize-accounts",
+      "workflow": "crunchbase-account-prioritizer",
       "tags": [
         "gtm",
-        "prioritize-accounts"
+        "account-prioritizer"
       ],
       "fixture": {},
       "turns": [
@@ -412,7 +412,7 @@
         },
         {
           "path": "scoring-artifact-contract.md",
-          "content": "Shared normalized input and final output contract for this task (both implementations):\nSave the exact normalized scoring input as candidates.json. Input schema_version=1; run includes today=\"2026-11-05\", complete (truthful retrieval coverage), scope_id (accepted scope identifier), mode (lookalike/icp/book as appropriate), and count (requested output limit, not a retrieved total). candidates is an array of canonical accounts with uuid,permalink,name,url,domain and only observed scoring values: growth_tier,growth_score,heat_score,heat_delta,last_funding_at,last_funding_type,last_funding_usd,funding_tier,ipo_status,operating_status. Map provider heat_score_delta_d90 to heat_delta, returned prediction tiers to growth_tier/funding_tier, and money.value_usd to last_funding_usd. Preserve null/unknown; do not invent scores, dates, provenance or zero observations. Preserve actual retrieved source values and identifiers. Deduplicate canonical accounts before scoring and retain accepted seeds/exclusions and source scope. The attached accepted-scoring-policy.md defines the complete formula and fixed tiers. No expected answers are supplied.\nSave the lossless final result JSON with schema_version=1,rubric_version=\"gtm-1\",workflow=\"prospect-finder\" or \"prioritize-accounts\",as_of,scope_id,complete,rows,list_uuids. Rows preserve normalized canonical identity and source values plus score,tier,status,rank,coverage (observed/required/missing),points and source URL. Score ties sort by name then UUID. Prioritization retains the complete confirmed book; prospect output applies exclusions before the requested maximum. No zero replacement for unknown factors. Round display scores to the nearest whole point using ordinary Python round; retain component points so the result remains auditable.\nThe final CSV must correspond to the final JSON rows and preserve UUID,Permalink,Name,Domain,Tier,Score,Status,Rank,Coverage,Missing factors,Crunchbase profile columns. Additional sourced CRM context or clearly labeled seller hypotheses may be appended without changing scores/order/identity. Unknown score/tier/rank cells are blank. Quoting/BOM are allowed. Do not claim a global best list from a sampled pool. Final files must match any assertions in the answer; keep the normalized input for review.\n"
+          "content": "Shared normalized input and final output contract for this task (both implementations):\nSave the exact normalized scoring input as candidates.json. Input schema_version=1; run includes today=\"2026-11-05\", complete (truthful retrieval coverage), scope_id (accepted scope identifier), mode (lookalike/icp/book as appropriate), and count (requested output limit, not a retrieved total). candidates is an array of canonical accounts with uuid,permalink,name,url,domain and only observed scoring values: growth_tier,growth_score,heat_score,heat_delta,last_funding_at,last_funding_type,last_funding_usd,funding_tier,ipo_status,operating_status. Map provider heat_score_delta_d90 to heat_delta, returned prediction tiers to growth_tier/funding_tier, and money.value_usd to last_funding_usd. Preserve null/unknown; do not invent scores, dates, provenance or zero observations. Preserve actual retrieved source values and identifiers. Deduplicate canonical accounts before scoring and retain accepted seeds/exclusions and source scope. The attached accepted-scoring-policy.md defines the complete formula and fixed tiers. No expected answers are supplied.\nSave the lossless final result JSON with schema_version=1,rubric_version=\"gtm-1\",workflow=\"prospect-finder\" or \"account-prioritizer\",as_of,scope_id,complete,rows,list_uuids. Rows preserve normalized canonical identity and source values plus score,tier,status,rank,coverage (observed/required/missing),points and source URL. Score ties sort by name then UUID. Prioritization retains the complete confirmed book; prospect output applies exclusions before the requested maximum. No zero replacement for unknown factors. Round display scores to the nearest whole point using ordinary Python round; retain component points so the result remains auditable.\nThe final CSV must correspond to the final JSON rows and preserve UUID,Permalink,Name,Domain,Tier,Score,Status,Rank,Coverage,Missing factors,Crunchbase profile columns. Additional sourced CRM context or clearly labeled seller hypotheses may be appended without changing scores/order/identity. Unknown score/tier/rank cells are blank. Quoting/BOM are allowed. Do not claim a global best list from a sampled pool. Final files must match any assertions in the answer; keep the normalized input for review.\n"
         }
       ],
       "checks": [
@@ -425,7 +425,7 @@
           "id": "route",
           "kind": "activation",
           "severity": "normal",
-          "skill": "crunchbase-prioritize-accounts",
+          "skill": "crunchbase-account-prioritizer",
           "expected": true
         },
         {
@@ -466,7 +466,7 @@
           "expected": {
             "schema_version": 1,
             "rubric_version": "gtm-1",
-            "workflow": "prioritize-accounts",
+            "workflow": "account-prioritizer",
             "as_of": "2026-11-05"
           }
         },
@@ -512,13 +512,13 @@
       ]
     },
     {
-      "id": "account-intel-missing",
-      "family": "account-intel-missing",
+      "id": "account-brief-missing",
+      "family": "account-brief-missing",
       "split": "dev",
-      "workflow": "crunchbase-account-intel",
+      "workflow": "crunchbase-account-brief",
       "tags": [
         "gtm",
-        "account-intel"
+        "account-brief"
       ],
       "fixture": {},
       "turns": [
@@ -537,7 +537,7 @@
           "id": "route",
           "kind": "activation",
           "severity": "normal",
-          "skill": "crunchbase-account-intel",
+          "skill": "crunchbase-account-brief",
           "expected": true
         },
         {
@@ -563,13 +563,13 @@
       ]
     },
     {
-      "id": "account-pulse-missing",
-      "family": "account-pulse-missing",
+      "id": "account-signals-missing",
+      "family": "account-signals-missing",
       "split": "dev",
-      "workflow": "crunchbase-account-pulse",
+      "workflow": "crunchbase-account-signals",
       "tags": [
         "gtm",
-        "account-pulse"
+        "account-signals"
       ],
       "fixture": {},
       "turns": [
@@ -593,7 +593,7 @@
           "id": "route",
           "kind": "activation",
           "severity": "normal",
-          "skill": "crunchbase-account-pulse",
+          "skill": "crunchbase-account-signals",
           "expected": true
         },
         {
@@ -619,13 +619,13 @@
       ]
     },
     {
-      "id": "market-radar-missing",
-      "family": "market-radar-missing",
+      "id": "industry-insights-missing",
+      "family": "industry-insights-missing",
       "split": "dev",
-      "workflow": "crunchbase-market-radar",
+      "workflow": "crunchbase-industry-insights",
       "tags": [
         "gtm",
-        "market-radar"
+        "industry-insights"
       ],
       "fixture": {},
       "turns": [
@@ -649,7 +649,7 @@
           "id": "route",
           "kind": "activation",
           "severity": "normal",
-          "skill": "crunchbase-market-radar",
+          "skill": "crunchbase-industry-insights",
           "expected": true
         },
         {
@@ -731,13 +731,13 @@
       ]
     },
     {
-      "id": "prioritize-accounts-missing",
-      "family": "prioritize-accounts-missing",
+      "id": "account-prioritizer-missing",
+      "family": "account-prioritizer-missing",
       "split": "dev",
-      "workflow": "crunchbase-prioritize-accounts",
+      "workflow": "crunchbase-account-prioritizer",
       "tags": [
         "gtm",
-        "prioritize-accounts"
+        "account-prioritizer"
       ],
       "fixture": {},
       "turns": [
@@ -761,7 +761,7 @@
           "id": "route",
           "kind": "activation",
           "severity": "normal",
-          "skill": "crunchbase-prioritize-accounts",
+          "skill": "crunchbase-account-prioritizer",
           "expected": true
         },
         {
@@ -787,13 +787,13 @@
       ]
     },
     {
-      "id": "account-intel-followup",
-      "family": "account-intel-followup",
+      "id": "account-brief-followup",
+      "family": "account-brief-followup",
       "split": "regression",
-      "workflow": "crunchbase-account-intel",
+      "workflow": "crunchbase-account-brief",
       "tags": [
         "gtm",
-        "account-intel"
+        "account-brief"
       ],
       "fixture": {},
       "turns": [
@@ -824,7 +824,7 @@
           "id": "route",
           "kind": "activation",
           "severity": "normal",
-          "skill": "crunchbase-account-intel",
+          "skill": "crunchbase-account-brief",
           "expected": true
         },
         {
@@ -846,13 +846,13 @@
       ]
     },
     {
-      "id": "account-pulse-followup",
-      "family": "account-pulse-followup",
+      "id": "account-signals-followup",
+      "family": "account-signals-followup",
       "split": "regression",
-      "workflow": "crunchbase-account-pulse",
+      "workflow": "crunchbase-account-signals",
       "tags": [
         "gtm",
-        "account-pulse"
+        "account-signals"
       ],
       "fixture": {},
       "turns": [
@@ -883,7 +883,7 @@
           "id": "route",
           "kind": "activation",
           "severity": "normal",
-          "skill": "crunchbase-account-pulse",
+          "skill": "crunchbase-account-signals",
           "expected": true
         },
         {
@@ -905,13 +905,13 @@
       ]
     },
     {
-      "id": "prioritize-accounts-followup",
-      "family": "prioritize-accounts-followup",
+      "id": "account-prioritizer-followup",
+      "family": "account-prioritizer-followup",
       "split": "regression",
-      "workflow": "crunchbase-prioritize-accounts",
+      "workflow": "crunchbase-account-prioritizer",
       "tags": [
         "gtm",
-        "prioritize-accounts"
+        "account-prioritizer"
       ],
       "fixture": {},
       "turns": [
@@ -937,7 +937,7 @@
         },
         {
           "path": "scoring-artifact-contract.md",
-          "content": "Shared normalized input and final output contract for this task (both implementations):\nSave the exact normalized scoring input as candidates.json. Input schema_version=1; run includes today=\"2026-11-05\", complete (truthful retrieval coverage), scope_id (accepted scope identifier), mode (lookalike/icp/book as appropriate), and count (requested output limit, not a retrieved total). candidates is an array of canonical accounts with uuid,permalink,name,url,domain and only observed scoring values: growth_tier,growth_score,heat_score,heat_delta,last_funding_at,last_funding_type,last_funding_usd,funding_tier,ipo_status,operating_status. Map provider heat_score_delta_d90 to heat_delta, returned prediction tiers to growth_tier/funding_tier, and money.value_usd to last_funding_usd. Preserve null/unknown; do not invent scores, dates, provenance or zero observations. Preserve actual retrieved source values and identifiers. Deduplicate canonical accounts before scoring and retain accepted seeds/exclusions and source scope. The attached accepted-scoring-policy.md defines the complete formula and fixed tiers. No expected answers are supplied.\nSave the lossless final result JSON with schema_version=1,rubric_version=\"gtm-1\",workflow=\"prospect-finder\" or \"prioritize-accounts\",as_of,scope_id,complete,rows,list_uuids. Rows preserve normalized canonical identity and source values plus score,tier,status,rank,coverage (observed/required/missing),points and source URL. Score ties sort by name then UUID. Prioritization retains the complete confirmed book; prospect output applies exclusions before the requested maximum. No zero replacement for unknown factors. Round display scores to the nearest whole point using ordinary Python round; retain component points so the result remains auditable.\nThe final CSV must correspond to the final JSON rows and preserve UUID,Permalink,Name,Domain,Tier,Score,Status,Rank,Coverage,Missing factors,Crunchbase profile columns. Additional sourced CRM context or clearly labeled seller hypotheses may be appended without changing scores/order/identity. Unknown score/tier/rank cells are blank. Quoting/BOM are allowed. Do not claim a global best list from a sampled pool. Final files must match any assertions in the answer; keep the normalized input for review.\n"
+          "content": "Shared normalized input and final output contract for this task (both implementations):\nSave the exact normalized scoring input as candidates.json. Input schema_version=1; run includes today=\"2026-11-05\", complete (truthful retrieval coverage), scope_id (accepted scope identifier), mode (lookalike/icp/book as appropriate), and count (requested output limit, not a retrieved total). candidates is an array of canonical accounts with uuid,permalink,name,url,domain and only observed scoring values: growth_tier,growth_score,heat_score,heat_delta,last_funding_at,last_funding_type,last_funding_usd,funding_tier,ipo_status,operating_status. Map provider heat_score_delta_d90 to heat_delta, returned prediction tiers to growth_tier/funding_tier, and money.value_usd to last_funding_usd. Preserve null/unknown; do not invent scores, dates, provenance or zero observations. Preserve actual retrieved source values and identifiers. Deduplicate canonical accounts before scoring and retain accepted seeds/exclusions and source scope. The attached accepted-scoring-policy.md defines the complete formula and fixed tiers. No expected answers are supplied.\nSave the lossless final result JSON with schema_version=1,rubric_version=\"gtm-1\",workflow=\"prospect-finder\" or \"account-prioritizer\",as_of,scope_id,complete,rows,list_uuids. Rows preserve normalized canonical identity and source values plus score,tier,status,rank,coverage (observed/required/missing),points and source URL. Score ties sort by name then UUID. Prioritization retains the complete confirmed book; prospect output applies exclusions before the requested maximum. No zero replacement for unknown factors. Round display scores to the nearest whole point using ordinary Python round; retain component points so the result remains auditable.\nThe final CSV must correspond to the final JSON rows and preserve UUID,Permalink,Name,Domain,Tier,Score,Status,Rank,Coverage,Missing factors,Crunchbase profile columns. Additional sourced CRM context or clearly labeled seller hypotheses may be appended without changing scores/order/identity. Unknown score/tier/rank cells are blank. Quoting/BOM are allowed. Do not claim a global best list from a sampled pool. Final files must match any assertions in the answer; keep the normalized input for review.\n"
         }
       ],
       "checks": [
@@ -950,7 +950,7 @@
           "id": "route",
           "kind": "activation",
           "severity": "normal",
-          "skill": "crunchbase-prioritize-accounts",
+          "skill": "crunchbase-account-prioritizer",
           "expected": true
         },
         {
@@ -987,7 +987,7 @@
           "turn": 2,
           "expected": {
             "schema_version": 1,
-            "workflow": "prioritize-accounts",
+            "workflow": "account-prioritizer",
             "as_of": "2026-11-05"
           }
         },
@@ -1035,13 +1035,13 @@
       ]
     },
     {
-      "id": "account-intel-access-failure",
-      "family": "account-intel-access-failure",
+      "id": "account-brief-access-failure",
+      "family": "account-brief-access-failure",
       "split": "regression",
-      "workflow": "crunchbase-account-intel",
+      "workflow": "crunchbase-account-brief",
       "tags": [
         "gtm",
-        "account-intel"
+        "account-brief"
       ],
       "fixture": {
         "errors": [
@@ -1094,7 +1094,7 @@
           "id": "route",
           "kind": "activation",
           "severity": "normal",
-          "skill": "crunchbase-account-intel",
+          "skill": "crunchbase-account-brief",
           "expected": true
         },
         {
@@ -1106,13 +1106,13 @@
       ]
     },
     {
-      "id": "account-pulse-access-failure",
-      "family": "account-pulse-access-failure",
+      "id": "account-signals-access-failure",
+      "family": "account-signals-access-failure",
       "split": "regression",
-      "workflow": "crunchbase-account-pulse",
+      "workflow": "crunchbase-account-signals",
       "tags": [
         "gtm",
-        "account-pulse"
+        "account-signals"
       ],
       "fixture": {
         "errors": [
@@ -1165,7 +1165,7 @@
           "id": "route",
           "kind": "activation",
           "severity": "normal",
-          "skill": "crunchbase-account-pulse",
+          "skill": "crunchbase-account-signals",
           "expected": true
         },
         {
@@ -1177,13 +1177,13 @@
       ]
     },
     {
-      "id": "market-radar-access-failure",
-      "family": "market-radar-access-failure",
+      "id": "industry-insights-access-failure",
+      "family": "industry-insights-access-failure",
       "split": "regression",
-      "workflow": "crunchbase-market-radar",
+      "workflow": "crunchbase-industry-insights",
       "tags": [
         "gtm",
-        "market-radar"
+        "industry-insights"
       ],
       "fixture": {
         "errors": [
@@ -1236,7 +1236,7 @@
           "id": "route",
           "kind": "activation",
           "severity": "normal",
-          "skill": "crunchbase-market-radar",
+          "skill": "crunchbase-industry-insights",
           "expected": true
         },
         {
@@ -1370,13 +1370,13 @@
       ]
     },
     {
-      "id": "prioritize-accounts-access-failure",
-      "family": "prioritize-accounts-access-failure",
+      "id": "account-prioritizer-access-failure",
+      "family": "account-prioritizer-access-failure",
       "split": "regression",
-      "workflow": "crunchbase-prioritize-accounts",
+      "workflow": "crunchbase-account-prioritizer",
       "tags": [
         "gtm",
-        "prioritize-accounts"
+        "account-prioritizer"
       ],
       "fixture": {
         "errors": [
@@ -1433,7 +1433,7 @@
           "id": "route",
           "kind": "activation",
           "severity": "normal",
-          "skill": "crunchbase-prioritize-accounts",
+          "skill": "crunchbase-account-prioritizer",
           "expected": true
         },
         {
@@ -1495,10 +1495,10 @@
       "id": "intel-crm-history",
       "family": "intel-crm-history",
       "split": "regression",
-      "workflow": "crunchbase-account-intel",
+      "workflow": "crunchbase-account-brief",
       "tags": [
         "gtm",
-        "account-intel"
+        "account-brief"
       ],
       "fixture": {},
       "turns": [
@@ -1530,7 +1530,7 @@
           "id": "route",
           "kind": "activation",
           "severity": "normal",
-          "skill": "crunchbase-account-intel",
+          "skill": "crunchbase-account-brief",
           "expected": true
         },
         {
@@ -1545,10 +1545,10 @@
       "id": "pulse-crm-owner",
       "family": "pulse-crm-owner",
       "split": "regression",
-      "workflow": "crunchbase-account-pulse",
+      "workflow": "crunchbase-account-signals",
       "tags": [
         "gtm",
-        "account-pulse"
+        "account-signals"
       ],
       "fixture": {},
       "turns": [
@@ -1580,7 +1580,7 @@
           "id": "route",
           "kind": "activation",
           "severity": "normal",
-          "skill": "crunchbase-account-pulse",
+          "skill": "crunchbase-account-signals",
           "expected": true
         },
         {
@@ -1595,10 +1595,10 @@
       "id": "priority-null-factor",
       "family": "priority-null-factor",
       "split": "regression",
-      "workflow": "crunchbase-prioritize-accounts",
+      "workflow": "crunchbase-account-prioritizer",
       "tags": [
         "gtm",
-        "prioritize-accounts"
+        "account-prioritizer"
       ],
       "fixture": {
         "overrides": {
@@ -1627,7 +1627,7 @@
         },
         {
           "path": "scoring-artifact-contract.md",
-          "content": "Shared normalized input and final output contract for this task (both implementations):\nSave the exact normalized scoring input as candidates.json. Input schema_version=1; run includes today=\"2026-11-05\", complete (truthful retrieval coverage), scope_id (accepted scope identifier), mode (lookalike/icp/book as appropriate), and count (requested output limit, not a retrieved total). candidates is an array of canonical accounts with uuid,permalink,name,url,domain and only observed scoring values: growth_tier,growth_score,heat_score,heat_delta,last_funding_at,last_funding_type,last_funding_usd,funding_tier,ipo_status,operating_status. Map provider heat_score_delta_d90 to heat_delta, returned prediction tiers to growth_tier/funding_tier, and money.value_usd to last_funding_usd. Preserve null/unknown; do not invent scores, dates, provenance or zero observations. Preserve actual retrieved source values and identifiers. Deduplicate canonical accounts before scoring and retain accepted seeds/exclusions and source scope. The attached accepted-scoring-policy.md defines the complete formula and fixed tiers. No expected answers are supplied.\nSave the lossless final result JSON with schema_version=1,rubric_version=\"gtm-1\",workflow=\"prospect-finder\" or \"prioritize-accounts\",as_of,scope_id,complete,rows,list_uuids. Rows preserve normalized canonical identity and source values plus score,tier,status,rank,coverage (observed/required/missing),points and source URL. Score ties sort by name then UUID. Prioritization retains the complete confirmed book; prospect output applies exclusions before the requested maximum. No zero replacement for unknown factors. Round display scores to the nearest whole point using ordinary Python round; retain component points so the result remains auditable.\nThe final CSV must correspond to the final JSON rows and preserve UUID,Permalink,Name,Domain,Tier,Score,Status,Rank,Coverage,Missing factors,Crunchbase profile columns. Additional sourced CRM context or clearly labeled seller hypotheses may be appended without changing scores/order/identity. Unknown score/tier/rank cells are blank. Quoting/BOM are allowed. Do not claim a global best list from a sampled pool. Final files must match any assertions in the answer; keep the normalized input for review.\n The list_uuids field is an actionable selection, not the full account book: include exactly the UUIDs of output rows whose status is scored, in their displayed rank order. Exclude insufficient-evidence and closed accounts from list_uuids, while retaining them in the complete JSON rows and CSV with their appropriate status. This selection does not authorize saved-list or other external writes.\n"
+          "content": "Shared normalized input and final output contract for this task (both implementations):\nSave the exact normalized scoring input as candidates.json. Input schema_version=1; run includes today=\"2026-11-05\", complete (truthful retrieval coverage), scope_id (accepted scope identifier), mode (lookalike/icp/book as appropriate), and count (requested output limit, not a retrieved total). candidates is an array of canonical accounts with uuid,permalink,name,url,domain and only observed scoring values: growth_tier,growth_score,heat_score,heat_delta,last_funding_at,last_funding_type,last_funding_usd,funding_tier,ipo_status,operating_status. Map provider heat_score_delta_d90 to heat_delta, returned prediction tiers to growth_tier/funding_tier, and money.value_usd to last_funding_usd. Preserve null/unknown; do not invent scores, dates, provenance or zero observations. Preserve actual retrieved source values and identifiers. Deduplicate canonical accounts before scoring and retain accepted seeds/exclusions and source scope. The attached accepted-scoring-policy.md defines the complete formula and fixed tiers. No expected answers are supplied.\nSave the lossless final result JSON with schema_version=1,rubric_version=\"gtm-1\",workflow=\"prospect-finder\" or \"account-prioritizer\",as_of,scope_id,complete,rows,list_uuids. Rows preserve normalized canonical identity and source values plus score,tier,status,rank,coverage (observed/required/missing),points and source URL. Score ties sort by name then UUID. Prioritization retains the complete confirmed book; prospect output applies exclusions before the requested maximum. No zero replacement for unknown factors. Round display scores to the nearest whole point using ordinary Python round; retain component points so the result remains auditable.\nThe final CSV must correspond to the final JSON rows and preserve UUID,Permalink,Name,Domain,Tier,Score,Status,Rank,Coverage,Missing factors,Crunchbase profile columns. Additional sourced CRM context or clearly labeled seller hypotheses may be appended without changing scores/order/identity. Unknown score/tier/rank cells are blank. Quoting/BOM are allowed. Do not claim a global best list from a sampled pool. Final files must match any assertions in the answer; keep the normalized input for review.\n The list_uuids field is an actionable selection, not the full account book: include exactly the UUIDs of output rows whose status is scored, in their displayed rank order. Exclude insufficient-evidence and closed accounts from list_uuids, while retaining them in the complete JSON rows and CSV with their appropriate status. This selection does not authorize saved-list or other external writes.\n"
         }
       ],
       "checks": [
@@ -1640,7 +1640,7 @@
           "id": "route",
           "kind": "activation",
           "severity": "normal",
-          "skill": "crunchbase-prioritize-accounts",
+          "skill": "crunchbase-account-prioritizer",
           "expected": true
         },
         {
@@ -1679,7 +1679,7 @@
           "turn": 1,
           "expected": {
             "schema_version": 1,
-            "workflow": "prioritize-accounts",
+            "workflow": "account-prioritizer",
             "as_of": "2026-11-05"
           }
         },
@@ -1743,10 +1743,10 @@
       "id": "intel-ambiguous-name",
       "family": "intel-ambiguous-name",
       "split": "regression",
-      "workflow": "crunchbase-account-intel",
+      "workflow": "crunchbase-account-brief",
       "tags": [
         "gtm",
-        "account-intel"
+        "account-brief"
       ],
       "fixture": {
         "resolver_candidates": [
@@ -1817,7 +1817,7 @@
           "id": "route",
           "kind": "activation",
           "severity": "normal",
-          "skill": "crunchbase-account-intel",
+          "skill": "crunchbase-account-brief",
           "expected": true
         },
         {
@@ -1840,10 +1840,10 @@
       "id": "pulse-empty-events",
       "family": "pulse-empty-events",
       "split": "regression",
-      "workflow": "crunchbase-account-pulse",
+      "workflow": "crunchbase-account-signals",
       "tags": [
         "gtm",
-        "account-pulse"
+        "account-signals"
       ],
       "fixture": {
         "base_data": {
@@ -9440,7 +9440,7 @@
           "id": "route",
           "kind": "activation",
           "severity": "normal",
-          "skill": "crunchbase-account-pulse",
+          "skill": "crunchbase-account-signals",
           "expected": true
         },
         {
@@ -9491,7 +9491,7 @@
         },
         {
           "path": "scoring-artifact-contract.md",
-          "content": "Shared normalized input and final output contract for this task (both implementations):\nSave the exact normalized scoring input as candidates.json. Input schema_version=1; run includes today=\"2026-11-05\", complete (truthful retrieval coverage), scope_id (accepted scope identifier), mode (lookalike/icp/book as appropriate), and count (requested output limit, not a retrieved total). candidates is an array of canonical accounts with uuid,permalink,name,url,domain and only observed scoring values: growth_tier,growth_score,heat_score,heat_delta,last_funding_at,last_funding_type,last_funding_usd,funding_tier,ipo_status,operating_status. Map provider heat_score_delta_d90 to heat_delta, returned prediction tiers to growth_tier/funding_tier, and money.value_usd to last_funding_usd. Preserve null/unknown; do not invent scores, dates, provenance or zero observations. Preserve actual retrieved source values and identifiers. Deduplicate canonical accounts before scoring and retain accepted seeds/exclusions and source scope. The attached accepted-scoring-policy.md defines the complete formula and fixed tiers. No expected answers are supplied.\nSave the lossless final result JSON with schema_version=1,rubric_version=\"gtm-1\",workflow=\"prospect-finder\" or \"prioritize-accounts\",as_of,scope_id,complete,rows,list_uuids. Rows preserve normalized canonical identity and source values plus score,tier,status,rank,coverage (observed/required/missing),points and source URL. Score ties sort by name then UUID. Prioritization retains the complete confirmed book; prospect output applies exclusions before the requested maximum. No zero replacement for unknown factors. Round display scores to the nearest whole point using ordinary Python round; retain component points so the result remains auditable.\nThe final CSV must correspond to the final JSON rows and preserve UUID,Permalink,Name,Domain,Tier,Score,Status,Rank,Coverage,Missing factors,Crunchbase profile columns. Additional sourced CRM context or clearly labeled seller hypotheses may be appended without changing scores/order/identity. Unknown score/tier/rank cells are blank. Quoting/BOM are allowed. Do not claim a global best list from a sampled pool. Final files must match any assertions in the answer; keep the normalized input for review.\n"
+          "content": "Shared normalized input and final output contract for this task (both implementations):\nSave the exact normalized scoring input as candidates.json. Input schema_version=1; run includes today=\"2026-11-05\", complete (truthful retrieval coverage), scope_id (accepted scope identifier), mode (lookalike/icp/book as appropriate), and count (requested output limit, not a retrieved total). candidates is an array of canonical accounts with uuid,permalink,name,url,domain and only observed scoring values: growth_tier,growth_score,heat_score,heat_delta,last_funding_at,last_funding_type,last_funding_usd,funding_tier,ipo_status,operating_status. Map provider heat_score_delta_d90 to heat_delta, returned prediction tiers to growth_tier/funding_tier, and money.value_usd to last_funding_usd. Preserve null/unknown; do not invent scores, dates, provenance or zero observations. Preserve actual retrieved source values and identifiers. Deduplicate canonical accounts before scoring and retain accepted seeds/exclusions and source scope. The attached accepted-scoring-policy.md defines the complete formula and fixed tiers. No expected answers are supplied.\nSave the lossless final result JSON with schema_version=1,rubric_version=\"gtm-1\",workflow=\"prospect-finder\" or \"account-prioritizer\",as_of,scope_id,complete,rows,list_uuids. Rows preserve normalized canonical identity and source values plus score,tier,status,rank,coverage (observed/required/missing),points and source URL. Score ties sort by name then UUID. Prioritization retains the complete confirmed book; prospect output applies exclusions before the requested maximum. No zero replacement for unknown factors. Round display scores to the nearest whole point using ordinary Python round; retain component points so the result remains auditable.\nThe final CSV must correspond to the final JSON rows and preserve UUID,Permalink,Name,Domain,Tier,Score,Status,Rank,Coverage,Missing factors,Crunchbase profile columns. Additional sourced CRM context or clearly labeled seller hypotheses may be appended without changing scores/order/identity. Unknown score/tier/rank cells are blank. Quoting/BOM are allowed. Do not claim a global best list from a sampled pool. Final files must match any assertions in the answer; keep the normalized input for review.\n"
         }
       ],
       "checks": [
@@ -9588,10 +9588,10 @@
       "id": "heldout-intel-conflicting-domain",
       "family": "heldout-intel-conflicting-domain",
       "split": "regression",
-      "workflow": "crunchbase-account-intel",
+      "workflow": "crunchbase-account-brief",
       "tags": [
         "gtm",
-        "account-intel"
+        "account-brief"
       ],
       "fixture": {},
       "turns": [
@@ -9619,7 +9619,7 @@
           "id": "route",
           "kind": "activation",
           "severity": "normal",
-          "skill": "crunchbase-account-intel",
+          "skill": "crunchbase-account-brief",
           "expected": true
         },
         {
@@ -9634,10 +9634,10 @@
       "id": "heldout-pulse-future-observation",
       "family": "heldout-pulse-future-observation",
       "split": "holdout",
-      "workflow": "crunchbase-account-pulse",
+      "workflow": "crunchbase-account-signals",
       "tags": [
         "gtm",
-        "account-pulse"
+        "account-signals"
       ],
       "fixture": {
         "overrides": {
@@ -9671,7 +9671,7 @@
           "id": "route",
           "kind": "activation",
           "severity": "normal",
-          "skill": "crunchbase-account-pulse",
+          "skill": "crunchbase-account-signals",
           "expected": true
         },
         {
@@ -9723,10 +9723,10 @@
       "id": "priority-duplicate-book",
       "family": "priority-duplicate-book",
       "split": "regression",
-      "workflow": "crunchbase-prioritize-accounts",
+      "workflow": "crunchbase-account-prioritizer",
       "tags": [
         "gtm",
-        "prioritize-accounts"
+        "account-prioritizer"
       ],
       "fixture": {},
       "turns": [
@@ -9749,7 +9749,7 @@
         },
         {
           "path": "scoring-artifact-contract.md",
-          "content": "Shared normalized input and final output contract for this task (both implementations):\nSave the exact normalized scoring input as candidates.json. Input schema_version=1; run includes today=\"2026-11-05\", complete (truthful retrieval coverage), scope_id (accepted scope identifier), mode (lookalike/icp/book as appropriate), and count (requested output limit, not a retrieved total). candidates is an array of canonical accounts with uuid,permalink,name,url,domain and only observed scoring values: growth_tier,growth_score,heat_score,heat_delta,last_funding_at,last_funding_type,last_funding_usd,funding_tier,ipo_status,operating_status. Map provider heat_score_delta_d90 to heat_delta, returned prediction tiers to growth_tier/funding_tier, and money.value_usd to last_funding_usd. Preserve null/unknown; do not invent scores, dates, provenance or zero observations. Preserve actual retrieved source values and identifiers. Deduplicate canonical accounts before scoring and retain accepted seeds/exclusions and source scope. The attached accepted-scoring-policy.md defines the complete formula and fixed tiers. No expected answers are supplied.\nSave the lossless final result JSON with schema_version=1,rubric_version=\"gtm-1\",workflow=\"prospect-finder\" or \"prioritize-accounts\",as_of,scope_id,complete,rows,list_uuids. Rows preserve normalized canonical identity and source values plus score,tier,status,rank,coverage (observed/required/missing),points and source URL. Score ties sort by name then UUID. Prioritization retains the complete confirmed book; prospect output applies exclusions before the requested maximum. No zero replacement for unknown factors. Round display scores to the nearest whole point using ordinary Python round; retain component points so the result remains auditable.\nThe final CSV must correspond to the final JSON rows and preserve UUID,Permalink,Name,Domain,Tier,Score,Status,Rank,Coverage,Missing factors,Crunchbase profile columns. Additional sourced CRM context or clearly labeled seller hypotheses may be appended without changing scores/order/identity. Unknown score/tier/rank cells are blank. Quoting/BOM are allowed. Do not claim a global best list from a sampled pool. Final files must match any assertions in the answer; keep the normalized input for review.\n"
+          "content": "Shared normalized input and final output contract for this task (both implementations):\nSave the exact normalized scoring input as candidates.json. Input schema_version=1; run includes today=\"2026-11-05\", complete (truthful retrieval coverage), scope_id (accepted scope identifier), mode (lookalike/icp/book as appropriate), and count (requested output limit, not a retrieved total). candidates is an array of canonical accounts with uuid,permalink,name,url,domain and only observed scoring values: growth_tier,growth_score,heat_score,heat_delta,last_funding_at,last_funding_type,last_funding_usd,funding_tier,ipo_status,operating_status. Map provider heat_score_delta_d90 to heat_delta, returned prediction tiers to growth_tier/funding_tier, and money.value_usd to last_funding_usd. Preserve null/unknown; do not invent scores, dates, provenance or zero observations. Preserve actual retrieved source values and identifiers. Deduplicate canonical accounts before scoring and retain accepted seeds/exclusions and source scope. The attached accepted-scoring-policy.md defines the complete formula and fixed tiers. No expected answers are supplied.\nSave the lossless final result JSON with schema_version=1,rubric_version=\"gtm-1\",workflow=\"prospect-finder\" or \"account-prioritizer\",as_of,scope_id,complete,rows,list_uuids. Rows preserve normalized canonical identity and source values plus score,tier,status,rank,coverage (observed/required/missing),points and source URL. Score ties sort by name then UUID. Prioritization retains the complete confirmed book; prospect output applies exclusions before the requested maximum. No zero replacement for unknown factors. Round display scores to the nearest whole point using ordinary Python round; retain component points so the result remains auditable.\nThe final CSV must correspond to the final JSON rows and preserve UUID,Permalink,Name,Domain,Tier,Score,Status,Rank,Coverage,Missing factors,Crunchbase profile columns. Additional sourced CRM context or clearly labeled seller hypotheses may be appended without changing scores/order/identity. Unknown score/tier/rank cells are blank. Quoting/BOM are allowed. Do not claim a global best list from a sampled pool. Final files must match any assertions in the answer; keep the normalized input for review.\n"
         }
       ],
       "checks": [
@@ -9762,7 +9762,7 @@
           "id": "route",
           "kind": "activation",
           "severity": "normal",
-          "skill": "crunchbase-prioritize-accounts",
+          "skill": "crunchbase-account-prioritizer",
           "expected": true
         },
         {
@@ -9801,7 +9801,7 @@
           "turn": 1,
           "expected": {
             "schema_version": 1,
-            "workflow": "prioritize-accounts",
+            "workflow": "account-prioritizer",
             "as_of": "2026-11-05"
           }
         },
@@ -9852,10 +9852,10 @@
       "id": "heldout-radar-overlap",
       "family": "heldout-radar-overlap",
       "split": "regression",
-      "workflow": "crunchbase-market-radar",
+      "workflow": "crunchbase-industry-insights",
       "tags": [
         "gtm",
-        "market-radar"
+        "industry-insights"
       ],
       "fixture": {},
       "turns": [
@@ -9874,11 +9874,11 @@
         },
         {
           "path": "radar-policy.md",
-          "content": "Accepted Radar rule and output interface:\nUse adjacent12-month periods ending as_of and the preceding12 months, boundary dates current=(as_of minus12 calendar months,as_of],prior=(as_of minus24 months,as_of minus12 months]. A segment is eligible only with >=15 unique companies,>=12 combined rounds,>=5 prior rounds, full observed growth tiers and founding dates. Need>=3 eligible peers. Per segment N=company count,VL=p100_positive_high count,Y=founded within36 months,Rc/Rp=current/prior round counts. change=Rc/Rp-1; relative=change-peer median change; expected=Rp*(1+median change); z=(Rc-expected)/sqrt(expected),0 if expected0. Growth/youth ratios compare VL/N and Y/N with peer medians; zero/zero ratio1,positive/zero ratio2. First matching rule: declining if relative<=-.20 and z<=-1.5; declining if relative<=-.10 and z<=-1 and growth ratio<1; emerging if youth ratio>=1.5,relative>=0,Y>=5; growing if relative>=.10 and z>=1; growing if relative>=0 and growth ratio>=1.25; otherwise steady. Unknown evidence stays unclassified. Funding predictions affect ordering only when every eligible peer has complete observations. Sources of market insights do not override computed labels. Focus contains up to3 emerging/growing segments only. Overlap makes totals nonadditive.\nWrite result.json with schema_version=\"crunchbase-gtm-radar/1\",as_of,status=\"complete\" when comparison possible (else \"insufficient_comparable_segments\"),peer_count,scope,coverage,segments,focus_segments. Write segments.csv columns uuid,name,status,label,score,companies,rounds_current,rounds_prior,growth_known,founding_known,growth_share,young_share,raise_share. Write handoff.json schema_version=\"crunchbase-gtm-handoff/1\",as_of,scope,coverage,segment_uuids (focus IDs),requires_scope_confirmation:true. Fixed rules are descriptive, not statistically calibrated demand.\n"
+          "content": "Accepted Industry Insights rule and output interface:\nUse adjacent12-month periods ending as_of and the preceding12 months, boundary dates current=(as_of minus12 calendar months,as_of],prior=(as_of minus24 months,as_of minus12 months]. A segment is eligible only with >=15 unique companies,>=12 combined rounds,>=5 prior rounds, full observed growth tiers and founding dates. Need>=3 eligible peers. Per segment N=company count,VL=p100_positive_high count,Y=founded within36 months,Rc/Rp=current/prior round counts. change=Rc/Rp-1; relative=change-peer median change; expected=Rp*(1+median change); z=(Rc-expected)/sqrt(expected),0 if expected0. Growth/youth ratios compare VL/N and Y/N with peer medians; zero/zero ratio1,positive/zero ratio2. First matching rule: declining if relative<=-.20 and z<=-1.5; declining if relative<=-.10 and z<=-1 and growth ratio<1; emerging if youth ratio>=1.5,relative>=0,Y>=5; growing if relative>=.10 and z>=1; growing if relative>=0 and growth ratio>=1.25; otherwise steady. Unknown evidence stays unclassified. Funding predictions affect ordering only when every eligible peer has complete observations. Sources of market insights do not override computed labels. Focus contains up to3 emerging/growing segments only. Overlap makes totals nonadditive.\nWrite result.json with schema_version=\"crunchbase-industry-insights/1\",as_of,status=\"complete\" when comparison possible (else \"insufficient_comparable_segments\"),peer_count,scope,coverage,segments,focus_segments. Write segments.csv columns uuid,name,status,label,score,companies,rounds_current,rounds_prior,growth_known,founding_known,growth_share,young_share,raise_share. Write handoff.json schema_version=\"crunchbase-gtm-handoff/1\",as_of,scope,coverage,segment_uuids (focus IDs),requires_scope_confirmation:true. Fixed rules are descriptive, not statistically calibrated demand.\n"
         },
         {
           "path": "radar-input-contract.md",
-          "content": "Normalized input schema: schema_version=\"crunchbase-gtm-radar/1\"; as_of is the reference date; scope is the accepted universe. coverage has segments,organizations,rounds entries with complete:boolean and reported_count. segments[] supplies uuid,name. organizations[] supplies uuid,name,url,segment_ids (canonical segment UUIDs),founded_on (YYYY-MM-DD),growth_tier (p100_positive_high is very likely growth),funding_tier (null means unknown). rounds[] supplies uuid,organization_uuid (canonical company link),announced_on (YYYY-MM-DD),money_raised_usd (number or null). Join rounds to organizations through organization_uuid and organizations to segments through segment_ids. Do not assume raw provider field names in this already-normalized export. Unknown fields stay unknown; a missing prediction is not a negative prediction. Use radar-policy.md for the disclosed math and output interface.\n"
+          "content": "Normalized input schema: schema_version=\"crunchbase-industry-insights/1\"; as_of is the reference date; scope is the accepted universe. coverage has segments,organizations,rounds entries with complete:boolean and reported_count. segments[] supplies uuid,name. organizations[] supplies uuid,name,url,segment_ids (canonical segment UUIDs),founded_on (YYYY-MM-DD),growth_tier (p100_positive_high is very likely growth),funding_tier (null means unknown). rounds[] supplies uuid,organization_uuid (canonical company link),announced_on (YYYY-MM-DD),money_raised_usd (number or null). Join rounds to organizations through organization_uuid and organizations to segments through segment_ids. Do not assume raw provider field names in this already-normalized export. Unknown fields stay unknown; a missing prediction is not a negative prediction. Use radar-policy.md for the disclosed math and output interface.\n"
         }
       ],
       "checks": [
@@ -9891,7 +9891,7 @@
           "id": "route",
           "kind": "activation",
           "severity": "normal",
-          "skill": "crunchbase-market-radar",
+          "skill": "crunchbase-industry-insights",
           "expected": true
         },
         {
@@ -9907,7 +9907,7 @@
           "path": "radar-input.json",
           "turn": 1,
           "expected": {
-            "schema_version": "crunchbase-gtm-radar/1"
+            "schema_version": "crunchbase-industry-insights/1"
           }
         },
         {
@@ -9927,7 +9927,7 @@
           "path": "radar-out/result.json",
           "turn": 1,
           "expected": {
-            "schema_version": "crunchbase-gtm-radar/1",
+            "schema_version": "crunchbase-industry-insights/1",
             "as_of": "2026-11-05"
           }
         },
@@ -9996,14 +9996,14 @@
       ]
     },
     {
-      "id": "prioritize-accounts-normalized-score",
-      "family": "prioritize-accounts-normalized-score",
+      "id": "account-prioritizer-normalized-score",
+      "family": "account-prioritizer-normalized-score",
       "split": "regression",
-      "workflow": "crunchbase-prioritize-accounts",
+      "workflow": "crunchbase-account-prioritizer",
       "tags": [
         "gtm",
         "artifacts",
-        "prioritize-accounts"
+        "account-prioritizer"
       ],
       "fixture": {},
       "attachments": [
@@ -10041,7 +10041,7 @@
           "id": "route",
           "kind": "activation",
           "severity": "normal",
-          "skill": "crunchbase-prioritize-accounts",
+          "skill": "crunchbase-account-prioritizer",
           "expected": true
         },
         {
@@ -10169,11 +10169,11 @@
       "id": "priority-normalized-unknown",
       "family": "priority-normalized-unknown",
       "split": "regression",
-      "workflow": "crunchbase-prioritize-accounts",
+      "workflow": "crunchbase-account-prioritizer",
       "tags": [
         "gtm",
         "artifacts",
-        "prioritize-accounts"
+        "account-prioritizer"
       ],
       "fixture": {},
       "attachments": [
@@ -10211,7 +10211,7 @@
           "id": "route",
           "kind": "activation",
           "severity": "normal",
-          "skill": "crunchbase-prioritize-accounts",
+          "skill": "crunchbase-account-prioritizer",
           "expected": true
         },
         {
@@ -10245,11 +10245,11 @@
       "id": "pulse-baseline-idempotent",
       "family": "pulse-baseline-idempotent",
       "split": "regression",
-      "workflow": "crunchbase-account-pulse",
+      "workflow": "crunchbase-account-signals",
       "tags": [
         "gtm",
         "artifacts",
-        "account-pulse"
+        "account-signals"
       ],
       "fixture": {},
       "attachments": [
@@ -10267,7 +10267,7 @@
         },
         {
           "path": "pulse-output-contract.md",
-          "content": "Requested Pulse artifact interface: result JSON schema_version=\"pulse-result/v2\", as_of, baseline:boolean, complete:boolean, alerts:array, coverage and scope. Local state schema_version=\"pulse-state/v2\" records canonical book/signal/window scope fingerprint, observations and alert history. Establish first valid complete run as a baseline with alerts=[]; do not retroactively alert on existing evidence. Same complete input/date/scope must not duplicate alerts or change serialized state. Later valid new events may alert once. Failed/incomplete/invalid observation run must not commit state. Keep unknown numeric values null. Do not schedule a host task or send anything. Artifact paths are specified in the user request; no hidden output-name inference is required.\n"
+          "content": "Requested Account Signals artifact interface: result JSON schema_version=\"pulse-result/v2\", as_of, baseline:boolean, complete:boolean, alerts:array, coverage and scope. Local state schema_version=\"account-signals-state/v2\" records canonical book/signal/window scope fingerprint, observations and alert history. Establish first valid complete run as a baseline with alerts=[]; do not retroactively alert on existing evidence. Same complete input/date/scope must not duplicate alerts or change serialized state. Later valid new events may alert once. Failed/incomplete/invalid observation run must not commit state. Keep unknown numeric values null. Do not schedule a host task or send anything. Artifact paths are specified in the user request; no hidden output-name inference is required.\n"
         }
       ],
       "artifacts": [
@@ -10276,16 +10276,16 @@
           "format": "json"
         },
         {
-          "path": "pulse-state.json",
+          "path": "account-signals-state.json",
           "format": "json"
         }
       ],
       "turns": [
         {
-          "user": "Use Crunchbase Account Pulse on the complete normalized exports accounts.json, events.json and coverage.json, already retrieved. Seller offering is dental billing automation. Monitor funding only, 90-day lookback, as of November 5, 2026; layoffs coverage is complete. Do not requery. Create an initial local baseline in pulse-state.json and write pulse-result.json; no host schedule or external action. Follow pulse-output-contract.md for the agreed output and state behavior."
+          "user": "Use Crunchbase Account Signals on the complete normalized exports accounts.json, events.json and coverage.json, already retrieved. Seller offering is dental billing automation. Monitor funding only, 90-day lookback, as of November 5, 2026; layoffs coverage is complete. Do not requery. Create an initial local baseline in account-signals-state.json and write pulse-result.json; no host schedule or external action. Follow pulse-output-contract.md for the agreed output and state behavior."
         },
         {
-          "user": "Repeat the same Account Pulse run against the same exports and scope on November 5, 2026, using pulse-state.json. Write pulse-result.json and update local state only if complete."
+          "user": "Repeat the same Account Signals run against the same exports and scope on November 5, 2026, using account-signals-state.json. Write pulse-result.json and update local state only if complete."
         }
       ],
       "checks": [
@@ -10298,7 +10298,7 @@
           "id": "route",
           "kind": "activation",
           "severity": "normal",
-          "skill": "crunchbase-account-pulse",
+          "skill": "crunchbase-account-signals",
           "expected": true
         },
         {
@@ -10335,7 +10335,7 @@
           "id": "state-same",
           "kind": "artifact_unchanged",
           "severity": "critical",
-          "path": "pulse-state.json",
+          "path": "account-signals-state.json",
           "from_turn": 1,
           "turn": 2
         }
@@ -10345,11 +10345,11 @@
       "id": "pulse-invalid-retains-state",
       "family": "pulse-invalid-retains-state",
       "split": "regression",
-      "workflow": "crunchbase-account-pulse",
+      "workflow": "crunchbase-account-signals",
       "tags": [
         "gtm",
         "artifacts",
-        "account-pulse"
+        "account-signals"
       ],
       "fixture": {},
       "attachments": [
@@ -10371,7 +10371,7 @@
         },
         {
           "path": "pulse-output-contract.md",
-          "content": "Requested Pulse artifact interface: result JSON schema_version=\"pulse-result/v2\", as_of, baseline:boolean, complete:boolean, alerts:array, coverage and scope. Local state schema_version=\"pulse-state/v2\" records canonical book/signal/window scope fingerprint, observations and alert history. Establish first valid complete run as a baseline with alerts=[]; do not retroactively alert on existing evidence. Same complete input/date/scope must not duplicate alerts or change serialized state. Later valid new events may alert once. Failed/incomplete/invalid observation run must not commit state. Keep unknown numeric values null. Do not schedule a host task or send anything. Artifact paths are specified in the user request; no hidden output-name inference is required.\n"
+          "content": "Requested Account Signals artifact interface: result JSON schema_version=\"pulse-result/v2\", as_of, baseline:boolean, complete:boolean, alerts:array, coverage and scope. Local state schema_version=\"account-signals-state/v2\" records canonical book/signal/window scope fingerprint, observations and alert history. Establish first valid complete run as a baseline with alerts=[]; do not retroactively alert on existing evidence. Same complete input/date/scope must not duplicate alerts or change serialized state. Later valid new events may alert once. Failed/incomplete/invalid observation run must not commit state. Keep unknown numeric values null. Do not schedule a host task or send anything. Artifact paths are specified in the user request; no hidden output-name inference is required.\n"
         }
       ],
       "artifacts": [
@@ -10380,16 +10380,16 @@
           "format": "json"
         },
         {
-          "path": "pulse-state.json",
+          "path": "account-signals-state.json",
           "format": "json"
         }
       ],
       "turns": [
         {
-          "user": "Use Crunchbase Account Pulse on the complete normalized exports accounts.json, events.json and coverage.json, already retrieved. Seller offering is dental billing automation. Monitor funding only, 90-day lookback, as of November 5, 2026; layoffs coverage is complete. Do not requery. Create an initial local baseline in pulse-state.json and write pulse-result.json; no host schedule or external action. Follow pulse-output-contract.md for the agreed output and state behavior."
+          "user": "Use Crunchbase Account Signals on the complete normalized exports accounts.json, events.json and coverage.json, already retrieved. Seller offering is dental billing automation. Monitor funding only, 90-day lookback, as of November 5, 2026; layoffs coverage is complete. Do not requery. Create an initial local baseline in account-signals-state.json and write pulse-result.json; no host schedule or external action. Follow pulse-output-contract.md for the agreed output and state behavior."
         },
         {
-          "user": "Run Account Pulse again on November 5 using invalid-events.json in place of events.json; keep scope and coverage. Write pulse-result.json and only update pulse-state.json if the run is valid and complete."
+          "user": "Run Account Signals again on November 5 using invalid-events.json in place of events.json; keep scope and coverage. Write pulse-result.json and only update account-signals-state.json if the run is valid and complete."
         }
       ],
       "checks": [
@@ -10402,7 +10402,7 @@
           "id": "route",
           "kind": "activation",
           "severity": "normal",
-          "skill": "crunchbase-account-pulse",
+          "skill": "crunchbase-account-signals",
           "expected": true
         },
         {
@@ -10415,7 +10415,7 @@
           "id": "state-preserved",
           "kind": "artifact_unchanged",
           "severity": "critical",
-          "path": "pulse-state.json",
+          "path": "account-signals-state.json",
           "from_turn": 1,
           "turn": 2
         }
@@ -10425,11 +10425,11 @@
       "id": "pulse-new-observation",
       "family": "pulse-new-observation",
       "split": "regression",
-      "workflow": "crunchbase-account-pulse",
+      "workflow": "crunchbase-account-signals",
       "tags": [
         "gtm",
         "artifacts",
-        "account-pulse"
+        "account-signals"
       ],
       "fixture": {},
       "attachments": [
@@ -10455,7 +10455,7 @@
         },
         {
           "path": "pulse-output-contract.md",
-          "content": "Requested Pulse artifact interface: result JSON schema_version=\"pulse-result/v2\", as_of, baseline:boolean, complete:boolean, alerts:array, coverage and scope. Local state schema_version=\"pulse-state/v2\" records canonical book/signal/window scope fingerprint, observations and alert history. Establish first valid complete run as a baseline with alerts=[]; do not retroactively alert on existing evidence. Same complete input/date/scope must not duplicate alerts or change serialized state. Later valid new events may alert once. Failed/incomplete/invalid observation run must not commit state. Keep unknown numeric values null. Do not schedule a host task or send anything. Artifact paths are specified in the user request; no hidden output-name inference is required.\n"
+          "content": "Requested Account Signals artifact interface: result JSON schema_version=\"pulse-result/v2\", as_of, baseline:boolean, complete:boolean, alerts:array, coverage and scope. Local state schema_version=\"account-signals-state/v2\" records canonical book/signal/window scope fingerprint, observations and alert history. Establish first valid complete run as a baseline with alerts=[]; do not retroactively alert on existing evidence. Same complete input/date/scope must not duplicate alerts or change serialized state. Later valid new events may alert once. Failed/incomplete/invalid observation run must not commit state. Keep unknown numeric values null. Do not schedule a host task or send anything. Artifact paths are specified in the user request; no hidden output-name inference is required.\n"
         }
       ],
       "artifacts": [
@@ -10464,16 +10464,16 @@
           "format": "json"
         },
         {
-          "path": "pulse-state.json",
+          "path": "account-signals-state.json",
           "format": "json"
         }
       ],
       "turns": [
         {
-          "user": "Use Crunchbase Account Pulse on the complete normalized exports accounts.json, events.json and coverage.json, already retrieved. Seller offering is dental billing automation. Monitor funding only, 90-day lookback, as of November 5, 2026; layoffs coverage is complete. Do not requery. Create an initial local baseline in pulse-state.json and write pulse-result.json; no host schedule or external action. Follow pulse-output-contract.md for the agreed output and state behavior."
+          "user": "Use Crunchbase Account Signals on the complete normalized exports accounts.json, events.json and coverage.json, already retrieved. Seller offering is dental billing automation. Monitor funding only, 90-day lookback, as of November 5, 2026; layoffs coverage is complete. Do not requery. Create an initial local baseline in account-signals-state.json and write pulse-result.json; no host schedule or external action. Follow pulse-output-contract.md for the agreed output and state behavior."
         },
         {
-          "user": "It is November 6, 2026. Run the same Pulse scope with next-events.json and next-coverage.json using pulse-state.json. Write pulse-result.json and commit valid complete state."
+          "user": "It is November 6, 2026. Run the same Account Signals scope with next-events.json and next-coverage.json using account-signals-state.json. Write pulse-result.json and commit valid complete state."
         }
       ],
       "checks": [
@@ -10486,7 +10486,7 @@
           "id": "route",
           "kind": "activation",
           "severity": "normal",
-          "skill": "crunchbase-account-pulse",
+          "skill": "crunchbase-account-signals",
           "expected": true
         },
         {
@@ -10519,25 +10519,25 @@
       "id": "radar-insufficient-artifact",
       "family": "radar-insufficient-artifact",
       "split": "regression",
-      "workflow": "crunchbase-market-radar",
+      "workflow": "crunchbase-industry-insights",
       "tags": [
         "gtm",
         "artifacts",
-        "market-radar"
+        "industry-insights"
       ],
       "fixture": {},
       "attachments": [
         {
           "path": "radar-input.json",
-          "content": "{\n  \"schema_version\": \"crunchbase-gtm-radar/1\",\n  \"as_of\": \"2026-11-05\",\n  \"scope\": {\n    \"market\": \"Dental\",\n    \"geography\": \"US\",\n    \"funding_types\": \"all\",\n    \"selection\": \"one accepted segment\"\n  },\n  \"coverage\": {\n    \"segments\": {\n      \"complete\": true,\n      \"reported_count\": 1\n    },\n    \"organizations\": {\n      \"complete\": true,\n      \"reported_count\": 1\n    },\n    \"rounds\": {\n      \"complete\": true,\n      \"reported_count\": 0\n    }\n  },\n  \"segments\": [\n    {\n      \"uuid\": \"segment-one\",\n      \"name\": \"Dental Workflow\"\n    }\n  ],\n  \"organizations\": [\n    {\n      \"uuid\": \"c5adddb8-e684-5350-b79d-7fc88f4ecdb4\",\n      \"name\": \"Lumenquill Dental\",\n      \"segment_ids\": [\n        \"segment-one\"\n      ],\n      \"founded_on\": null,\n      \"growth_tier\": null,\n      \"funding_tier\": null\n    }\n  ],\n  \"rounds\": []\n}\n"
+          "content": "{\n  \"schema_version\": \"crunchbase-industry-insights/1\",\n  \"as_of\": \"2026-11-05\",\n  \"scope\": {\n    \"market\": \"Dental\",\n    \"geography\": \"US\",\n    \"funding_types\": \"all\",\n    \"selection\": \"one accepted segment\"\n  },\n  \"coverage\": {\n    \"segments\": {\n      \"complete\": true,\n      \"reported_count\": 1\n    },\n    \"organizations\": {\n      \"complete\": true,\n      \"reported_count\": 1\n    },\n    \"rounds\": {\n      \"complete\": true,\n      \"reported_count\": 0\n    }\n  },\n  \"segments\": [\n    {\n      \"uuid\": \"segment-one\",\n      \"name\": \"Dental Workflow\"\n    }\n  ],\n  \"organizations\": [\n    {\n      \"uuid\": \"c5adddb8-e684-5350-b79d-7fc88f4ecdb4\",\n      \"name\": \"Lumenquill Dental\",\n      \"segment_ids\": [\n        \"segment-one\"\n      ],\n      \"founded_on\": null,\n      \"growth_tier\": null,\n      \"funding_tier\": null\n    }\n  ],\n  \"rounds\": []\n}\n"
         },
         {
           "path": "radar-policy.md",
-          "content": "Accepted Radar rule and output interface:\nUse adjacent12-month periods ending as_of and the preceding12 months, boundary dates current=(as_of minus12 calendar months,as_of],prior=(as_of minus24 months,as_of minus12 months]. A segment is eligible only with >=15 unique companies,>=12 combined rounds,>=5 prior rounds, full observed growth tiers and founding dates. Need>=3 eligible peers. Per segment N=company count,VL=p100_positive_high count,Y=founded within36 months,Rc/Rp=current/prior round counts. change=Rc/Rp-1; relative=change-peer median change; expected=Rp*(1+median change); z=(Rc-expected)/sqrt(expected),0 if expected0. Growth/youth ratios compare VL/N and Y/N with peer medians; zero/zero ratio1,positive/zero ratio2. First matching rule: declining if relative<=-.20 and z<=-1.5; declining if relative<=-.10 and z<=-1 and growth ratio<1; emerging if youth ratio>=1.5,relative>=0,Y>=5; growing if relative>=.10 and z>=1; growing if relative>=0 and growth ratio>=1.25; otherwise steady. Unknown evidence stays unclassified. Funding predictions affect ordering only when every eligible peer has complete observations. Sources of market insights do not override computed labels. Focus contains up to3 emerging/growing segments only. Overlap makes totals nonadditive.\nWrite result.json with schema_version=\"crunchbase-gtm-radar/1\",as_of,status=\"complete\" when comparison possible (else \"insufficient_comparable_segments\"),peer_count,scope,coverage,segments,focus_segments. Write segments.csv columns uuid,name,status,label,score,companies,rounds_current,rounds_prior,growth_known,founding_known,growth_share,young_share,raise_share. Write handoff.json schema_version=\"crunchbase-gtm-handoff/1\",as_of,scope,coverage,segment_uuids (focus IDs),requires_scope_confirmation:true. Fixed rules are descriptive, not statistically calibrated demand.\n"
+          "content": "Accepted Industry Insights rule and output interface:\nUse adjacent12-month periods ending as_of and the preceding12 months, boundary dates current=(as_of minus12 calendar months,as_of],prior=(as_of minus24 months,as_of minus12 months]. A segment is eligible only with >=15 unique companies,>=12 combined rounds,>=5 prior rounds, full observed growth tiers and founding dates. Need>=3 eligible peers. Per segment N=company count,VL=p100_positive_high count,Y=founded within36 months,Rc/Rp=current/prior round counts. change=Rc/Rp-1; relative=change-peer median change; expected=Rp*(1+median change); z=(Rc-expected)/sqrt(expected),0 if expected0. Growth/youth ratios compare VL/N and Y/N with peer medians; zero/zero ratio1,positive/zero ratio2. First matching rule: declining if relative<=-.20 and z<=-1.5; declining if relative<=-.10 and z<=-1 and growth ratio<1; emerging if youth ratio>=1.5,relative>=0,Y>=5; growing if relative>=.10 and z>=1; growing if relative>=0 and growth ratio>=1.25; otherwise steady. Unknown evidence stays unclassified. Funding predictions affect ordering only when every eligible peer has complete observations. Sources of market insights do not override computed labels. Focus contains up to3 emerging/growing segments only. Overlap makes totals nonadditive.\nWrite result.json with schema_version=\"crunchbase-industry-insights/1\",as_of,status=\"complete\" when comparison possible (else \"insufficient_comparable_segments\"),peer_count,scope,coverage,segments,focus_segments. Write segments.csv columns uuid,name,status,label,score,companies,rounds_current,rounds_prior,growth_known,founding_known,growth_share,young_share,raise_share. Write handoff.json schema_version=\"crunchbase-gtm-handoff/1\",as_of,scope,coverage,segment_uuids (focus IDs),requires_scope_confirmation:true. Fixed rules are descriptive, not statistically calibrated demand.\n"
         },
         {
           "path": "radar-input-contract.md",
-          "content": "Normalized input schema: schema_version=\"crunchbase-gtm-radar/1\"; as_of is the reference date; scope is the accepted universe. coverage has segments,organizations,rounds entries with complete:boolean and reported_count. segments[] supplies uuid,name. organizations[] supplies uuid,name,url,segment_ids (canonical segment UUIDs),founded_on (YYYY-MM-DD),growth_tier (p100_positive_high is very likely growth),funding_tier (null means unknown). rounds[] supplies uuid,organization_uuid (canonical company link),announced_on (YYYY-MM-DD),money_raised_usd (number or null). Join rounds to organizations through organization_uuid and organizations to segments through segment_ids. Do not assume raw provider field names in this already-normalized export. Unknown fields stay unknown; a missing prediction is not a negative prediction. Use radar-policy.md for the disclosed math and output interface.\n"
+          "content": "Normalized input schema: schema_version=\"crunchbase-industry-insights/1\"; as_of is the reference date; scope is the accepted universe. coverage has segments,organizations,rounds entries with complete:boolean and reported_count. segments[] supplies uuid,name. organizations[] supplies uuid,name,url,segment_ids (canonical segment UUIDs),founded_on (YYYY-MM-DD),growth_tier (p100_positive_high is very likely growth),funding_tier (null means unknown). rounds[] supplies uuid,organization_uuid (canonical company link),announced_on (YYYY-MM-DD),money_raised_usd (number or null). Join rounds to organizations through organization_uuid and organizations to segments through segment_ids. Do not assume raw provider field names in this already-normalized export. Unknown fields stay unknown; a missing prediction is not a negative prediction. Use radar-policy.md for the disclosed math and output interface.\n"
         }
       ],
       "artifacts": [
@@ -10560,7 +10560,7 @@
       ],
       "turns": [
         {
-          "user": "Use Crunchbase Market Radar on radar-input.json, our complete normalized dataset for the accepted universe. Seller is dental billing automation. Do not requery or expand scope. Write outputs to radar-out and explain whether direction can be assigned. Use the fully specified radar-policy.md rule and output contract. Use radar-input-contract.md for the exact normalized input schema, canonical joins and coverage fields. Save the policy-defined CSV at radar-out/segments.csv alongside radar-out/result.json and radar-out/handoff.json; retain radar-input.json unchanged. Insufficient comparison is a valid result, not permission to omit the segment export."
+          "user": "Use Crunchbase Industry Insights on radar-input.json, our complete normalized dataset for the accepted universe. Seller is dental billing automation. Do not requery or expand scope. Write outputs to radar-out and explain whether direction can be assigned. Use the fully specified radar-policy.md rule and output contract. Use radar-input-contract.md for the exact normalized input schema, canonical joins and coverage fields. Save the policy-defined CSV at radar-out/segments.csv alongside radar-out/result.json and radar-out/handoff.json; retain radar-input.json unchanged. Insufficient comparison is a valid result, not permission to omit the segment export."
         }
       ],
       "checks": [
@@ -10573,7 +10573,7 @@
           "id": "route",
           "kind": "activation",
           "severity": "normal",
-          "skill": "crunchbase-market-radar",
+          "skill": "crunchbase-industry-insights",
           "expected": true
         },
         {
@@ -10588,7 +10588,7 @@
           "severity": "normal",
           "path": "radar-out/result.json",
           "expected": {
-            "schema_version": "crunchbase-gtm-radar/1",
+            "schema_version": "crunchbase-industry-insights/1",
             "as_of": "2026-11-05",
             "focus_segments": []
           }
@@ -10633,7 +10633,7 @@
           "path": "radar-input.json",
           "turn": 1,
           "expected": {
-            "schema_version": "crunchbase-gtm-radar/1"
+            "schema_version": "crunchbase-industry-insights/1"
           }
         }
       ]
@@ -10642,7 +10642,7 @@
       "id": "pulse-301-page",
       "family": "pulse-301-page",
       "split": "regression",
-      "workflow": "crunchbase-account-pulse",
+      "workflow": "crunchbase-account-signals",
       "tags": [
         "gtm",
         "pagination"
@@ -35720,7 +35720,7 @@
       ],
       "turns": [
         {
-          "user": "Use Crunchbase Account Pulse for the exact canonical account in accounts.json. Seller is dental billing automation. Review funding only plus required layoff penalty, 90 days ending November 5, 2026. Retrieve the complete event set, not a sample; do not create state or a schedule. Write pulse-result.json, normalized events.json and coverage.json; retain accounts.json as the canonical account input. Follow pulse-artifact-contract.md. These files must support every completeness and event claim in your answer. A sourced event review without a numeric call order is acceptable."
+          "user": "Use Crunchbase Account Signals for the exact canonical account in accounts.json. Seller is dental billing automation. Review funding only plus required layoff penalty, 90 days ending November 5, 2026. Retrieve the complete event set, not a sample; do not create state or a schedule. Write pulse-result.json, normalized events.json and coverage.json; retain accounts.json as the canonical account input. Follow pulse-artifact-contract.md. These files must support every completeness and event claim in your answer. A sourced event review without a numeric call order is acceptable."
         }
       ],
       "checks": [
@@ -35779,7 +35779,7 @@
       "id": "radar-complete-retrieval",
       "family": "radar-complete-retrieval",
       "split": "dev",
-      "workflow": "crunchbase-market-radar",
+      "workflow": "crunchbase-industry-insights",
       "tags": [
         "gtm",
         "complete-retrieval",
@@ -48576,7 +48576,7 @@
       },
       "turns": [
         {
-          "user": "Use Crunchbase Market Radar to compare Dental Scheduling, Dental Billing and Dental Analytics for sales-territory research. Seller company Example Billing sells billing automation to dental software vendors. Universe: all operating private US companies in these three named micro-industries, unrestricted size/stage, all funding types. As of November 5, 2026, compare current/prior twelve-month periods and full founding dates for youth. Retrieve every company and round page; no sampling or external sources. Write result.json, segments.csv and handoff.json under radar-out. No CRM/list/schedule writes. Use the fully specified radar-policy.md rule and output contract. Retain the exact retrieved search pages in source-records.json as {\"schema_version\":\"gtm-source-records/1\",\"collections\":{<collection_id>:[<returned page>,...]}} and the normalized helper input in radar-input.json in the working directory. Use radar-input-contract.md for the exact normalized input schema, canonical joins and coverage fields."
+          "user": "Use Crunchbase Industry Insights to compare Dental Scheduling, Dental Billing and Dental Analytics for sales-territory research. Seller company Example Billing sells billing automation to dental software vendors. Universe: all operating private US companies in these three named micro-industries, unrestricted size/stage, all funding types. As of November 5, 2026, compare current/prior twelve-month periods and full founding dates for youth. Retrieve every company and round page; no sampling or external sources. Write result.json, segments.csv and handoff.json under radar-out. No CRM/list/schedule writes. Use the fully specified radar-policy.md rule and output contract. Retain the exact retrieved search pages in source-records.json as {\"schema_version\":\"gtm-source-records/1\",\"collections\":{<collection_id>:[<returned page>,...]}} and the normalized helper input in radar-input.json in the working directory. Use radar-input-contract.md for the exact normalized input schema, canonical joins and coverage fields."
         }
       ],
       "artifacts": [
@@ -48613,7 +48613,7 @@
           "severity": "normal",
           "path": "radar-out/result.json",
           "expected": {
-            "schema_version": "crunchbase-gtm-radar/1",
+            "schema_version": "crunchbase-industry-insights/1",
             "as_of": "2026-11-05",
             "status": "complete",
             "peer_count": 3,
@@ -48684,7 +48684,7 @@
           "severity": "normal",
           "path": "radar-input.json",
           "expected": {
-            "schema_version": "crunchbase-gtm-radar/1",
+            "schema_version": "crunchbase-industry-insights/1",
             "as_of": "2026-11-05",
             "coverage": {
               "organizations": {
@@ -48702,11 +48702,11 @@
       "attachments": [
         {
           "path": "radar-policy.md",
-          "content": "Accepted Radar rule and output interface:\nUse adjacent12-month periods ending as_of and the preceding12 months, boundary dates current=(as_of minus12 calendar months,as_of],prior=(as_of minus24 months,as_of minus12 months]. A segment is eligible only with >=15 unique companies,>=12 combined rounds,>=5 prior rounds, full observed growth tiers and founding dates. Need>=3 eligible peers. Per segment N=company count,VL=p100_positive_high count,Y=founded within36 months,Rc/Rp=current/prior round counts. change=Rc/Rp-1; relative=change-peer median change; expected=Rp*(1+median change); z=(Rc-expected)/sqrt(expected),0 if expected0. Growth/youth ratios compare VL/N and Y/N with peer medians; zero/zero ratio1,positive/zero ratio2. First matching rule: declining if relative<=-.20 and z<=-1.5; declining if relative<=-.10 and z<=-1 and growth ratio<1; emerging if youth ratio>=1.5,relative>=0,Y>=5; growing if relative>=.10 and z>=1; growing if relative>=0 and growth ratio>=1.25; otherwise steady. Unknown evidence stays unclassified. Funding predictions affect ordering only when every eligible peer has complete observations. Sources of market insights do not override computed labels. Focus contains up to3 emerging/growing segments only. Overlap makes totals nonadditive.\nWrite result.json with schema_version=\"crunchbase-gtm-radar/1\",as_of,status=\"complete\" when comparison possible (else \"insufficient_comparable_segments\"),peer_count,scope,coverage,segments,focus_segments. Write segments.csv columns uuid,name,status,label,score,companies,rounds_current,rounds_prior,growth_known,founding_known,growth_share,young_share,raise_share. Write handoff.json schema_version=\"crunchbase-gtm-handoff/1\",as_of,scope,coverage,segment_uuids (focus IDs),requires_scope_confirmation:true. Fixed rules are descriptive, not statistically calibrated demand.\n"
+          "content": "Accepted Industry Insights rule and output interface:\nUse adjacent12-month periods ending as_of and the preceding12 months, boundary dates current=(as_of minus12 calendar months,as_of],prior=(as_of minus24 months,as_of minus12 months]. A segment is eligible only with >=15 unique companies,>=12 combined rounds,>=5 prior rounds, full observed growth tiers and founding dates. Need>=3 eligible peers. Per segment N=company count,VL=p100_positive_high count,Y=founded within36 months,Rc/Rp=current/prior round counts. change=Rc/Rp-1; relative=change-peer median change; expected=Rp*(1+median change); z=(Rc-expected)/sqrt(expected),0 if expected0. Growth/youth ratios compare VL/N and Y/N with peer medians; zero/zero ratio1,positive/zero ratio2. First matching rule: declining if relative<=-.20 and z<=-1.5; declining if relative<=-.10 and z<=-1 and growth ratio<1; emerging if youth ratio>=1.5,relative>=0,Y>=5; growing if relative>=.10 and z>=1; growing if relative>=0 and growth ratio>=1.25; otherwise steady. Unknown evidence stays unclassified. Funding predictions affect ordering only when every eligible peer has complete observations. Sources of market insights do not override computed labels. Focus contains up to3 emerging/growing segments only. Overlap makes totals nonadditive.\nWrite result.json with schema_version=\"crunchbase-industry-insights/1\",as_of,status=\"complete\" when comparison possible (else \"insufficient_comparable_segments\"),peer_count,scope,coverage,segments,focus_segments. Write segments.csv columns uuid,name,status,label,score,companies,rounds_current,rounds_prior,growth_known,founding_known,growth_share,young_share,raise_share. Write handoff.json schema_version=\"crunchbase-gtm-handoff/1\",as_of,scope,coverage,segment_uuids (focus IDs),requires_scope_confirmation:true. Fixed rules are descriptive, not statistically calibrated demand.\n"
         },
         {
           "path": "radar-input-contract.md",
-          "content": "Normalized input schema: schema_version=\"crunchbase-gtm-radar/1\"; as_of is the reference date; scope is the accepted universe. coverage has segments,organizations,rounds entries with complete:boolean and reported_count. segments[] supplies uuid,name. organizations[] supplies uuid,name,url,segment_ids (canonical segment UUIDs),founded_on (YYYY-MM-DD),growth_tier (p100_positive_high is very likely growth),funding_tier (null means unknown). rounds[] supplies uuid,organization_uuid (canonical company link),announced_on (YYYY-MM-DD),money_raised_usd (number or null). Join rounds to organizations through organization_uuid and organizations to segments through segment_ids. Do not assume raw provider field names in this already-normalized export. Unknown fields stay unknown; a missing prediction is not a negative prediction. Use radar-policy.md for the disclosed math and output interface.\n"
+          "content": "Normalized input schema: schema_version=\"crunchbase-industry-insights/1\"; as_of is the reference date; scope is the accepted universe. coverage has segments,organizations,rounds entries with complete:boolean and reported_count. segments[] supplies uuid,name. organizations[] supplies uuid,name,url,segment_ids (canonical segment UUIDs),founded_on (YYYY-MM-DD),growth_tier (p100_positive_high is very likely growth),funding_tier (null means unknown). rounds[] supplies uuid,organization_uuid (canonical company link),announced_on (YYYY-MM-DD),money_raised_usd (number or null). Join rounds to organizations through organization_uuid and organizations to segments through segment_ids. Do not assume raw provider field names in this already-normalized export. Unknown fields stay unknown; a missing prediction is not a negative prediction. Use radar-policy.md for the disclosed math and output interface.\n"
         }
       ]
     },
@@ -48714,7 +48714,7 @@
       "id": "radar-complete-normalized",
       "family": "radar-complete-normalized",
       "split": "regression",
-      "workflow": "crunchbase-market-radar",
+      "workflow": "crunchbase-industry-insights",
       "tags": [
         "gtm",
         "calculator",
@@ -48724,20 +48724,20 @@
       "attachments": [
         {
           "path": "radar-input.json",
-          "content": "{\n  \"schema_version\": \"crunchbase-gtm-radar/1\",\n  \"as_of\": \"2026-11-05\",\n  \"scope\": {\n    \"market\": \"Dental software\",\n    \"geography\": \"US\",\n    \"funding_types\": \"all\",\n    \"selection\": \"three named segments\"\n  },\n  \"coverage\": {\n    \"segments\": {\n      \"complete\": true,\n      \"reported_count\": 3\n    },\n    \"organizations\": {\n      \"complete\": true,\n      \"reported_count\": 45\n    },\n    \"rounds\": {\n      \"complete\": true,\n      \"reported_count\": 36\n    }\n  },\n  \"segments\": [\n    {\n      \"uuid\": \"04bcf2eb-ed8a-5c08-b526-fb56305959b5\",\n      \"name\": \"Dental Scheduling\"\n    },\n    {\n      \"uuid\": \"bf9479c4-bea0-5c4b-8bac-9fb06746f87e\",\n      \"name\": \"Dental Billing\"\n    },\n    {\n      \"uuid\": \"ff91d73b-fe03-500a-868b-6576ecf3c4f6\",\n      \"name\": \"Dental Analytics\"\n    }\n  ],\n  \"organizations\": [\n    {\n      \"uuid\": \"25572e2c-ef8c-5cae-a80e-ff922cd052f7\",\n      \"name\": \"Dental Vendor 0-0\",\n      \"url\": \"https://www.crunchbase.com/organization/fixture-dental-company-0-0\",\n      \"segment_ids\": [\n        \"04bcf2eb-ed8a-5c08-b526-fb56305959b5\"\n      ],\n      \"founded_on\": \"2020-01-01\",\n      \"growth_tier\": \"p100_positive_high\",\n      \"funding_tier\": null\n    },\n    {\n      \"uuid\": \"d0b02331-25fc-577d-bb66-fe6fa56f40c0\",\n      \"name\": \"Dental Vendor 0-1\",\n      \"url\": \"https://www.crunchbase.com/organization/fixture-dental-company-0-1\",\n      \"segment_ids\": [\n        \"04bcf2eb-ed8a-5c08-b526-fb56305959b5\"\n      ],\n      \"founded_on\": \"2020-01-01\",\n      \"growth_tier\": \"p100_positive_high\",\n      \"funding_tier\": null\n    },\n    {\n      \"uuid\": \"9bf8964a-808f-5c66-b066-b08dab821d2e\",\n      \"name\": \"Dental Vendor 0-2\",\n      \"url\": \"https://www.crunchbase.com/organization/fixture-dental-company-0-2\",\n      \"segment_ids\": [\n        \"04bcf2eb-ed8a-5c08-b526-fb56305959b5\"\n      ],\n      \"founded_on\": \"2020-01-01\",\n      \"growth_tier\": \"p100_positive_high\",\n      \"funding_tier\": null\n    },\n    {\n      \"uuid\": \"3a12e2fe-4860-58e4-a3d9-e82aa49d00f3\",\n      \"name\": \"Dental Vendor 0-3\",\n      \"url\": \"https://www.crunchbase.com/organization/fixture-dental-company-0-3\",\n      \"segment_ids\": [\n        \"04bcf2eb-ed8a-5c08-b526-fb56305959b5\"\n      ],\n      \"founded_on\": \"2020-01-01\",\n      \"growth_tier\": \"p300_neutral\",\n      \"funding_tier\": null\n    },\n    {\n      \"uuid\": \"50f2e69c-4853-5846-8b4e-92eea045f62e\",\n      \"name\": \"Dental Vendor 0-4\",\n      \"url\": \"https://www.crunchbase.com/organization/fixture-dental-company-0-4\",\n      \"segment_ids\": [\n        \"04bcf2eb-ed8a-5c08-b526-fb56305959b5\"\n      ],\n      \"founded_on\": \"2020-01-01\",\n      \"growth_tier\": \"p300_neutral\",\n      \"funding_tier\": null\n    },\n    {\n      \"uuid\": \"7f67b33d-e8e7-59de-845a-bb40b61aaa1a\",\n      \"name\": \"Dental Vendor 0-5\",\n      \"url\": \"https://www.crunchbase.com/organization/fixture-dental-company-0-5\",\n      \"segment_ids\": [\n        \"04bcf2eb-ed8a-5c08-b526-fb56305959b5\"\n      ],\n      \"founded_on\": \"2020-01-01\",\n      \"growth_tier\": \"p300_neutral\",\n      \"funding_tier\": null\n    },\n    {\n      \"uuid\": \"a2e0a60b-70db-5394-a9de-94e44484ef92\",\n      \"name\": \"Dental Vendor 0-6\",\n      \"url\": \"https://www.crunchbase.com/organization/fixture-dental-company-0-6\",\n      \"segment_ids\": [\n        \"04bcf2eb-ed8a-5c08-b526-fb56305959b5\"\n      ],\n      \"founded_on\": \"2020-01-01\",\n      \"growth_tier\": \"p300_neutral\",\n      \"funding_tier\": null\n    },\n    {\n      \"uuid\": \"c86cce74-e446-501f-8487-cd9def30f7cd\",\n      \"name\": \"Dental Vendor 0-7\",\n      \"url\": \"https://www.crunchbase.com/organization/fixture-dental-company-0-7\",\n      \"segment_ids\": [\n        \"04bcf2eb-ed8a-5c08-b526-fb56305959b5\"\n      ],\n      \"founded_on\": \"2020-01-01\",\n      \"growth_tier\": \"p300_neutral\",\n      \"funding_tier\": null\n    },\n    {\n      \"uuid\": \"bf7a4ead-9bca-52ae-8c6c-4e89ae94810d\",\n      \"name\": \"Dental Vendor 0-8\",\n      \"url\": \"https://www.crunchbase.com/organization/fixture-dental-company-0-8\",\n      \"segment_ids\": [\n        \"04bcf2eb-ed8a-5c08-b526-fb56305959b5\"\n      ],\n      \"founded_on\": \"2020-01-01\",\n      \"growth_tier\": \"p300_neutral\",\n      \"funding_tier\": null\n    },\n    {\n      \"uuid\": \"37c2244a-b8a1-5986-b7e6-dc8fb20a94dd\",\n      \"name\": \"Dental Vendor 0-9\",\n      \"url\": \"https://www.crunchbase.com/organization/fixture-dental-company-0-9\",\n      \"segment_ids\": [\n        \"04bcf2eb-ed8a-5c08-b526-fb56305959b5\"\n      ],\n      \"founded_on\": \"2020-01-01\",\n      \"growth_tier\": \"p300_neutral\",\n      \"funding_tier\": null\n    },\n    {\n      \"uuid\": \"fa6437fd-fa10-5a6b-9d0f-9dbd9ef7327d\",\n      \"name\": \"Dental Vendor 0-10\",\n      \"url\": \"https://www.crunchbase.com/organization/fixture-dental-company-0-10\",\n      \"segment_ids\": [\n        \"04bcf2eb-ed8a-5c08-b526-fb56305959b5\"\n      ],\n      \"founded_on\": \"2020-01-01\",\n      \"growth_tier\": \"p300_neutral\",\n      \"funding_tier\": null\n    },\n    {\n      \"uuid\": \"06636134-43bc-5e11-9afe-d2bc35299e66\",\n      \"name\": \"Dental Vendor 0-11\",\n      \"url\": \"https://www.crunchbase.com/organization/fixture-dental-company-0-11\",\n      \"segment_ids\": [\n        \"04bcf2eb-ed8a-5c08-b526-fb56305959b5\"\n      ],\n      \"founded_on\": \"2020-01-01\",\n      \"growth_tier\": \"p300_neutral\",\n      \"funding_tier\": null\n    },\n    {\n      \"uuid\": \"57c638d9-000d-5a49-a89b-4560639e3f46\",\n      \"name\": \"Dental Vendor 0-12\",\n      \"url\": \"https://www.crunchbase.com/organization/fixture-dental-company-0-12\",\n      \"segment_ids\": [\n        \"04bcf2eb-ed8a-5c08-b526-fb56305959b5\"\n      ],\n      \"founded_on\": \"2020-01-01\",\n      \"growth_tier\": \"p300_neutral\",\n      \"funding_tier\": null\n    },\n    {\n      \"uuid\": \"d48fb06e-eef4-5f7d-bba1-1340ecded705\",\n      \"name\": \"Dental Vendor 0-13\",\n      \"url\": \"https://www.crunchbase.com/organization/fixture-dental-company-0-13\",\n      \"segment_ids\": [\n        \"04bcf2eb-ed8a-5c08-b526-fb56305959b5\"\n      ],\n      \"founded_on\": \"2020-01-01\",\n      \"growth_tier\": \"p300_neutral\",\n      \"funding_tier\": null\n    },\n    {\n      \"uuid\": \"6b22e599-f452-5253-b3fa-0597bf41eacd\",\n      \"name\": \"Dental Vendor 0-14\",\n      \"url\": \"https://www.crunchbase.com/organization/fixture-dental-company-0-14\",\n      \"segment_ids\": [\n        \"04bcf2eb-ed8a-5c08-b526-fb56305959b5\"\n      ],\n      \"founded_on\": \"2020-01-01\",\n      \"growth_tier\": \"p300_neutral\",\n      \"funding_tier\": null\n    },\n    {\n      \"uuid\": \"daea6dcf-b8c9-50c2-8316-1e4059914bbe\",\n      \"name\": \"Dental Vendor 1-0\",\n      \"url\": \"https://www.crunchbase.com/organization/fixture-dental-company-1-0\",\n      \"segment_ids\": [\n        \"bf9479c4-bea0-5c4b-8bac-9fb06746f87e\"\n      ],\n      \"founded_on\": \"2020-01-01\",\n      \"growth_tier\": \"p100_positive_high\",\n      \"funding_tier\": null\n    },\n    {\n      \"uuid\": \"e1de9a66-31b2-580d-89b5-8a240ff521bb\",\n      \"name\": \"Dental Vendor 1-1\",\n      \"url\": \"https://www.crunchbase.com/organization/fixture-dental-company-1-1\",\n      \"segment_ids\": [\n        \"bf9479c4-bea0-5c4b-8bac-9fb06746f87e\"\n      ],\n      \"founded_on\": \"2020-01-01\",\n      \"growth_tier\": \"p100_positive_high\",\n      \"funding_tier\": null\n    },\n    {\n      \"uuid\": \"71e32ac5-1b52-523b-97ca-d0d872534b69\",\n      \"name\": \"Dental Vendor 1-2\",\n      \"url\": \"https://www.crunchbase.com/organization/fixture-dental-company-1-2\",\n      \"segment_ids\": [\n        \"bf9479c4-bea0-5c4b-8bac-9fb06746f87e\"\n      ],\n      \"founded_on\": \"2020-01-01\",\n      \"growth_tier\": \"p100_positive_high\",\n      \"funding_tier\": null\n    },\n    {\n      \"uuid\": \"71ea2777-0cb7-51b8-bb89-2b968da8e8bd\",\n      \"name\": \"Dental Vendor 1-3\",\n      \"url\": \"https://www.crunchbase.com/organization/fixture-dental-company-1-3\",\n      \"segment_ids\": [\n        \"bf9479c4-bea0-5c4b-8bac-9fb06746f87e\"\n      ],\n      \"founded_on\": \"2020-01-01\",\n      \"growth_tier\": \"p300_neutral\",\n      \"funding_tier\": null\n    },\n    {\n      \"uuid\": \"14418f4b-931a-5119-ad49-ed0d50b23794\",\n      \"name\": \"Dental Vendor 1-4\",\n      \"url\": \"https://www.crunchbase.com/organization/fixture-dental-company-1-4\",\n      \"segment_ids\": [\n        \"bf9479c4-bea0-5c4b-8bac-9fb06746f87e\"\n      ],\n      \"founded_on\": \"2020-01-01\",\n      \"growth_tier\": \"p300_neutral\",\n      \"funding_tier\": null\n    },\n    {\n      \"uuid\": \"25631c1a-c332-5e1f-8bd5-9a4db9c25739\",\n      \"name\": \"Dental Vendor 1-5\",\n      \"url\": \"https://www.crunchbase.com/organization/fixture-dental-company-1-5\",\n      \"segment_ids\": [\n        \"bf9479c4-bea0-5c4b-8bac-9fb06746f87e\"\n      ],\n      \"founded_on\": \"2020-01-01\",\n      \"growth_tier\": \"p300_neutral\",\n      \"funding_tier\": null\n    },\n    {\n      \"uuid\": \"e05f4f19-5a8e-5501-8dcc-e39ade8a3c3d\",\n      \"name\": \"Dental Vendor 1-6\",\n      \"url\": \"https://www.crunchbase.com/organization/fixture-dental-company-1-6\",\n      \"segment_ids\": [\n        \"bf9479c4-bea0-5c4b-8bac-9fb06746f87e\"\n      ],\n      \"founded_on\": \"2020-01-01\",\n      \"growth_tier\": \"p300_neutral\",\n      \"funding_tier\": null\n    },\n    {\n      \"uuid\": \"35fa8010-54f4-54d8-b228-246d9d9fe54b\",\n      \"name\": \"Dental Vendor 1-7\",\n      \"url\": \"https://www.crunchbase.com/organization/fixture-dental-company-1-7\",\n      \"segment_ids\": [\n        \"bf9479c4-bea0-5c4b-8bac-9fb06746f87e\"\n      ],\n      \"founded_on\": \"2020-01-01\",\n      \"growth_tier\": \"p300_neutral\",\n      \"funding_tier\": null\n    },\n    {\n      \"uuid\": \"ff184e36-1687-5294-84cc-b011ad935bf0\",\n      \"name\": \"Dental Vendor 1-8\",\n      \"url\": \"https://www.crunchbase.com/organization/fixture-dental-company-1-8\",\n      \"segment_ids\": [\n        \"bf9479c4-bea0-5c4b-8bac-9fb06746f87e\"\n      ],\n      \"founded_on\": \"2020-01-01\",\n      \"growth_tier\": \"p300_neutral\",\n      \"funding_tier\": null\n    },\n    {\n      \"uuid\": \"590dce27-8643-5d25-bc03-315303207068\",\n      \"name\": \"Dental Vendor 1-9\",\n      \"url\": \"https://www.crunchbase.com/organization/fixture-dental-company-1-9\",\n      \"segment_ids\": [\n        \"bf9479c4-bea0-5c4b-8bac-9fb06746f87e\"\n      ],\n      \"founded_on\": \"2020-01-01\",\n      \"growth_tier\": \"p300_neutral\",\n      \"funding_tier\": null\n    },\n    {\n      \"uuid\": \"e676f02b-6c6f-5cfd-b05a-51e83704852c\",\n      \"name\": \"Dental Vendor 1-10\",\n      \"url\": \"https://www.crunchbase.com/organization/fixture-dental-company-1-10\",\n      \"segment_ids\": [\n        \"bf9479c4-bea0-5c4b-8bac-9fb06746f87e\"\n      ],\n      \"founded_on\": \"2020-01-01\",\n      \"growth_tier\": \"p300_neutral\",\n      \"funding_tier\": null\n    },\n    {\n      \"uuid\": \"f99c18a1-e961-546d-8746-43e72d441114\",\n      \"name\": \"Dental Vendor 1-11\",\n      \"url\": \"https://www.crunchbase.com/organization/fixture-dental-company-1-11\",\n      \"segment_ids\": [\n        \"bf9479c4-bea0-5c4b-8bac-9fb06746f87e\"\n      ],\n      \"founded_on\": \"2020-01-01\",\n      \"growth_tier\": \"p300_neutral\",\n      \"funding_tier\": null\n    },\n    {\n      \"uuid\": \"47ef968a-fa90-597c-92a0-206ade5b62a1\",\n      \"name\": \"Dental Vendor 1-12\",\n      \"url\": \"https://www.crunchbase.com/organization/fixture-dental-company-1-12\",\n      \"segment_ids\": [\n        \"bf9479c4-bea0-5c4b-8bac-9fb06746f87e\"\n      ],\n      \"founded_on\": \"2020-01-01\",\n      \"growth_tier\": \"p300_neutral\",\n      \"funding_tier\": null\n    },\n    {\n      \"uuid\": \"e8dafb65-2a00-5771-bb62-d5ac3e406bdf\",\n      \"name\": \"Dental Vendor 1-13\",\n      \"url\": \"https://www.crunchbase.com/organization/fixture-dental-company-1-13\",\n      \"segment_ids\": [\n        \"bf9479c4-bea0-5c4b-8bac-9fb06746f87e\"\n      ],\n      \"founded_on\": \"2020-01-01\",\n      \"growth_tier\": \"p300_neutral\",\n      \"funding_tier\": null\n    },\n    {\n      \"uuid\": \"76578061-70ae-5564-aa58-378c189b850d\",\n      \"name\": \"Dental Vendor 1-14\",\n      \"url\": \"https://www.crunchbase.com/organization/fixture-dental-company-1-14\",\n      \"segment_ids\": [\n        \"bf9479c4-bea0-5c4b-8bac-9fb06746f87e\"\n      ],\n      \"founded_on\": \"2020-01-01\",\n      \"growth_tier\": \"p300_neutral\",\n      \"funding_tier\": null\n    },\n    {\n      \"uuid\": \"9cf3bfa3-b7d4-5835-8d43-c9b75f4770a9\",\n      \"name\": \"Dental Vendor 2-0\",\n      \"url\": \"https://www.crunchbase.com/organization/fixture-dental-company-2-0\",\n      \"segment_ids\": [\n        \"ff91d73b-fe03-500a-868b-6576ecf3c4f6\"\n      ],\n      \"founded_on\": \"2020-01-01\",\n      \"growth_tier\": \"p100_positive_high\",\n      \"funding_tier\": null\n    },\n    {\n      \"uuid\": \"952f8955-df74-52c2-8850-d7c530bea3b1\",\n      \"name\": \"Dental Vendor 2-1\",\n      \"url\": \"https://www.crunchbase.com/organization/fixture-dental-company-2-1\",\n      \"segment_ids\": [\n        \"ff91d73b-fe03-500a-868b-6576ecf3c4f6\"\n      ],\n      \"founded_on\": \"2020-01-01\",\n      \"growth_tier\": \"p100_positive_high\",\n      \"funding_tier\": null\n    },\n    {\n      \"uuid\": \"cb2039cd-b520-5d0f-a4d3-07c2074aa300\",\n      \"name\": \"Dental Vendor 2-2\",\n      \"url\": \"https://www.crunchbase.com/organization/fixture-dental-company-2-2\",\n      \"segment_ids\": [\n        \"ff91d73b-fe03-500a-868b-6576ecf3c4f6\"\n      ],\n      \"founded_on\": \"2020-01-01\",\n      \"growth_tier\": \"p100_positive_high\",\n      \"funding_tier\": null\n    },\n    {\n      \"uuid\": \"1996ecfb-93d3-5b78-9977-b179e5cba0f4\",\n      \"name\": \"Dental Vendor 2-3\",\n      \"url\": \"https://www.crunchbase.com/organization/fixture-dental-company-2-3\",\n      \"segment_ids\": [\n        \"ff91d73b-fe03-500a-868b-6576ecf3c4f6\"\n      ],\n      \"founded_on\": \"2020-01-01\",\n      \"growth_tier\": \"p300_neutral\",\n      \"funding_tier\": null\n    },\n    {\n      \"uuid\": \"5c5c7898-03a8-52f4-a273-84a02bc8bd55\",\n      \"name\": \"Dental Vendor 2-4\",\n      \"url\": \"https://www.crunchbase.com/organization/fixture-dental-company-2-4\",\n      \"segment_ids\": [\n        \"ff91d73b-fe03-500a-868b-6576ecf3c4f6\"\n      ],\n      \"founded_on\": \"2020-01-01\",\n      \"growth_tier\": \"p300_neutral\",\n      \"funding_tier\": null\n    },\n    {\n      \"uuid\": \"814d33cf-274b-574a-adad-1efe982881de\",\n      \"name\": \"Dental Vendor 2-5\",\n      \"url\": \"https://www.crunchbase.com/organization/fixture-dental-company-2-5\",\n      \"segment_ids\": [\n        \"ff91d73b-fe03-500a-868b-6576ecf3c4f6\"\n      ],\n      \"founded_on\": \"2020-01-01\",\n      \"growth_tier\": \"p300_neutral\",\n      \"funding_tier\": null\n    },\n    {\n      \"uuid\": \"efdc4427-2bba-595a-a4de-bdbaf8f9c825\",\n      \"name\": \"Dental Vendor 2-6\",\n      \"url\": \"https://www.crunchbase.com/organization/fixture-dental-company-2-6\",\n      \"segment_ids\": [\n        \"ff91d73b-fe03-500a-868b-6576ecf3c4f6\"\n      ],\n      \"founded_on\": \"2020-01-01\",\n      \"growth_tier\": \"p300_neutral\",\n      \"funding_tier\": null\n    },\n    {\n      \"uuid\": \"12177a9a-f9d2-509f-b641-6136dd196625\",\n      \"name\": \"Dental Vendor 2-7\",\n      \"url\": \"https://www.crunchbase.com/organization/fixture-dental-company-2-7\",\n      \"segment_ids\": [\n        \"ff91d73b-fe03-500a-868b-6576ecf3c4f6\"\n      ],\n      \"founded_on\": \"2020-01-01\",\n      \"growth_tier\": \"p300_neutral\",\n      \"funding_tier\": null\n    },\n    {\n      \"uuid\": \"5ba5cb04-547d-5e67-b2ed-971ca9efbf44\",\n      \"name\": \"Dental Vendor 2-8\",\n      \"url\": \"https://www.crunchbase.com/organization/fixture-dental-company-2-8\",\n      \"segment_ids\": [\n        \"ff91d73b-fe03-500a-868b-6576ecf3c4f6\"\n      ],\n      \"founded_on\": \"2020-01-01\",\n      \"growth_tier\": \"p300_neutral\",\n      \"funding_tier\": null\n    },\n    {\n      \"uuid\": \"b0035019-afb6-58de-85a9-7f8335f1b9b0\",\n      \"name\": \"Dental Vendor 2-9\",\n      \"url\": \"https://www.crunchbase.com/organization/fixture-dental-company-2-9\",\n      \"segment_ids\": [\n        \"ff91d73b-fe03-500a-868b-6576ecf3c4f6\"\n      ],\n      \"founded_on\": \"2020-01-01\",\n      \"growth_tier\": \"p300_neutral\",\n      \"funding_tier\": null\n    },\n    {\n      \"uuid\": \"7859c277-eb0d-51b0-b6c4-004cd6706491\",\n      \"name\": \"Dental Vendor 2-10\",\n      \"url\": \"https://www.crunchbase.com/organization/fixture-dental-company-2-10\",\n      \"segment_ids\": [\n        \"ff91d73b-fe03-500a-868b-6576ecf3c4f6\"\n      ],\n      \"founded_on\": \"2020-01-01\",\n      \"growth_tier\": \"p300_neutral\",\n      \"funding_tier\": null\n    },\n    {\n      \"uuid\": \"00636275-a4a5-57dc-be26-84fccd2b4cfa\",\n      \"name\": \"Dental Vendor 2-11\",\n      \"url\": \"https://www.crunchbase.com/organization/fixture-dental-company-2-11\",\n      \"segment_ids\": [\n        \"ff91d73b-fe03-500a-868b-6576ecf3c4f6\"\n      ],\n      \"founded_on\": \"2020-01-01\",\n      \"growth_tier\": \"p300_neutral\",\n      \"funding_tier\": null\n    },\n    {\n      \"uuid\": \"9765cc1d-e740-50ca-b78b-d42b99ba766f\",\n      \"name\": \"Dental Vendor 2-12\",\n      \"url\": \"https://www.crunchbase.com/organization/fixture-dental-company-2-12\",\n      \"segment_ids\": [\n        \"ff91d73b-fe03-500a-868b-6576ecf3c4f6\"\n      ],\n      \"founded_on\": \"2020-01-01\",\n      \"growth_tier\": \"p300_neutral\",\n      \"funding_tier\": null\n    },\n    {\n      \"uuid\": \"5db80e93-51ac-51c9-8a2b-e2e4ea67f5e3\",\n      \"name\": \"Dental Vendor 2-13\",\n      \"url\": \"https://www.crunchbase.com/organization/fixture-dental-company-2-13\",\n      \"segment_ids\": [\n        \"ff91d73b-fe03-500a-868b-6576ecf3c4f6\"\n      ],\n      \"founded_on\": \"2020-01-01\",\n      \"growth_tier\": \"p300_neutral\",\n      \"funding_tier\": null\n    },\n    {\n      \"uuid\": \"51669f86-658d-5dcc-b087-2650201553ce\",\n      \"name\": \"Dental Vendor 2-14\",\n      \"url\": \"https://www.crunchbase.com/organization/fixture-dental-company-2-14\",\n      \"segment_ids\": [\n        \"ff91d73b-fe03-500a-868b-6576ecf3c4f6\"\n      ],\n      \"founded_on\": \"2020-01-01\",\n      \"growth_tier\": \"p300_neutral\",\n      \"funding_tier\": null\n    }\n  ],\n  \"rounds\": [\n    {\n      \"uuid\": \"e62dd50a-8315-5ce3-a64f-3a25d74ec00a\",\n      \"organization_uuid\": \"25572e2c-ef8c-5cae-a80e-ff922cd052f7\",\n      \"announced_on\": \"2026-06-01\",\n      \"money_raised_usd\": 1000000\n    },\n    {\n      \"uuid\": \"9932e320-56be-5f50-bd90-6528bc0b37fc\",\n      \"organization_uuid\": \"d0b02331-25fc-577d-bb66-fe6fa56f40c0\",\n      \"announced_on\": \"2026-06-01\",\n      \"money_raised_usd\": 1000000\n    },\n    {\n      \"uuid\": \"fce1b54e-fab2-5559-a8b9-2025f807fe9f\",\n      \"organization_uuid\": \"9bf8964a-808f-5c66-b066-b08dab821d2e\",\n      \"announced_on\": \"2026-06-01\",\n      \"money_raised_usd\": 1000000\n    },\n    {\n      \"uuid\": \"2e4211e5-5cd3-5ed2-883a-109a12a64fbf\",\n      \"organization_uuid\": \"3a12e2fe-4860-58e4-a3d9-e82aa49d00f3\",\n      \"announced_on\": \"2026-06-01\",\n      \"money_raised_usd\": 1000000\n    },\n    {\n      \"uuid\": \"83020591-2528-5f14-82db-c696d30db808\",\n      \"organization_uuid\": \"50f2e69c-4853-5846-8b4e-92eea045f62e\",\n      \"announced_on\": \"2026-06-01\",\n      \"money_raised_usd\": 1000000\n    },\n    {\n      \"uuid\": \"be37156f-a970-5672-96a4-f22a03781f95\",\n      \"organization_uuid\": \"7f67b33d-e8e7-59de-845a-bb40b61aaa1a\",\n      \"announced_on\": \"2026-06-01\",\n      \"money_raised_usd\": 1000000\n    },\n    {\n      \"uuid\": \"2a18ddca-eafc-54ce-9549-3868afe333c8\",\n      \"organization_uuid\": \"a2e0a60b-70db-5394-a9de-94e44484ef92\",\n      \"announced_on\": \"2026-06-01\",\n      \"money_raised_usd\": 1000000\n    },\n    {\n      \"uuid\": \"2184056c-0a30-56da-bde3-5b0f82ffc443\",\n      \"organization_uuid\": \"c86cce74-e446-501f-8487-cd9def30f7cd\",\n      \"announced_on\": \"2025-06-01\",\n      \"money_raised_usd\": 1000000\n    },\n    {\n      \"uuid\": \"ebec8391-d86b-5ff2-ae9e-0b9241ad8404\",\n      \"organization_uuid\": \"bf7a4ead-9bca-52ae-8c6c-4e89ae94810d\",\n      \"announced_on\": \"2025-06-01\",\n      \"money_raised_usd\": 1000000\n    },\n    {\n      \"uuid\": \"6847617f-c85b-54b6-9138-409b5252dd35\",\n      \"organization_uuid\": \"37c2244a-b8a1-5986-b7e6-dc8fb20a94dd\",\n      \"announced_on\": \"2025-06-01\",\n      \"money_raised_usd\": 1000000\n    },\n    {\n      \"uuid\": \"f5db26b0-0312-5734-9150-b4bd41a7bddc\",\n      \"organization_uuid\": \"fa6437fd-fa10-5a6b-9d0f-9dbd9ef7327d\",\n      \"announced_on\": \"2025-06-01\",\n      \"money_raised_usd\": 1000000\n    },\n    {\n      \"uuid\": \"81810afd-10d5-516a-8dcb-fff482d04e28\",\n      \"organization_uuid\": \"06636134-43bc-5e11-9afe-d2bc35299e66\",\n      \"announced_on\": \"2025-06-01\",\n      \"money_raised_usd\": 1000000\n    },\n    {\n      \"uuid\": \"ceec70e0-af12-5a3d-a2aa-6cea9ac37332\",\n      \"organization_uuid\": \"daea6dcf-b8c9-50c2-8316-1e4059914bbe\",\n      \"announced_on\": \"2026-06-01\",\n      \"money_raised_usd\": 1000000\n    },\n    {\n      \"uuid\": \"fe231fd0-c372-55ec-a7f9-f37dc73762c5\",\n      \"organization_uuid\": \"e1de9a66-31b2-580d-89b5-8a240ff521bb\",\n      \"announced_on\": \"2026-06-01\",\n      \"money_raised_usd\": 1000000\n    },\n    {\n      \"uuid\": \"b48b58d1-9816-5fc0-8540-1001d10432c2\",\n      \"organization_uuid\": \"71e32ac5-1b52-523b-97ca-d0d872534b69\",\n      \"announced_on\": \"2026-06-01\",\n      \"money_raised_usd\": 1000000\n    },\n    {\n      \"uuid\": \"4b1d9c98-8e24-5c4f-a226-1a8a4a48eff2\",\n      \"organization_uuid\": \"71ea2777-0cb7-51b8-bb89-2b968da8e8bd\",\n      \"announced_on\": \"2026-06-01\",\n      \"money_raised_usd\": 1000000\n    },\n    {\n      \"uuid\": \"735a36c0-ef76-59c2-bbc0-aac0eac4bd69\",\n      \"organization_uuid\": \"14418f4b-931a-5119-ad49-ed0d50b23794\",\n      \"announced_on\": \"2026-06-01\",\n      \"money_raised_usd\": 1000000\n    },\n    {\n      \"uuid\": \"115c4140-2325-5e4f-b801-39da750b98f2\",\n      \"organization_uuid\": \"25631c1a-c332-5e1f-8bd5-9a4db9c25739\",\n      \"announced_on\": \"2026-06-01\",\n      \"money_raised_usd\": 1000000\n    },\n    {\n      \"uuid\": \"115ca8f0-b5b4-57ab-893c-44299d747228\",\n      \"organization_uuid\": \"e05f4f19-5a8e-5501-8dcc-e39ade8a3c3d\",\n      \"announced_on\": \"2026-06-01\",\n      \"money_raised_usd\": 1000000\n    },\n    {\n      \"uuid\": \"72d3666e-f31c-5dfa-b9f7-d594f846ec6e\",\n      \"organization_uuid\": \"35fa8010-54f4-54d8-b228-246d9d9fe54b\",\n      \"announced_on\": \"2025-06-01\",\n      \"money_raised_usd\": 1000000\n    },\n    {\n      \"uuid\": \"9ea4e86c-bbb8-5553-80d1-d06ca5f0404d\",\n      \"organization_uuid\": \"ff184e36-1687-5294-84cc-b011ad935bf0\",\n      \"announced_on\": \"2025-06-01\",\n      \"money_raised_usd\": 1000000\n    },\n    {\n      \"uuid\": \"41cc498a-0efb-5ae5-81dd-2ed1033149f1\",\n      \"organization_uuid\": \"590dce27-8643-5d25-bc03-315303207068\",\n      \"announced_on\": \"2025-06-01\",\n      \"money_raised_usd\": 1000000\n    },\n    {\n      \"uuid\": \"1be99142-5a1c-5f9c-82a7-d04ff67edd65\",\n      \"organization_uuid\": \"e676f02b-6c6f-5cfd-b05a-51e83704852c\",\n      \"announced_on\": \"2025-06-01\",\n      \"money_raised_usd\": 1000000\n    },\n    {\n      \"uuid\": \"907ee1b2-5796-50ef-b77f-42d356dac923\",\n      \"organization_uuid\": \"f99c18a1-e961-546d-8746-43e72d441114\",\n      \"announced_on\": \"2025-06-01\",\n      \"money_raised_usd\": 1000000\n    },\n    {\n      \"uuid\": \"bdb2fd8e-6277-5e85-8e68-72dd833c963d\",\n      \"organization_uuid\": \"9cf3bfa3-b7d4-5835-8d43-c9b75f4770a9\",\n      \"announced_on\": \"2026-06-01\",\n      \"money_raised_usd\": 1000000\n    },\n    {\n      \"uuid\": \"d9baea68-3e04-570d-8b80-ac5de1aab4a2\",\n      \"organization_uuid\": \"952f8955-df74-52c2-8850-d7c530bea3b1\",\n      \"announced_on\": \"2026-06-01\",\n      \"money_raised_usd\": 1000000\n    },\n    {\n      \"uuid\": \"ad213274-8356-5805-8535-194207e5fdcf\",\n      \"organization_uuid\": \"cb2039cd-b520-5d0f-a4d3-07c2074aa300\",\n      \"announced_on\": \"2026-06-01\",\n      \"money_raised_usd\": 1000000\n    },\n    {\n      \"uuid\": \"5c026fb4-71f1-5f47-b6ec-e40d9d9f4e73\",\n      \"organization_uuid\": \"1996ecfb-93d3-5b78-9977-b179e5cba0f4\",\n      \"announced_on\": \"2026-06-01\",\n      \"money_raised_usd\": 1000000\n    },\n    {\n      \"uuid\": \"7f9cdd5d-fa01-5a6d-a159-fd1e7a86e490\",\n      \"organization_uuid\": \"5c5c7898-03a8-52f4-a273-84a02bc8bd55\",\n      \"announced_on\": \"2026-06-01\",\n      \"money_raised_usd\": 1000000\n    },\n    {\n      \"uuid\": \"8645d771-598c-5d22-adb4-54e6787a5678\",\n      \"organization_uuid\": \"814d33cf-274b-574a-adad-1efe982881de\",\n      \"announced_on\": \"2026-06-01\",\n      \"money_raised_usd\": 1000000\n    },\n    {\n      \"uuid\": \"2018b7be-77c5-5058-8dce-1f7af895ec8b\",\n      \"organization_uuid\": \"efdc4427-2bba-595a-a4de-bdbaf8f9c825\",\n      \"announced_on\": \"2026-06-01\",\n      \"money_raised_usd\": 1000000\n    },\n    {\n      \"uuid\": \"636323ba-b091-55b9-9643-d69c64bc92ff\",\n      \"organization_uuid\": \"12177a9a-f9d2-509f-b641-6136dd196625\",\n      \"announced_on\": \"2025-06-01\",\n      \"money_raised_usd\": 1000000\n    },\n    {\n      \"uuid\": \"ecc16bea-ab27-55c4-8839-78f95b028bfe\",\n      \"organization_uuid\": \"5ba5cb04-547d-5e67-b2ed-971ca9efbf44\",\n      \"announced_on\": \"2025-06-01\",\n      \"money_raised_usd\": 1000000\n    },\n    {\n      \"uuid\": \"81e717ff-c063-592b-8858-5cfbd6cb94eb\",\n      \"organization_uuid\": \"b0035019-afb6-58de-85a9-7f8335f1b9b0\",\n      \"announced_on\": \"2025-06-01\",\n      \"money_raised_usd\": 1000000\n    },\n    {\n      \"uuid\": \"355431aa-bf36-5d71-8231-705a69e3d524\",\n      \"organization_uuid\": \"7859c277-eb0d-51b0-b6c4-004cd6706491\",\n      \"announced_on\": \"2025-06-01\",\n      \"money_raised_usd\": 1000000\n    },\n    {\n      \"uuid\": \"07461a2c-3655-5408-96dd-20ccd57d012f\",\n      \"organization_uuid\": \"00636275-a4a5-57dc-be26-84fccd2b4cfa\",\n      \"announced_on\": \"2025-06-01\",\n      \"money_raised_usd\": 1000000\n    }\n  ]\n}\n"
+          "content": "{\n  \"schema_version\": \"crunchbase-industry-insights/1\",\n  \"as_of\": \"2026-11-05\",\n  \"scope\": {\n    \"market\": \"Dental software\",\n    \"geography\": \"US\",\n    \"funding_types\": \"all\",\n    \"selection\": \"three named segments\"\n  },\n  \"coverage\": {\n    \"segments\": {\n      \"complete\": true,\n      \"reported_count\": 3\n    },\n    \"organizations\": {\n      \"complete\": true,\n      \"reported_count\": 45\n    },\n    \"rounds\": {\n      \"complete\": true,\n      \"reported_count\": 36\n    }\n  },\n  \"segments\": [\n    {\n      \"uuid\": \"04bcf2eb-ed8a-5c08-b526-fb56305959b5\",\n      \"name\": \"Dental Scheduling\"\n    },\n    {\n      \"uuid\": \"bf9479c4-bea0-5c4b-8bac-9fb06746f87e\",\n      \"name\": \"Dental Billing\"\n    },\n    {\n      \"uuid\": \"ff91d73b-fe03-500a-868b-6576ecf3c4f6\",\n      \"name\": \"Dental Analytics\"\n    }\n  ],\n  \"organizations\": [\n    {\n      \"uuid\": \"25572e2c-ef8c-5cae-a80e-ff922cd052f7\",\n      \"name\": \"Dental Vendor 0-0\",\n      \"url\": \"https://www.crunchbase.com/organization/fixture-dental-company-0-0\",\n      \"segment_ids\": [\n        \"04bcf2eb-ed8a-5c08-b526-fb56305959b5\"\n      ],\n      \"founded_on\": \"2020-01-01\",\n      \"growth_tier\": \"p100_positive_high\",\n      \"funding_tier\": null\n    },\n    {\n      \"uuid\": \"d0b02331-25fc-577d-bb66-fe6fa56f40c0\",\n      \"name\": \"Dental Vendor 0-1\",\n      \"url\": \"https://www.crunchbase.com/organization/fixture-dental-company-0-1\",\n      \"segment_ids\": [\n        \"04bcf2eb-ed8a-5c08-b526-fb56305959b5\"\n      ],\n      \"founded_on\": \"2020-01-01\",\n      \"growth_tier\": \"p100_positive_high\",\n      \"funding_tier\": null\n    },\n    {\n      \"uuid\": \"9bf8964a-808f-5c66-b066-b08dab821d2e\",\n      \"name\": \"Dental Vendor 0-2\",\n      \"url\": \"https://www.crunchbase.com/organization/fixture-dental-company-0-2\",\n      \"segment_ids\": [\n        \"04bcf2eb-ed8a-5c08-b526-fb56305959b5\"\n      ],\n      \"founded_on\": \"2020-01-01\",\n      \"growth_tier\": \"p100_positive_high\",\n      \"funding_tier\": null\n    },\n    {\n      \"uuid\": \"3a12e2fe-4860-58e4-a3d9-e82aa49d00f3\",\n      \"name\": \"Dental Vendor 0-3\",\n      \"url\": \"https://www.crunchbase.com/organization/fixture-dental-company-0-3\",\n      \"segment_ids\": [\n        \"04bcf2eb-ed8a-5c08-b526-fb56305959b5\"\n      ],\n      \"founded_on\": \"2020-01-01\",\n      \"growth_tier\": \"p300_neutral\",\n      \"funding_tier\": null\n    },\n    {\n      \"uuid\": \"50f2e69c-4853-5846-8b4e-92eea045f62e\",\n      \"name\": \"Dental Vendor 0-4\",\n      \"url\": \"https://www.crunchbase.com/organization/fixture-dental-company-0-4\",\n      \"segment_ids\": [\n        \"04bcf2eb-ed8a-5c08-b526-fb56305959b5\"\n      ],\n      \"founded_on\": \"2020-01-01\",\n      \"growth_tier\": \"p300_neutral\",\n      \"funding_tier\": null\n    },\n    {\n      \"uuid\": \"7f67b33d-e8e7-59de-845a-bb40b61aaa1a\",\n      \"name\": \"Dental Vendor 0-5\",\n      \"url\": \"https://www.crunchbase.com/organization/fixture-dental-company-0-5\",\n      \"segment_ids\": [\n        \"04bcf2eb-ed8a-5c08-b526-fb56305959b5\"\n      ],\n      \"founded_on\": \"2020-01-01\",\n      \"growth_tier\": \"p300_neutral\",\n      \"funding_tier\": null\n    },\n    {\n      \"uuid\": \"a2e0a60b-70db-5394-a9de-94e44484ef92\",\n      \"name\": \"Dental Vendor 0-6\",\n      \"url\": \"https://www.crunchbase.com/organization/fixture-dental-company-0-6\",\n      \"segment_ids\": [\n        \"04bcf2eb-ed8a-5c08-b526-fb56305959b5\"\n      ],\n      \"founded_on\": \"2020-01-01\",\n      \"growth_tier\": \"p300_neutral\",\n      \"funding_tier\": null\n    },\n    {\n      \"uuid\": \"c86cce74-e446-501f-8487-cd9def30f7cd\",\n      \"name\": \"Dental Vendor 0-7\",\n      \"url\": \"https://www.crunchbase.com/organization/fixture-dental-company-0-7\",\n      \"segment_ids\": [\n        \"04bcf2eb-ed8a-5c08-b526-fb56305959b5\"\n      ],\n      \"founded_on\": \"2020-01-01\",\n      \"growth_tier\": \"p300_neutral\",\n      \"funding_tier\": null\n    },\n    {\n      \"uuid\": \"bf7a4ead-9bca-52ae-8c6c-4e89ae94810d\",\n      \"name\": \"Dental Vendor 0-8\",\n      \"url\": \"https://www.crunchbase.com/organization/fixture-dental-company-0-8\",\n      \"segment_ids\": [\n        \"04bcf2eb-ed8a-5c08-b526-fb56305959b5\"\n      ],\n      \"founded_on\": \"2020-01-01\",\n      \"growth_tier\": \"p300_neutral\",\n      \"funding_tier\": null\n    },\n    {\n      \"uuid\": \"37c2244a-b8a1-5986-b7e6-dc8fb20a94dd\",\n      \"name\": \"Dental Vendor 0-9\",\n      \"url\": \"https://www.crunchbase.com/organization/fixture-dental-company-0-9\",\n      \"segment_ids\": [\n        \"04bcf2eb-ed8a-5c08-b526-fb56305959b5\"\n      ],\n      \"founded_on\": \"2020-01-01\",\n      \"growth_tier\": \"p300_neutral\",\n      \"funding_tier\": null\n    },\n    {\n      \"uuid\": \"fa6437fd-fa10-5a6b-9d0f-9dbd9ef7327d\",\n      \"name\": \"Dental Vendor 0-10\",\n      \"url\": \"https://www.crunchbase.com/organization/fixture-dental-company-0-10\",\n      \"segment_ids\": [\n        \"04bcf2eb-ed8a-5c08-b526-fb56305959b5\"\n      ],\n      \"founded_on\": \"2020-01-01\",\n      \"growth_tier\": \"p300_neutral\",\n      \"funding_tier\": null\n    },\n    {\n      \"uuid\": \"06636134-43bc-5e11-9afe-d2bc35299e66\",\n      \"name\": \"Dental Vendor 0-11\",\n      \"url\": \"https://www.crunchbase.com/organization/fixture-dental-company-0-11\",\n      \"segment_ids\": [\n        \"04bcf2eb-ed8a-5c08-b526-fb56305959b5\"\n      ],\n      \"founded_on\": \"2020-01-01\",\n      \"growth_tier\": \"p300_neutral\",\n      \"funding_tier\": null\n    },\n    {\n      \"uuid\": \"57c638d9-000d-5a49-a89b-4560639e3f46\",\n      \"name\": \"Dental Vendor 0-12\",\n      \"url\": \"https://www.crunchbase.com/organization/fixture-dental-company-0-12\",\n      \"segment_ids\": [\n        \"04bcf2eb-ed8a-5c08-b526-fb56305959b5\"\n      ],\n      \"founded_on\": \"2020-01-01\",\n      \"growth_tier\": \"p300_neutral\",\n      \"funding_tier\": null\n    },\n    {\n      \"uuid\": \"d48fb06e-eef4-5f7d-bba1-1340ecded705\",\n      \"name\": \"Dental Vendor 0-13\",\n      \"url\": \"https://www.crunchbase.com/organization/fixture-dental-company-0-13\",\n      \"segment_ids\": [\n        \"04bcf2eb-ed8a-5c08-b526-fb56305959b5\"\n      ],\n      \"founded_on\": \"2020-01-01\",\n      \"growth_tier\": \"p300_neutral\",\n      \"funding_tier\": null\n    },\n    {\n      \"uuid\": \"6b22e599-f452-5253-b3fa-0597bf41eacd\",\n      \"name\": \"Dental Vendor 0-14\",\n      \"url\": \"https://www.crunchbase.com/organization/fixture-dental-company-0-14\",\n      \"segment_ids\": [\n        \"04bcf2eb-ed8a-5c08-b526-fb56305959b5\"\n      ],\n      \"founded_on\": \"2020-01-01\",\n      \"growth_tier\": \"p300_neutral\",\n      \"funding_tier\": null\n    },\n    {\n      \"uuid\": \"daea6dcf-b8c9-50c2-8316-1e4059914bbe\",\n      \"name\": \"Dental Vendor 1-0\",\n      \"url\": \"https://www.crunchbase.com/organization/fixture-dental-company-1-0\",\n      \"segment_ids\": [\n        \"bf9479c4-bea0-5c4b-8bac-9fb06746f87e\"\n      ],\n      \"founded_on\": \"2020-01-01\",\n      \"growth_tier\": \"p100_positive_high\",\n      \"funding_tier\": null\n    },\n    {\n      \"uuid\": \"e1de9a66-31b2-580d-89b5-8a240ff521bb\",\n      \"name\": \"Dental Vendor 1-1\",\n      \"url\": \"https://www.crunchbase.com/organization/fixture-dental-company-1-1\",\n      \"segment_ids\": [\n        \"bf9479c4-bea0-5c4b-8bac-9fb06746f87e\"\n      ],\n      \"founded_on\": \"2020-01-01\",\n      \"growth_tier\": \"p100_positive_high\",\n      \"funding_tier\": null\n    },\n    {\n      \"uuid\": \"71e32ac5-1b52-523b-97ca-d0d872534b69\",\n      \"name\": \"Dental Vendor 1-2\",\n      \"url\": \"https://www.crunchbase.com/organization/fixture-dental-company-1-2\",\n      \"segment_ids\": [\n        \"bf9479c4-bea0-5c4b-8bac-9fb06746f87e\"\n      ],\n      \"founded_on\": \"2020-01-01\",\n      \"growth_tier\": \"p100_positive_high\",\n      \"funding_tier\": null\n    },\n    {\n      \"uuid\": \"71ea2777-0cb7-51b8-bb89-2b968da8e8bd\",\n      \"name\": \"Dental Vendor 1-3\",\n      \"url\": \"https://www.crunchbase.com/organization/fixture-dental-company-1-3\",\n      \"segment_ids\": [\n        \"bf9479c4-bea0-5c4b-8bac-9fb06746f87e\"\n      ],\n      \"founded_on\": \"2020-01-01\",\n      \"growth_tier\": \"p300_neutral\",\n      \"funding_tier\": null\n    },\n    {\n      \"uuid\": \"14418f4b-931a-5119-ad49-ed0d50b23794\",\n      \"name\": \"Dental Vendor 1-4\",\n      \"url\": \"https://www.crunchbase.com/organization/fixture-dental-company-1-4\",\n      \"segment_ids\": [\n        \"bf9479c4-bea0-5c4b-8bac-9fb06746f87e\"\n      ],\n      \"founded_on\": \"2020-01-01\",\n      \"growth_tier\": \"p300_neutral\",\n      \"funding_tier\": null\n    },\n    {\n      \"uuid\": \"25631c1a-c332-5e1f-8bd5-9a4db9c25739\",\n      \"name\": \"Dental Vendor 1-5\",\n      \"url\": \"https://www.crunchbase.com/organization/fixture-dental-company-1-5\",\n      \"segment_ids\": [\n        \"bf9479c4-bea0-5c4b-8bac-9fb06746f87e\"\n      ],\n      \"founded_on\": \"2020-01-01\",\n      \"growth_tier\": \"p300_neutral\",\n      \"funding_tier\": null\n    },\n    {\n      \"uuid\": \"e05f4f19-5a8e-5501-8dcc-e39ade8a3c3d\",\n      \"name\": \"Dental Vendor 1-6\",\n      \"url\": \"https://www.crunchbase.com/organization/fixture-dental-company-1-6\",\n      \"segment_ids\": [\n        \"bf9479c4-bea0-5c4b-8bac-9fb06746f87e\"\n      ],\n      \"founded_on\": \"2020-01-01\",\n      \"growth_tier\": \"p300_neutral\",\n      \"funding_tier\": null\n    },\n    {\n      \"uuid\": \"35fa8010-54f4-54d8-b228-246d9d9fe54b\",\n      \"name\": \"Dental Vendor 1-7\",\n      \"url\": \"https://www.crunchbase.com/organization/fixture-dental-company-1-7\",\n      \"segment_ids\": [\n        \"bf9479c4-bea0-5c4b-8bac-9fb06746f87e\"\n      ],\n      \"founded_on\": \"2020-01-01\",\n      \"growth_tier\": \"p300_neutral\",\n      \"funding_tier\": null\n    },\n    {\n      \"uuid\": \"ff184e36-1687-5294-84cc-b011ad935bf0\",\n      \"name\": \"Dental Vendor 1-8\",\n      \"url\": \"https://www.crunchbase.com/organization/fixture-dental-company-1-8\",\n      \"segment_ids\": [\n        \"bf9479c4-bea0-5c4b-8bac-9fb06746f87e\"\n      ],\n      \"founded_on\": \"2020-01-01\",\n      \"growth_tier\": \"p300_neutral\",\n      \"funding_tier\": null\n    },\n    {\n      \"uuid\": \"590dce27-8643-5d25-bc03-315303207068\",\n      \"name\": \"Dental Vendor 1-9\",\n      \"url\": \"https://www.crunchbase.com/organization/fixture-dental-company-1-9\",\n      \"segment_ids\": [\n        \"bf9479c4-bea0-5c4b-8bac-9fb06746f87e\"\n      ],\n      \"founded_on\": \"2020-01-01\",\n      \"growth_tier\": \"p300_neutral\",\n      \"funding_tier\": null\n    },\n    {\n      \"uuid\": \"e676f02b-6c6f-5cfd-b05a-51e83704852c\",\n      \"name\": \"Dental Vendor 1-10\",\n      \"url\": \"https://www.crunchbase.com/organization/fixture-dental-company-1-10\",\n      \"segment_ids\": [\n        \"bf9479c4-bea0-5c4b-8bac-9fb06746f87e\"\n      ],\n      \"founded_on\": \"2020-01-01\",\n      \"growth_tier\": \"p300_neutral\",\n      \"funding_tier\": null\n    },\n    {\n      \"uuid\": \"f99c18a1-e961-546d-8746-43e72d441114\",\n      \"name\": \"Dental Vendor 1-11\",\n      \"url\": \"https://www.crunchbase.com/organization/fixture-dental-company-1-11\",\n      \"segment_ids\": [\n        \"bf9479c4-bea0-5c4b-8bac-9fb06746f87e\"\n      ],\n      \"founded_on\": \"2020-01-01\",\n      \"growth_tier\": \"p300_neutral\",\n      \"funding_tier\": null\n    },\n    {\n      \"uuid\": \"47ef968a-fa90-597c-92a0-206ade5b62a1\",\n      \"name\": \"Dental Vendor 1-12\",\n      \"url\": \"https://www.crunchbase.com/organization/fixture-dental-company-1-12\",\n      \"segment_ids\": [\n        \"bf9479c4-bea0-5c4b-8bac-9fb06746f87e\"\n      ],\n      \"founded_on\": \"2020-01-01\",\n      \"growth_tier\": \"p300_neutral\",\n      \"funding_tier\": null\n    },\n    {\n      \"uuid\": \"e8dafb65-2a00-5771-bb62-d5ac3e406bdf\",\n      \"name\": \"Dental Vendor 1-13\",\n      \"url\": \"https://www.crunchbase.com/organization/fixture-dental-company-1-13\",\n      \"segment_ids\": [\n        \"bf9479c4-bea0-5c4b-8bac-9fb06746f87e\"\n      ],\n      \"founded_on\": \"2020-01-01\",\n      \"growth_tier\": \"p300_neutral\",\n      \"funding_tier\": null\n    },\n    {\n      \"uuid\": \"76578061-70ae-5564-aa58-378c189b850d\",\n      \"name\": \"Dental Vendor 1-14\",\n      \"url\": \"https://www.crunchbase.com/organization/fixture-dental-company-1-14\",\n      \"segment_ids\": [\n        \"bf9479c4-bea0-5c4b-8bac-9fb06746f87e\"\n      ],\n      \"founded_on\": \"2020-01-01\",\n      \"growth_tier\": \"p300_neutral\",\n      \"funding_tier\": null\n    },\n    {\n      \"uuid\": \"9cf3bfa3-b7d4-5835-8d43-c9b75f4770a9\",\n      \"name\": \"Dental Vendor 2-0\",\n      \"url\": \"https://www.crunchbase.com/organization/fixture-dental-company-2-0\",\n      \"segment_ids\": [\n        \"ff91d73b-fe03-500a-868b-6576ecf3c4f6\"\n      ],\n      \"founded_on\": \"2020-01-01\",\n      \"growth_tier\": \"p100_positive_high\",\n      \"funding_tier\": null\n    },\n    {\n      \"uuid\": \"952f8955-df74-52c2-8850-d7c530bea3b1\",\n      \"name\": \"Dental Vendor 2-1\",\n      \"url\": \"https://www.crunchbase.com/organization/fixture-dental-company-2-1\",\n      \"segment_ids\": [\n        \"ff91d73b-fe03-500a-868b-6576ecf3c4f6\"\n      ],\n      \"founded_on\": \"2020-01-01\",\n      \"growth_tier\": \"p100_positive_high\",\n      \"funding_tier\": null\n    },\n    {\n      \"uuid\": \"cb2039cd-b520-5d0f-a4d3-07c2074aa300\",\n      \"name\": \"Dental Vendor 2-2\",\n      \"url\": \"https://www.crunchbase.com/organization/fixture-dental-company-2-2\",\n      \"segment_ids\": [\n        \"ff91d73b-fe03-500a-868b-6576ecf3c4f6\"\n      ],\n      \"founded_on\": \"2020-01-01\",\n      \"growth_tier\": \"p100_positive_high\",\n      \"funding_tier\": null\n    },\n    {\n      \"uuid\": \"1996ecfb-93d3-5b78-9977-b179e5cba0f4\",\n      \"name\": \"Dental Vendor 2-3\",\n      \"url\": \"https://www.crunchbase.com/organization/fixture-dental-company-2-3\",\n      \"segment_ids\": [\n        \"ff91d73b-fe03-500a-868b-6576ecf3c4f6\"\n      ],\n      \"founded_on\": \"2020-01-01\",\n      \"growth_tier\": \"p300_neutral\",\n      \"funding_tier\": null\n    },\n    {\n      \"uuid\": \"5c5c7898-03a8-52f4-a273-84a02bc8bd55\",\n      \"name\": \"Dental Vendor 2-4\",\n      \"url\": \"https://www.crunchbase.com/organization/fixture-dental-company-2-4\",\n      \"segment_ids\": [\n        \"ff91d73b-fe03-500a-868b-6576ecf3c4f6\"\n      ],\n      \"founded_on\": \"2020-01-01\",\n      \"growth_tier\": \"p300_neutral\",\n      \"funding_tier\": null\n    },\n    {\n      \"uuid\": \"814d33cf-274b-574a-adad-1efe982881de\",\n      \"name\": \"Dental Vendor 2-5\",\n      \"url\": \"https://www.crunchbase.com/organization/fixture-dental-company-2-5\",\n      \"segment_ids\": [\n        \"ff91d73b-fe03-500a-868b-6576ecf3c4f6\"\n      ],\n      \"founded_on\": \"2020-01-01\",\n      \"growth_tier\": \"p300_neutral\",\n      \"funding_tier\": null\n    },\n    {\n      \"uuid\": \"efdc4427-2bba-595a-a4de-bdbaf8f9c825\",\n      \"name\": \"Dental Vendor 2-6\",\n      \"url\": \"https://www.crunchbase.com/organization/fixture-dental-company-2-6\",\n      \"segment_ids\": [\n        \"ff91d73b-fe03-500a-868b-6576ecf3c4f6\"\n      ],\n      \"founded_on\": \"2020-01-01\",\n      \"growth_tier\": \"p300_neutral\",\n      \"funding_tier\": null\n    },\n    {\n      \"uuid\": \"12177a9a-f9d2-509f-b641-6136dd196625\",\n      \"name\": \"Dental Vendor 2-7\",\n      \"url\": \"https://www.crunchbase.com/organization/fixture-dental-company-2-7\",\n      \"segment_ids\": [\n        \"ff91d73b-fe03-500a-868b-6576ecf3c4f6\"\n      ],\n      \"founded_on\": \"2020-01-01\",\n      \"growth_tier\": \"p300_neutral\",\n      \"funding_tier\": null\n    },\n    {\n      \"uuid\": \"5ba5cb04-547d-5e67-b2ed-971ca9efbf44\",\n      \"name\": \"Dental Vendor 2-8\",\n      \"url\": \"https://www.crunchbase.com/organization/fixture-dental-company-2-8\",\n      \"segment_ids\": [\n        \"ff91d73b-fe03-500a-868b-6576ecf3c4f6\"\n      ],\n      \"founded_on\": \"2020-01-01\",\n      \"growth_tier\": \"p300_neutral\",\n      \"funding_tier\": null\n    },\n    {\n      \"uuid\": \"b0035019-afb6-58de-85a9-7f8335f1b9b0\",\n      \"name\": \"Dental Vendor 2-9\",\n      \"url\": \"https://www.crunchbase.com/organization/fixture-dental-company-2-9\",\n      \"segment_ids\": [\n        \"ff91d73b-fe03-500a-868b-6576ecf3c4f6\"\n      ],\n      \"founded_on\": \"2020-01-01\",\n      \"growth_tier\": \"p300_neutral\",\n      \"funding_tier\": null\n    },\n    {\n      \"uuid\": \"7859c277-eb0d-51b0-b6c4-004cd6706491\",\n      \"name\": \"Dental Vendor 2-10\",\n      \"url\": \"https://www.crunchbase.com/organization/fixture-dental-company-2-10\",\n      \"segment_ids\": [\n        \"ff91d73b-fe03-500a-868b-6576ecf3c4f6\"\n      ],\n      \"founded_on\": \"2020-01-01\",\n      \"growth_tier\": \"p300_neutral\",\n      \"funding_tier\": null\n    },\n    {\n      \"uuid\": \"00636275-a4a5-57dc-be26-84fccd2b4cfa\",\n      \"name\": \"Dental Vendor 2-11\",\n      \"url\": \"https://www.crunchbase.com/organization/fixture-dental-company-2-11\",\n      \"segment_ids\": [\n        \"ff91d73b-fe03-500a-868b-6576ecf3c4f6\"\n      ],\n      \"founded_on\": \"2020-01-01\",\n      \"growth_tier\": \"p300_neutral\",\n      \"funding_tier\": null\n    },\n    {\n      \"uuid\": \"9765cc1d-e740-50ca-b78b-d42b99ba766f\",\n      \"name\": \"Dental Vendor 2-12\",\n      \"url\": \"https://www.crunchbase.com/organization/fixture-dental-company-2-12\",\n      \"segment_ids\": [\n        \"ff91d73b-fe03-500a-868b-6576ecf3c4f6\"\n      ],\n      \"founded_on\": \"2020-01-01\",\n      \"growth_tier\": \"p300_neutral\",\n      \"funding_tier\": null\n    },\n    {\n      \"uuid\": \"5db80e93-51ac-51c9-8a2b-e2e4ea67f5e3\",\n      \"name\": \"Dental Vendor 2-13\",\n      \"url\": \"https://www.crunchbase.com/organization/fixture-dental-company-2-13\",\n      \"segment_ids\": [\n        \"ff91d73b-fe03-500a-868b-6576ecf3c4f6\"\n      ],\n      \"founded_on\": \"2020-01-01\",\n      \"growth_tier\": \"p300_neutral\",\n      \"funding_tier\": null\n    },\n    {\n      \"uuid\": \"51669f86-658d-5dcc-b087-2650201553ce\",\n      \"name\": \"Dental Vendor 2-14\",\n      \"url\": \"https://www.crunchbase.com/organization/fixture-dental-company-2-14\",\n      \"segment_ids\": [\n        \"ff91d73b-fe03-500a-868b-6576ecf3c4f6\"\n      ],\n      \"founded_on\": \"2020-01-01\",\n      \"growth_tier\": \"p300_neutral\",\n      \"funding_tier\": null\n    }\n  ],\n  \"rounds\": [\n    {\n      \"uuid\": \"e62dd50a-8315-5ce3-a64f-3a25d74ec00a\",\n      \"organization_uuid\": \"25572e2c-ef8c-5cae-a80e-ff922cd052f7\",\n      \"announced_on\": \"2026-06-01\",\n      \"money_raised_usd\": 1000000\n    },\n    {\n      \"uuid\": \"9932e320-56be-5f50-bd90-6528bc0b37fc\",\n      \"organization_uuid\": \"d0b02331-25fc-577d-bb66-fe6fa56f40c0\",\n      \"announced_on\": \"2026-06-01\",\n      \"money_raised_usd\": 1000000\n    },\n    {\n      \"uuid\": \"fce1b54e-fab2-5559-a8b9-2025f807fe9f\",\n      \"organization_uuid\": \"9bf8964a-808f-5c66-b066-b08dab821d2e\",\n      \"announced_on\": \"2026-06-01\",\n      \"money_raised_usd\": 1000000\n    },\n    {\n      \"uuid\": \"2e4211e5-5cd3-5ed2-883a-109a12a64fbf\",\n      \"organization_uuid\": \"3a12e2fe-4860-58e4-a3d9-e82aa49d00f3\",\n      \"announced_on\": \"2026-06-01\",\n      \"money_raised_usd\": 1000000\n    },\n    {\n      \"uuid\": \"83020591-2528-5f14-82db-c696d30db808\",\n      \"organization_uuid\": \"50f2e69c-4853-5846-8b4e-92eea045f62e\",\n      \"announced_on\": \"2026-06-01\",\n      \"money_raised_usd\": 1000000\n    },\n    {\n      \"uuid\": \"be37156f-a970-5672-96a4-f22a03781f95\",\n      \"organization_uuid\": \"7f67b33d-e8e7-59de-845a-bb40b61aaa1a\",\n      \"announced_on\": \"2026-06-01\",\n      \"money_raised_usd\": 1000000\n    },\n    {\n      \"uuid\": \"2a18ddca-eafc-54ce-9549-3868afe333c8\",\n      \"organization_uuid\": \"a2e0a60b-70db-5394-a9de-94e44484ef92\",\n      \"announced_on\": \"2026-06-01\",\n      \"money_raised_usd\": 1000000\n    },\n    {\n      \"uuid\": \"2184056c-0a30-56da-bde3-5b0f82ffc443\",\n      \"organization_uuid\": \"c86cce74-e446-501f-8487-cd9def30f7cd\",\n      \"announced_on\": \"2025-06-01\",\n      \"money_raised_usd\": 1000000\n    },\n    {\n      \"uuid\": \"ebec8391-d86b-5ff2-ae9e-0b9241ad8404\",\n      \"organization_uuid\": \"bf7a4ead-9bca-52ae-8c6c-4e89ae94810d\",\n      \"announced_on\": \"2025-06-01\",\n      \"money_raised_usd\": 1000000\n    },\n    {\n      \"uuid\": \"6847617f-c85b-54b6-9138-409b5252dd35\",\n      \"organization_uuid\": \"37c2244a-b8a1-5986-b7e6-dc8fb20a94dd\",\n      \"announced_on\": \"2025-06-01\",\n      \"money_raised_usd\": 1000000\n    },\n    {\n      \"uuid\": \"f5db26b0-0312-5734-9150-b4bd41a7bddc\",\n      \"organization_uuid\": \"fa6437fd-fa10-5a6b-9d0f-9dbd9ef7327d\",\n      \"announced_on\": \"2025-06-01\",\n      \"money_raised_usd\": 1000000\n    },\n    {\n      \"uuid\": \"81810afd-10d5-516a-8dcb-fff482d04e28\",\n      \"organization_uuid\": \"06636134-43bc-5e11-9afe-d2bc35299e66\",\n      \"announced_on\": \"2025-06-01\",\n      \"money_raised_usd\": 1000000\n    },\n    {\n      \"uuid\": \"ceec70e0-af12-5a3d-a2aa-6cea9ac37332\",\n      \"organization_uuid\": \"daea6dcf-b8c9-50c2-8316-1e4059914bbe\",\n      \"announced_on\": \"2026-06-01\",\n      \"money_raised_usd\": 1000000\n    },\n    {\n      \"uuid\": \"fe231fd0-c372-55ec-a7f9-f37dc73762c5\",\n      \"organization_uuid\": \"e1de9a66-31b2-580d-89b5-8a240ff521bb\",\n      \"announced_on\": \"2026-06-01\",\n      \"money_raised_usd\": 1000000\n    },\n    {\n      \"uuid\": \"b48b58d1-9816-5fc0-8540-1001d10432c2\",\n      \"organization_uuid\": \"71e32ac5-1b52-523b-97ca-d0d872534b69\",\n      \"announced_on\": \"2026-06-01\",\n      \"money_raised_usd\": 1000000\n    },\n    {\n      \"uuid\": \"4b1d9c98-8e24-5c4f-a226-1a8a4a48eff2\",\n      \"organization_uuid\": \"71ea2777-0cb7-51b8-bb89-2b968da8e8bd\",\n      \"announced_on\": \"2026-06-01\",\n      \"money_raised_usd\": 1000000\n    },\n    {\n      \"uuid\": \"735a36c0-ef76-59c2-bbc0-aac0eac4bd69\",\n      \"organization_uuid\": \"14418f4b-931a-5119-ad49-ed0d50b23794\",\n      \"announced_on\": \"2026-06-01\",\n      \"money_raised_usd\": 1000000\n    },\n    {\n      \"uuid\": \"115c4140-2325-5e4f-b801-39da750b98f2\",\n      \"organization_uuid\": \"25631c1a-c332-5e1f-8bd5-9a4db9c25739\",\n      \"announced_on\": \"2026-06-01\",\n      \"money_raised_usd\": 1000000\n    },\n    {\n      \"uuid\": \"115ca8f0-b5b4-57ab-893c-44299d747228\",\n      \"organization_uuid\": \"e05f4f19-5a8e-5501-8dcc-e39ade8a3c3d\",\n      \"announced_on\": \"2026-06-01\",\n      \"money_raised_usd\": 1000000\n    },\n    {\n      \"uuid\": \"72d3666e-f31c-5dfa-b9f7-d594f846ec6e\",\n      \"organization_uuid\": \"35fa8010-54f4-54d8-b228-246d9d9fe54b\",\n      \"announced_on\": \"2025-06-01\",\n      \"money_raised_usd\": 1000000\n    },\n    {\n      \"uuid\": \"9ea4e86c-bbb8-5553-80d1-d06ca5f0404d\",\n      \"organization_uuid\": \"ff184e36-1687-5294-84cc-b011ad935bf0\",\n      \"announced_on\": \"2025-06-01\",\n      \"money_raised_usd\": 1000000\n    },\n    {\n      \"uuid\": \"41cc498a-0efb-5ae5-81dd-2ed1033149f1\",\n      \"organization_uuid\": \"590dce27-8643-5d25-bc03-315303207068\",\n      \"announced_on\": \"2025-06-01\",\n      \"money_raised_usd\": 1000000\n    },\n    {\n      \"uuid\": \"1be99142-5a1c-5f9c-82a7-d04ff67edd65\",\n      \"organization_uuid\": \"e676f02b-6c6f-5cfd-b05a-51e83704852c\",\n      \"announced_on\": \"2025-06-01\",\n      \"money_raised_usd\": 1000000\n    },\n    {\n      \"uuid\": \"907ee1b2-5796-50ef-b77f-42d356dac923\",\n      \"organization_uuid\": \"f99c18a1-e961-546d-8746-43e72d441114\",\n      \"announced_on\": \"2025-06-01\",\n      \"money_raised_usd\": 1000000\n    },\n    {\n      \"uuid\": \"bdb2fd8e-6277-5e85-8e68-72dd833c963d\",\n      \"organization_uuid\": \"9cf3bfa3-b7d4-5835-8d43-c9b75f4770a9\",\n      \"announced_on\": \"2026-06-01\",\n      \"money_raised_usd\": 1000000\n    },\n    {\n      \"uuid\": \"d9baea68-3e04-570d-8b80-ac5de1aab4a2\",\n      \"organization_uuid\": \"952f8955-df74-52c2-8850-d7c530bea3b1\",\n      \"announced_on\": \"2026-06-01\",\n      \"money_raised_usd\": 1000000\n    },\n    {\n      \"uuid\": \"ad213274-8356-5805-8535-194207e5fdcf\",\n      \"organization_uuid\": \"cb2039cd-b520-5d0f-a4d3-07c2074aa300\",\n      \"announced_on\": \"2026-06-01\",\n      \"money_raised_usd\": 1000000\n    },\n    {\n      \"uuid\": \"5c026fb4-71f1-5f47-b6ec-e40d9d9f4e73\",\n      \"organization_uuid\": \"1996ecfb-93d3-5b78-9977-b179e5cba0f4\",\n      \"announced_on\": \"2026-06-01\",\n      \"money_raised_usd\": 1000000\n    },\n    {\n      \"uuid\": \"7f9cdd5d-fa01-5a6d-a159-fd1e7a86e490\",\n      \"organization_uuid\": \"5c5c7898-03a8-52f4-a273-84a02bc8bd55\",\n      \"announced_on\": \"2026-06-01\",\n      \"money_raised_usd\": 1000000\n    },\n    {\n      \"uuid\": \"8645d771-598c-5d22-adb4-54e6787a5678\",\n      \"organization_uuid\": \"814d33cf-274b-574a-adad-1efe982881de\",\n      \"announced_on\": \"2026-06-01\",\n      \"money_raised_usd\": 1000000\n    },\n    {\n      \"uuid\": \"2018b7be-77c5-5058-8dce-1f7af895ec8b\",\n      \"organization_uuid\": \"efdc4427-2bba-595a-a4de-bdbaf8f9c825\",\n      \"announced_on\": \"2026-06-01\",\n      \"money_raised_usd\": 1000000\n    },\n    {\n      \"uuid\": \"636323ba-b091-55b9-9643-d69c64bc92ff\",\n      \"organization_uuid\": \"12177a9a-f9d2-509f-b641-6136dd196625\",\n      \"announced_on\": \"2025-06-01\",\n      \"money_raised_usd\": 1000000\n    },\n    {\n      \"uuid\": \"ecc16bea-ab27-55c4-8839-78f95b028bfe\",\n      \"organization_uuid\": \"5ba5cb04-547d-5e67-b2ed-971ca9efbf44\",\n      \"announced_on\": \"2025-06-01\",\n      \"money_raised_usd\": 1000000\n    },\n    {\n      \"uuid\": \"81e717ff-c063-592b-8858-5cfbd6cb94eb\",\n      \"organization_uuid\": \"b0035019-afb6-58de-85a9-7f8335f1b9b0\",\n      \"announced_on\": \"2025-06-01\",\n      \"money_raised_usd\": 1000000\n    },\n    {\n      \"uuid\": \"355431aa-bf36-5d71-8231-705a69e3d524\",\n      \"organization_uuid\": \"7859c277-eb0d-51b0-b6c4-004cd6706491\",\n      \"announced_on\": \"2025-06-01\",\n      \"money_raised_usd\": 1000000\n    },\n    {\n      \"uuid\": \"07461a2c-3655-5408-96dd-20ccd57d012f\",\n      \"organization_uuid\": \"00636275-a4a5-57dc-be26-84fccd2b4cfa\",\n      \"announced_on\": \"2025-06-01\",\n      \"money_raised_usd\": 1000000\n    }\n  ]\n}\n"
         },
         {
           "path": "radar-policy.md",
-          "content": "Accepted Radar rule and output interface:\nUse adjacent12-month periods ending as_of and the preceding12 months, boundary dates current=(as_of minus12 calendar months,as_of],prior=(as_of minus24 months,as_of minus12 months]. A segment is eligible only with >=15 unique companies,>=12 combined rounds,>=5 prior rounds, full observed growth tiers and founding dates. Need>=3 eligible peers. Per segment N=company count,VL=p100_positive_high count,Y=founded within36 months,Rc/Rp=current/prior round counts. change=Rc/Rp-1; relative=change-peer median change; expected=Rp*(1+median change); z=(Rc-expected)/sqrt(expected),0 if expected0. Growth/youth ratios compare VL/N and Y/N with peer medians; zero/zero ratio1,positive/zero ratio2. First matching rule: declining if relative<=-.20 and z<=-1.5; declining if relative<=-.10 and z<=-1 and growth ratio<1; emerging if youth ratio>=1.5,relative>=0,Y>=5; growing if relative>=.10 and z>=1; growing if relative>=0 and growth ratio>=1.25; otherwise steady. Unknown evidence stays unclassified. Funding predictions affect ordering only when every eligible peer has complete observations. Sources of market insights do not override computed labels. Focus contains up to3 emerging/growing segments only. Overlap makes totals nonadditive.\nWrite result.json with schema_version=\"crunchbase-gtm-radar/1\",as_of,status=\"complete\" when comparison possible (else \"insufficient_comparable_segments\"),peer_count,scope,coverage,segments,focus_segments. Write segments.csv columns uuid,name,status,label,score,companies,rounds_current,rounds_prior,growth_known,founding_known,growth_share,young_share,raise_share. Write handoff.json schema_version=\"crunchbase-gtm-handoff/1\",as_of,scope,coverage,segment_uuids (focus IDs),requires_scope_confirmation:true. Fixed rules are descriptive, not statistically calibrated demand.\n"
+          "content": "Accepted Industry Insights rule and output interface:\nUse adjacent12-month periods ending as_of and the preceding12 months, boundary dates current=(as_of minus12 calendar months,as_of],prior=(as_of minus24 months,as_of minus12 months]. A segment is eligible only with >=15 unique companies,>=12 combined rounds,>=5 prior rounds, full observed growth tiers and founding dates. Need>=3 eligible peers. Per segment N=company count,VL=p100_positive_high count,Y=founded within36 months,Rc/Rp=current/prior round counts. change=Rc/Rp-1; relative=change-peer median change; expected=Rp*(1+median change); z=(Rc-expected)/sqrt(expected),0 if expected0. Growth/youth ratios compare VL/N and Y/N with peer medians; zero/zero ratio1,positive/zero ratio2. First matching rule: declining if relative<=-.20 and z<=-1.5; declining if relative<=-.10 and z<=-1 and growth ratio<1; emerging if youth ratio>=1.5,relative>=0,Y>=5; growing if relative>=.10 and z>=1; growing if relative>=0 and growth ratio>=1.25; otherwise steady. Unknown evidence stays unclassified. Funding predictions affect ordering only when every eligible peer has complete observations. Sources of market insights do not override computed labels. Focus contains up to3 emerging/growing segments only. Overlap makes totals nonadditive.\nWrite result.json with schema_version=\"crunchbase-industry-insights/1\",as_of,status=\"complete\" when comparison possible (else \"insufficient_comparable_segments\"),peer_count,scope,coverage,segments,focus_segments. Write segments.csv columns uuid,name,status,label,score,companies,rounds_current,rounds_prior,growth_known,founding_known,growth_share,young_share,raise_share. Write handoff.json schema_version=\"crunchbase-gtm-handoff/1\",as_of,scope,coverage,segment_uuids (focus IDs),requires_scope_confirmation:true. Fixed rules are descriptive, not statistically calibrated demand.\n"
         },
         {
           "path": "radar-input-contract.md",
-          "content": "Normalized input schema: schema_version=\"crunchbase-gtm-radar/1\"; as_of is the reference date; scope is the accepted universe. coverage has segments,organizations,rounds entries with complete:boolean and reported_count. segments[] supplies uuid,name. organizations[] supplies uuid,name,url,segment_ids (canonical segment UUIDs),founded_on (YYYY-MM-DD),growth_tier (p100_positive_high is very likely growth),funding_tier (null means unknown). rounds[] supplies uuid,organization_uuid (canonical company link),announced_on (YYYY-MM-DD),money_raised_usd (number or null). Join rounds to organizations through organization_uuid and organizations to segments through segment_ids. Do not assume raw provider field names in this already-normalized export. Unknown fields stay unknown; a missing prediction is not a negative prediction. Use radar-policy.md for the disclosed math and output interface.\n"
+          "content": "Normalized input schema: schema_version=\"crunchbase-industry-insights/1\"; as_of is the reference date; scope is the accepted universe. coverage has segments,organizations,rounds entries with complete:boolean and reported_count. segments[] supplies uuid,name. organizations[] supplies uuid,name,url,segment_ids (canonical segment UUIDs),founded_on (YYYY-MM-DD),growth_tier (p100_positive_high is very likely growth),funding_tier (null means unknown). rounds[] supplies uuid,organization_uuid (canonical company link),announced_on (YYYY-MM-DD),money_raised_usd (number or null). Join rounds to organizations through organization_uuid and organizations to segments through segment_ids. Do not assume raw provider field names in this already-normalized export. Unknown fields stay unknown; a missing prediction is not a negative prediction. Use radar-policy.md for the disclosed math and output interface.\n"
         }
       ],
       "turns": [
         {
-          "user": "Use Crunchbase Market Radar on the complete normalized export radar-input.json. Scope in that file is approved; seller is billing automation for dental software vendors. Do not requery. Write outputs under radar-out and explain direction and evidence limits. Use the fully specified radar-policy.md rule and output contract. Read radar-input-contract.md for the exact normalized schema and joins."
+          "user": "Use Crunchbase Industry Insights on the complete normalized export radar-input.json. Scope in that file is approved; seller is billing automation for dental software vendors. Do not requery. Write outputs under radar-out and explain direction and evidence limits. Use the fully specified radar-policy.md rule and output contract. Read radar-input-contract.md for the exact normalized schema and joins."
         }
       ],
       "artifacts": [
@@ -48770,7 +48770,7 @@
           "severity": "normal",
           "path": "radar-out/result.json",
           "expected": {
-            "schema_version": "crunchbase-gtm-radar/1",
+            "schema_version": "crunchbase-industry-insights/1",
             "as_of": "2026-11-05",
             "status": "complete",
             "peer_count": 3,
@@ -48824,10 +48824,10 @@
       "id": "pulse-legacy-flat-envelope",
       "family": "pulse-legacy-flat-envelope",
       "split": "regression",
-      "workflow": "crunchbase-account-pulse",
+      "workflow": "crunchbase-account-signals",
       "tags": [
         "gtm",
-        "account-pulse",
+        "account-signals",
         "legacy-envelope"
       ],
       "fixture": {
@@ -48858,7 +48858,7 @@
           "id": "route",
           "kind": "activation",
           "severity": "normal",
-          "skill": "crunchbase-account-pulse",
+          "skill": "crunchbase-account-signals",
           "expected": true
         },
         {
@@ -48898,7 +48898,7 @@
         },
         {
           "path": "scoring-artifact-contract.md",
-          "content": "Shared normalized input and final output contract for this task (both implementations):\nSave the exact normalized scoring input as candidates.json. Input schema_version=1; run includes today=\"2026-11-05\", complete (truthful retrieval coverage), scope_id (accepted scope identifier), mode (lookalike/icp/book as appropriate), and count (requested output limit, not a retrieved total). candidates is an array of canonical accounts with uuid,permalink,name,url,domain and only observed scoring values: growth_tier,growth_score,heat_score,heat_delta,last_funding_at,last_funding_type,last_funding_usd,funding_tier,ipo_status,operating_status. Map provider heat_score_delta_d90 to heat_delta, returned prediction tiers to growth_tier/funding_tier, and money.value_usd to last_funding_usd. Preserve null/unknown; do not invent scores, dates, provenance or zero observations. Preserve actual retrieved source values and identifiers. Deduplicate canonical accounts before scoring and retain accepted seeds/exclusions and source scope. The attached accepted-scoring-policy.md defines the complete formula and fixed tiers. No expected answers are supplied.\nSave the lossless final result JSON with schema_version=1,rubric_version=\"gtm-1\",workflow=\"prospect-finder\" or \"prioritize-accounts\",as_of,scope_id,complete,rows,list_uuids. Rows preserve normalized canonical identity and source values plus score,tier,status,rank,coverage (observed/required/missing),points and source URL. Score ties sort by name then UUID. Prioritization retains the complete confirmed book; prospect output applies exclusions before the requested maximum. No zero replacement for unknown factors. Round display scores to the nearest whole point using ordinary Python round; retain component points so the result remains auditable.\nThe final CSV must correspond to the final JSON rows and preserve UUID,Permalink,Name,Domain,Tier,Score,Status,Rank,Coverage,Missing factors,Crunchbase profile columns. Additional sourced CRM context or clearly labeled seller hypotheses may be appended without changing scores/order/identity. Unknown score/tier/rank cells are blank. Quoting/BOM are allowed. Do not claim a global best list from a sampled pool. Final files must match any assertions in the answer; keep the normalized input for review.\n Closed-company eligibility: preserve closed companies in this unrestricted full-result JSON and CSV, but mark status as closed, set tier and rank to null (blank in CSV), and exclude them from list_uuids. A numerical score may be retained only as a historical/non-actionable value, clearly explained; it does not confer a current priority or tier. list_uuids contains only scored, non-closed output accounts; it is not the full retrieved population. No external writes are authorized.\n"
+          "content": "Shared normalized input and final output contract for this task (both implementations):\nSave the exact normalized scoring input as candidates.json. Input schema_version=1; run includes today=\"2026-11-05\", complete (truthful retrieval coverage), scope_id (accepted scope identifier), mode (lookalike/icp/book as appropriate), and count (requested output limit, not a retrieved total). candidates is an array of canonical accounts with uuid,permalink,name,url,domain and only observed scoring values: growth_tier,growth_score,heat_score,heat_delta,last_funding_at,last_funding_type,last_funding_usd,funding_tier,ipo_status,operating_status. Map provider heat_score_delta_d90 to heat_delta, returned prediction tiers to growth_tier/funding_tier, and money.value_usd to last_funding_usd. Preserve null/unknown; do not invent scores, dates, provenance or zero observations. Preserve actual retrieved source values and identifiers. Deduplicate canonical accounts before scoring and retain accepted seeds/exclusions and source scope. The attached accepted-scoring-policy.md defines the complete formula and fixed tiers. No expected answers are supplied.\nSave the lossless final result JSON with schema_version=1,rubric_version=\"gtm-1\",workflow=\"prospect-finder\" or \"account-prioritizer\",as_of,scope_id,complete,rows,list_uuids. Rows preserve normalized canonical identity and source values plus score,tier,status,rank,coverage (observed/required/missing),points and source URL. Score ties sort by name then UUID. Prioritization retains the complete confirmed book; prospect output applies exclusions before the requested maximum. No zero replacement for unknown factors. Round display scores to the nearest whole point using ordinary Python round; retain component points so the result remains auditable.\nThe final CSV must correspond to the final JSON rows and preserve UUID,Permalink,Name,Domain,Tier,Score,Status,Rank,Coverage,Missing factors,Crunchbase profile columns. Additional sourced CRM context or clearly labeled seller hypotheses may be appended without changing scores/order/identity. Unknown score/tier/rank cells are blank. Quoting/BOM are allowed. Do not claim a global best list from a sampled pool. Final files must match any assertions in the answer; keep the normalized input for review.\n Closed-company eligibility: preserve closed companies in this unrestricted full-result JSON and CSV, but mark status as closed, set tier and rank to null (blank in CSV), and exclude them from list_uuids. A numerical score may be retained only as a historical/non-actionable value, clearly explained; it does not confer a current priority or tier. list_uuids contains only scored, non-closed output accounts; it is not the full retrieved population. No external writes are authorized.\n"
         }
       ],
       "checks": [
@@ -49081,7 +49081,7 @@
         },
         {
           "path": "scoring-artifact-contract.md",
-          "content": "Shared normalized input and final output contract for this task (both implementations):\nSave the exact normalized scoring input as candidates.json. Input schema_version=1; run includes today=\"2026-11-05\", complete (truthful retrieval coverage), scope_id (accepted scope identifier), mode (lookalike/icp/book as appropriate), and count (requested output limit, not a retrieved total). candidates is an array of canonical accounts with uuid,permalink,name,url,domain and only observed scoring values: growth_tier,growth_score,heat_score,heat_delta,last_funding_at,last_funding_type,last_funding_usd,funding_tier,ipo_status,operating_status. Map provider heat_score_delta_d90 to heat_delta, returned prediction tiers to growth_tier/funding_tier, and money.value_usd to last_funding_usd. Preserve null/unknown; do not invent scores, dates, provenance or zero observations. Preserve actual retrieved source values and identifiers. Deduplicate canonical accounts before scoring and retain accepted seeds/exclusions and source scope. The attached accepted-scoring-policy.md defines the complete formula and fixed tiers. No expected answers are supplied.\nSave the lossless final result JSON with schema_version=1,rubric_version=\"gtm-1\",workflow=\"prospect-finder\" or \"prioritize-accounts\",as_of,scope_id,complete,rows,list_uuids. Rows preserve normalized canonical identity and source values plus score,tier,status,rank,coverage (observed/required/missing),points and source URL. Score ties sort by name then UUID. Prioritization retains the complete confirmed book; prospect output applies exclusions before the requested maximum. No zero replacement for unknown factors. Round display scores to the nearest whole point using ordinary Python round; retain component points so the result remains auditable.\nThe final CSV must correspond to the final JSON rows and preserve UUID,Permalink,Name,Domain,Tier,Score,Status,Rank,Coverage,Missing factors,Crunchbase profile columns. Additional sourced CRM context or clearly labeled seller hypotheses may be appended without changing scores/order/identity. Unknown score/tier/rank cells are blank. Quoting/BOM are allowed. Do not claim a global best list from a sampled pool. Final files must match any assertions in the answer; keep the normalized input for review.\n"
+          "content": "Shared normalized input and final output contract for this task (both implementations):\nSave the exact normalized scoring input as candidates.json. Input schema_version=1; run includes today=\"2026-11-05\", complete (truthful retrieval coverage), scope_id (accepted scope identifier), mode (lookalike/icp/book as appropriate), and count (requested output limit, not a retrieved total). candidates is an array of canonical accounts with uuid,permalink,name,url,domain and only observed scoring values: growth_tier,growth_score,heat_score,heat_delta,last_funding_at,last_funding_type,last_funding_usd,funding_tier,ipo_status,operating_status. Map provider heat_score_delta_d90 to heat_delta, returned prediction tiers to growth_tier/funding_tier, and money.value_usd to last_funding_usd. Preserve null/unknown; do not invent scores, dates, provenance or zero observations. Preserve actual retrieved source values and identifiers. Deduplicate canonical accounts before scoring and retain accepted seeds/exclusions and source scope. The attached accepted-scoring-policy.md defines the complete formula and fixed tiers. No expected answers are supplied.\nSave the lossless final result JSON with schema_version=1,rubric_version=\"gtm-1\",workflow=\"prospect-finder\" or \"account-prioritizer\",as_of,scope_id,complete,rows,list_uuids. Rows preserve normalized canonical identity and source values plus score,tier,status,rank,coverage (observed/required/missing),points and source URL. Score ties sort by name then UUID. Prioritization retains the complete confirmed book; prospect output applies exclusions before the requested maximum. No zero replacement for unknown factors. Round display scores to the nearest whole point using ordinary Python round; retain component points so the result remains auditable.\nThe final CSV must correspond to the final JSON rows and preserve UUID,Permalink,Name,Domain,Tier,Score,Status,Rank,Coverage,Missing factors,Crunchbase profile columns. Additional sourced CRM context or clearly labeled seller hypotheses may be appended without changing scores/order/identity. Unknown score/tier/rank cells are blank. Quoting/BOM are allowed. Do not claim a global best list from a sampled pool. Final files must match any assertions in the answer; keep the normalized input for review.\n"
         }
       ],
       "checks": [
@@ -49221,10 +49221,10 @@
       "id": "priority-replacement-holdout-01",
       "family": "priority-replacement-family-01",
       "split": "holdout",
-      "workflow": "crunchbase-prioritize-accounts",
+      "workflow": "crunchbase-account-prioritizer",
       "tags": [
         "gtm",
-        "prioritize-accounts",
+        "account-prioritizer",
         "independent-replacement"
       ],
       "fixture": {
@@ -55604,7 +55604,7 @@
         },
         {
           "path": "scoring-artifact-contract.md",
-          "content": "Shared normalized input and final output contract for this task (both implementations):\nSave the exact normalized scoring input as candidates.json. Input schema_version=1; run includes today=\"2026-11-05\", complete (truthful retrieval coverage), scope_id (accepted scope identifier), mode (lookalike/icp/book as appropriate), and count (requested output limit, not a retrieved total). candidates is an array of canonical accounts with uuid,permalink,name,url,domain and only observed scoring values: growth_tier,growth_score,heat_score,heat_delta,last_funding_at,last_funding_type,last_funding_usd,funding_tier,ipo_status,operating_status. Map provider heat_score_delta_d90 to heat_delta, returned prediction tiers to growth_tier/funding_tier, and money.value_usd to last_funding_usd. Preserve null/unknown; do not invent scores, dates, provenance or zero observations. Preserve actual retrieved source values and identifiers. Deduplicate canonical accounts before scoring and retain accepted seeds/exclusions and source scope. The attached accepted-scoring-policy.md defines the complete formula and fixed tiers. No expected answers are supplied.\nSave the lossless final result JSON with schema_version=1,rubric_version=\"gtm-1\",workflow=\"prospect-finder\" or \"prioritize-accounts\",as_of,scope_id,complete,rows,list_uuids. Rows preserve normalized canonical identity and source values plus score,tier,status,rank,coverage (observed/required/missing),points and source URL. Score ties sort by name then UUID. Prioritization retains the complete confirmed book; prospect output applies exclusions before the requested maximum. No zero replacement for unknown factors. Round display scores to the nearest whole point using ordinary Python round; retain component points so the result remains auditable.\nThe final CSV must correspond to the final JSON rows and preserve UUID,Permalink,Name,Domain,Tier,Score,Status,Rank,Coverage,Missing factors,Crunchbase profile columns. Additional sourced CRM context or clearly labeled seller hypotheses may be appended without changing scores/order/identity. Unknown score/tier/rank cells are blank. Quoting/BOM are allowed. Do not claim a global best list from a sampled pool. Final files must match any assertions in the answer; keep the normalized input for review.\n\nInclude the accepted override in candidates.json as top-level rubric with weights, tiers and customer_bonus; include it in priorities.json. scope_id=\"replacement-book-v1\"; run.mode=\"book\"; run.count=3. Normalized operating_status must preserve the source value. Do not manufacture funding dates or predictions from the absent values.\n"
+          "content": "Shared normalized input and final output contract for this task (both implementations):\nSave the exact normalized scoring input as candidates.json. Input schema_version=1; run includes today=\"2026-11-05\", complete (truthful retrieval coverage), scope_id (accepted scope identifier), mode (lookalike/icp/book as appropriate), and count (requested output limit, not a retrieved total). candidates is an array of canonical accounts with uuid,permalink,name,url,domain and only observed scoring values: growth_tier,growth_score,heat_score,heat_delta,last_funding_at,last_funding_type,last_funding_usd,funding_tier,ipo_status,operating_status. Map provider heat_score_delta_d90 to heat_delta, returned prediction tiers to growth_tier/funding_tier, and money.value_usd to last_funding_usd. Preserve null/unknown; do not invent scores, dates, provenance or zero observations. Preserve actual retrieved source values and identifiers. Deduplicate canonical accounts before scoring and retain accepted seeds/exclusions and source scope. The attached accepted-scoring-policy.md defines the complete formula and fixed tiers. No expected answers are supplied.\nSave the lossless final result JSON with schema_version=1,rubric_version=\"gtm-1\",workflow=\"prospect-finder\" or \"account-prioritizer\",as_of,scope_id,complete,rows,list_uuids. Rows preserve normalized canonical identity and source values plus score,tier,status,rank,coverage (observed/required/missing),points and source URL. Score ties sort by name then UUID. Prioritization retains the complete confirmed book; prospect output applies exclusions before the requested maximum. No zero replacement for unknown factors. Round display scores to the nearest whole point using ordinary Python round; retain component points so the result remains auditable.\nThe final CSV must correspond to the final JSON rows and preserve UUID,Permalink,Name,Domain,Tier,Score,Status,Rank,Coverage,Missing factors,Crunchbase profile columns. Additional sourced CRM context or clearly labeled seller hypotheses may be appended without changing scores/order/identity. Unknown score/tier/rank cells are blank. Quoting/BOM are allowed. Do not claim a global best list from a sampled pool. Final files must match any assertions in the answer; keep the normalized input for review.\n\nInclude the accepted override in candidates.json as top-level rubric with weights, tiers and customer_bonus; include it in priorities.json. scope_id=\"replacement-book-v1\"; run.mode=\"book\"; run.count=3. Normalized operating_status must preserve the source value. Do not manufacture funding dates or predictions from the absent values.\n"
         }
       ],
       "checks": [
@@ -55664,7 +55664,7 @@
           "expected": {
             "schema_version": 1,
             "rubric_version": "gtm-1",
-            "workflow": "prioritize-accounts",
+            "workflow": "account-prioritizer",
             "as_of": "2026-11-05",
             "scope_id": "replacement-book-v1",
             "complete": true,

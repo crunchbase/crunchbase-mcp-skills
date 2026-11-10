@@ -19,8 +19,8 @@ def module(name, path):
     return result
 
 
-pulse = module("pulse_workflow", "skills/crunchbase-account-pulse/scripts/pulse.py")
-brief = module("intel_validator", "skills/crunchbase-account-intel/scripts/validate_brief.py")
+pulse = module("pulse_workflow", "skills/crunchbase-account-signals/scripts/account_signals.py")
+brief = module("intel_validator", "skills/crunchbase-account-brief/scripts/validate_brief.py")
 
 
 class PulseTests(unittest.TestCase):
@@ -296,7 +296,7 @@ class PulseTests(unittest.TestCase):
 
 class IntelTests(unittest.TestCase):
     def example(self):
-        return {"schema_version": "account-intel/v2", "as_of": "2026-11-05",
+        return {"schema_version": "account-brief/v2", "as_of": "2026-11-05",
                 "company": {"uuid": "company-1", "name": "Fictional One", "permalink": "fictional-one", "url": "https://www.crunchbase.com/organization/fictional-one"},
                 "scope": {"purpose": "sales meeting", "seller_mode": "product-neutral", "event_start": "2026-05-05", "event_end": "2026-11-05"},
                 "coverage": {"complete": True, "limitations": [], "sources": ["Crunchbase"]},

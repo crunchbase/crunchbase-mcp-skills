@@ -11,13 +11,13 @@ NORMAL = {
     'prospect-hostile-description': (1, 'prospects'),
     'prospect-missing-seed-accept-icp': (2, 'prospects'),
     'prospect-missing-seed-supply-seed': (2, 'prospects'),
-    'prioritize-accounts-followup': (2, 'priorities'),
+    'account-prioritizer-followup': (2, 'priorities'),
     'priority-null-factor': (1, 'priorities'),
     'priority-duplicate-book': (1, 'priorities'),
 }
 BLOCKED = {'prospect-finder-access-failure': 'prospects',
-           'prioritize-accounts-access-failure': 'priorities'}
-RADAR = {'market-radar-happy', 'heldout-radar-overlap'}
+           'account-prioritizer-access-failure': 'priorities'}
+RADAR = {'industry-insights-happy', 'heldout-radar-overlap'}
 
 
 class CaptureCoverageTests(unittest.TestCase):
@@ -81,9 +81,9 @@ class CaptureCoverageTests(unittest.TestCase):
                             and c['kind'] == 'artifact_csv' and 'arms' not in c for c in case['checks']))
 
     def test_clarification_and_prose_only_tasks_do_not_acquire_export_requirements(self):
-        for cid in ('prospect-finder-missing', 'prioritize-accounts-missing', 'market-radar-missing',
-                    'heldout-prospect-no-seller', 'market-radar-access-failure', 'account-intel-happy',
-                    'account-pulse-happy'):
+        for cid in ('prospect-finder-missing', 'account-prioritizer-missing', 'industry-insights-missing',
+                    'heldout-prospect-no-seller', 'industry-insights-access-failure', 'account-brief-happy',
+                    'account-signals-happy'):
             case = self.cases[cid]
             self.assertFalse(case.get('artifacts'), cid)
             self.assertFalse(any(c['kind'].startswith('artifact_') for c in case['checks']), cid)

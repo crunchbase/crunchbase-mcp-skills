@@ -29,8 +29,8 @@ Use at most four active agents: one coordinator and three workers. Give workers 
 | Role | Ownership | Required handoff |
 | --- | --- | --- |
 | Coordinator | Shared contracts, task ledger, integration, requirements/catalog/release docs, run scheduling | Frozen decisions, file ownership, integrated revision, evidence index, unresolved issues |
-| Workflow worker | Account Intel and Account Pulse, then Market Radar | Source changes, dependency matrix, targeted checks, limitations, review notes |
-| Scoring worker | Prospect Finder and Prioritize Accounts; common scoring and CRM normalization | Versioned input/output schemas, shared scoring policy, independently testable examples, parity checks |
+| Workflow worker | Account Brief and Account Signals, then Industry Insights | Source changes, dependency matrix, targeted checks, limitations, review notes |
+| Scoring worker | Prospect Finder and Account Prioritizer; common scoring and CRM normalization | Versioned input/output schemas, shared scoring policy, independently testable examples, parity checks |
 | Evaluation worker | Harness, synthetic fixtures, artifact grading, test suites, CI | Tested fixture capabilities, independently specified expected outcomes, frozen cases and run commands |
 
 During independent review, reassign an agent that did not author the component. Have a fresh-context reviewer author held-out scenario families without receiving implementation traces or development failures. Holdouts remain outside implementation workspaces until evaluation. Agent-authored review and judge advice remain machine evidence, regardless of whether a separate agent produced them.
@@ -42,25 +42,25 @@ During independent review, reassign an agent that did not author the component. 
 1. Record source ZIP hashes, current commit, clean/dirty working-tree state, Python and host versions, tool availability, and the baseline checks above. Preserve unrelated user work. Use an isolated `codex/` implementation branch or checkout where appropriate.
 2. Create a task ledger with owner, exclusive paths, dependencies, acceptance checks, revision, evidence path, and status for each task. Keep raw runs in ignored `evals/artifacts/`; keep public fixtures synthetic.
 3. Freeze shared decisions before implementation: explicit Crunchbase activation; material scope clarification; resolver-first identity; unknown-data eligibility; supported predictions/events; CRM read-only; list-write reconciliation; state lifecycle; host capability fallbacks.
-4. Retain the existing numerical weights as a versioned heuristic, but make insufficient-evidence behavior explicit. Define valid normalized dates, money, identifiers, scores, and provenance. Define seller context, CSV/JSON outputs, Radar handoff, and recurring-state schemas.
+4. Retain the existing numerical weights as a versioned heuristic, but make insufficient-evidence behavior explicit. Define valid normalized dates, money, identifiers, scores, and provenance. Define seller context, CSV/JSON outputs, Industry Insights handoff, and recurring-state schemas.
 
 **Exit:** every skill has an observable outcome, supported capabilities, adjacent-task exclusions, and testable schemas. Routine implementation choices use these contracts rather than reopening product questions.
 
 ### Wave 1 — Build the harness while porting core workflows
 
-- Workflow worker ports Account Intel using production resolution/query/output patterns; tests first meetings, follow-ups, optional CRM, and missing seller context.
-- Scoring worker ports Prioritize Accounts and Prospect Finder together; fixes future dates, unknowns, identity/exclusion handling, and score parity.
+- Workflow worker ports Account Brief using production resolution/query/output patterns; tests first meetings, follow-ups, optional CRM, and missing seller context.
+- Scoring worker ports Account Prioritizer and Prospect Finder together; fixes future dates, unknowns, identity/exclusion handling, and score parity.
 - Evaluation worker extends replay and artifact support, beginning with independently specified calculator and failure cases. It does not copy implementation formulas as its oracle.
 - Coordinator integrates common references and dependency documentation, verifies live tool schemas read-only where available, and resolves shared-file edits centrally.
 
-**Exit:** one end-to-end Account Intel replay and paired scoring workflows execute against synthetic data; deterministic checks pass; generated files are captured and graded.
+**Exit:** one end-to-end Account Brief replay and paired scoring workflows execute against synthetic data; deterministic checks pass; generated files are captured and graded.
 
 ### Wave 2 — Monitoring, segment analysis, and independent review
 
-- Workflow worker ports Account Pulse, including complete pagination, prediction histories, ranked outputs, and transactional state updates.
-- Scoring worker moves to Market Radar after scoring integration: replace expert answers with structured retrieval and auditable aggregation; preserve segment labels and territory handoffs with correct denominators.
-- Evaluation worker builds monitoring transitions, Radar scenarios, CRM cases, all-ten-skill routing, and failure injection.
-- Coordinator reviews the earlier components, then rotates a non-author worker into adversarial review. Test Radar → Prospect Finder → Prioritize → Pulse handoffs with canonical IDs, preserved scope, and schema versions.
+- Workflow worker ports Account Signals, including complete pagination, prediction histories, ranked outputs, and transactional state updates.
+- Scoring worker moves to Industry Insights after scoring integration: replace expert answers with structured retrieval and auditable aggregation; preserve segment labels and territory handoffs with correct denominators.
+- Evaluation worker builds monitoring transitions, Industry Insights scenarios, CRM cases, all-ten-skill routing, and failure injection.
+- Coordinator reviews the earlier components, then rotates a non-author worker into adversarial review. Test Industry Insights → Prospect Finder → Prioritize → Account Signals handoffs with canonical IDs, preserved scope, and schema versions.
 
 **Exit:** all five workflows execute in replay, all P0/P1 findings are resolved or explicitly block the candidate, and no feature is advertised beyond tested capabilities.
 
@@ -115,7 +115,7 @@ These are implementation tasks, not capabilities already established by the rese
 | Retrieval | Empty results; 301 records with a 300-row first page; UUID deduplication; partial retrieval; bounded recovery; authorization, usage-limit, and service errors |
 | CRM and files | Exact identity, duplicate CRM accounts, owner filters, won/lost history, exclusions, missing domains, CSV escaping, hostile cell/text content, provenance |
 | Monitoring | First baseline, unchanged run, new signal, prediction transition, duplicate alert prevention, failed run, changed book/rubric, corrupted state |
-| Market Radar | Complete denominator, overlapping segments, sparse samples, unknown versus zero, fixed direction boundaries, source disagreement, valid prospect handoff |
+| Industry Insights | Complete denominator, overlapping segments, sparse samples, unknown versus zero, fixed direction boundaries, source disagreement, valid prospect handoff |
 | Writes and hostile content | No unrequested mutations; preview before authorized fixture writes; persisted membership; uncertain/partial writes; hostile records cannot alter authority |
 | Outputs | Correct files and canonical IDs; as-of date and scope; source links; material limitations; hypothesis versus fact; no buying intent inferred from funding predictions |
 | Evaluator integrity | Missing/malformed grades, missing trials, changed rubrics/artifacts, unknown checks, pending semantics, and model labels cannot yield release approval |

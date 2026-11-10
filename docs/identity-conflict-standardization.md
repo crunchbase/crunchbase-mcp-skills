@@ -16,7 +16,7 @@ Semantic judgments remain formally pending independent review. Brief and landsca
 
 ## Untracked GTM skills
 
-All five GTM `references/entity-resolution.md` files now match the production PR’s generalized guide byte-for-byte. Account Intel’s earlier briefing-specific rule was generalized without dropping the conflict boundary. Each skill passes structural validation. The GTM packages remain untracked.
+All five GTM `references/entity-resolution.md` files now match the production PR’s generalized guide byte-for-byte. Account Brief’s earlier briefing-specific rule was generalized without dropping the conflict boundary. Each skill passes structural validation. The GTM packages remain untracked.
 
 A separate `evals/suites/gtm/identity-conflicts.json` covers meeting briefs, monitoring, territory assignment, ranking and look-alike seed discovery. Focused run: `evals/artifacts/gtm-identity-conflict/run-20261105T233105Z-1879d4c0`. All five completed with zero deterministic failures and zero infrastructure errors. Assistant review confirms each asks the user to choose the intended entity before its dependent workflow. Tool logs contain only identity resolver, card-free identity-profile and metadata calls; no discovery, monitoring, scoring or saved-list writes occurred. All five responses also expose internal instruction links, and two provider validation errors were recorded. These remain presentation/recovery caveats rather than hidden full-pass claims; formal semantic checks are still pending independent review.
 

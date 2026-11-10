@@ -14,8 +14,8 @@ November 5, 2026. Compared all five GTM skills with all five existing production
 
 ## Findings
 
-1. Market Radar lacks icon_small, icon_large and brand_color in agents/openai.yaml. Every production skill and the other four GTM skills declares these. Its image asset is already bundled. Recommended: add the same two ./assets/crunchbase-icon-blue.png references and #146AFF color.
-2. Account Intel and Account Pulse use the generic default prompt “for my Crunchbase sales workflow.” Production skills and the other GTM skills use task-specific prompts. Recommended: describe meeting preparation and account monitoring respectively while retaining current identifiers until marketing approves names. Dependency descriptions for these two are also generic; task-specific wording would improve consistency but is not a functional dependency defect.
+1. Industry Insights lacks icon_small, icon_large and brand_color in agents/openai.yaml. Every production skill and the other four GTM skills declares these. Its image asset is already bundled. Recommended: add the same two ./assets/crunchbase-icon-blue.png references and #146AFF color.
+2. Account Brief and Account Signals use the generic default prompt “for my Crunchbase sales workflow.” Production skills and the other GTM skills use task-specific prompts. Recommended: describe meeting preparation and account monitoring respectively while retaining current identifiers until marketing approves names. Dependency descriptions for these two are also generic; task-specific wording would improve consistency but is not a functional dependency defect.
 3. All five GTM folders are currently untracked by Git. The standard scripts/build_releases.py builder reads only git ls-files, so a build from the current index would omit these packages. This is a release-preparation blocker, not a metadata syntax error. Ensure intended GTM files are tracked before the final standard release build; do not include caches or evaluation artifacts. No staging or build was performed by this audit.
 
 ## Naming handoff
@@ -24,7 +24,7 @@ Once names are approved, reconcile directory name, SKILL.md name, agents/openai.
 
 ## Remediation
 
-Findings 1 and 2 are resolved: Market Radar now declares both bundled icon references and the shared brand color; Account Intel and Account Pulse now have task-specific default prompts and dependency descriptions. Skill identifiers, display names, dependency identifiers and invocation policies are unchanged. All ten metadata files parse, reference their own skill in the default prompt, and resolve their icon assets. Finding 3 remains for release preparation. No behavioral reruns were needed for these metadata-only edits.
+Findings 1 and 2 are resolved: Industry Insights now declares both bundled icon references and the shared brand color; Account Brief and Account Signals now have task-specific default prompts and dependency descriptions. Skill identifiers, display names, dependency identifiers and invocation policies are unchanged. All ten metadata files parse, reference their own skill in the default prompt, and resolve their icon assets. Finding 3 remains for release preparation. No behavioral reruns were needed for these metadata-only edits.
 
 ## Second consistency pass
 
@@ -35,7 +35,7 @@ Shared-contract comparison:
 - `query-core.md` is byte-identical across all ten skills.
 - `saved-lists.md` is byte-identical across all five skills that bundle it.
 - GTM output-contract changes intentionally replace investment context with sales context; Prospect Finder additionally includes its tested missing-seed clarification. These are appropriate workflow differences, not accidental metadata drift.
-- Account Intel alone has the strengthened conflicting-name/domain rule added during earlier testing. The other eight copies of `entity-resolution.md` remain identical to the production version. Those copies require identity confirmation and ambiguity handling, but do not explicitly state that resolver confidence cannot override contradictory supplied identity anchors. This is a shared-policy consistency gap, not evidence of eight observed behavioral failures. Recommended follow-up: generalize the rule beyond briefing language, propagate it to applicable workflows, and run a narrowly scoped identity-conflict check rather than another full suite. Funding Signals Screener has no bundled copy; inspect its own identity path before deciding whether any change applies.
+- Account Brief alone has the strengthened conflicting-name/domain rule added during earlier testing. The other eight copies of `entity-resolution.md` remain identical to the production version. Those copies require identity confirmation and ambiguity handling, but do not explicitly state that resolver confidence cannot override contradictory supplied identity anchors. This is a shared-policy consistency gap, not evidence of eight observed behavioral failures. Recommended follow-up: generalize the rule beyond briefing language, propagate it to applicable workflows, and run a narrowly scoped identity-conflict check rather than another full suite. Funding Signals Screener has no bundled copy; inspect its own identity path before deciding whether any change applies.
 
 The existing Git-tracking/build blocker remains. Naming and final archive rebuilding remain deferred. This pass changed only this audit record; no skill behavior, names, staging state or archives were changed.
 

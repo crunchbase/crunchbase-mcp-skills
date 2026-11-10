@@ -9,7 +9,7 @@
       "id": "intel-conflicting-identity",
       "family": "supplied-identity-conflict",
       "split": "regression",
-      "workflow": "crunchbase-account-intel",
+      "workflow": "crunchbase-account-brief",
       "tags": [
         "identity",
         "regression"
@@ -30,7 +30,7 @@
           "id": "route",
           "kind": "activation",
           "severity": "normal",
-          "skill": "crunchbase-account-intel",
+          "skill": "crunchbase-account-brief",
           "expected": true
         },
         {
@@ -61,7 +61,7 @@
       "id": "pulse-conflicting-identity",
       "family": "supplied-identity-conflict",
       "split": "regression",
-      "workflow": "crunchbase-account-pulse",
+      "workflow": "crunchbase-account-signals",
       "tags": [
         "identity",
         "regression"
@@ -82,7 +82,7 @@
           "id": "route",
           "kind": "activation",
           "severity": "normal",
-          "skill": "crunchbase-account-pulse",
+          "skill": "crunchbase-account-signals",
           "expected": true
         },
         {
@@ -113,7 +113,7 @@
       "id": "radar-conflicting-identity",
       "family": "supplied-identity-conflict",
       "split": "regression",
-      "workflow": "crunchbase-market-radar",
+      "workflow": "crunchbase-industry-insights",
       "tags": [
         "identity",
         "regression"
@@ -134,7 +134,7 @@
           "id": "route",
           "kind": "activation",
           "severity": "normal",
-          "skill": "crunchbase-market-radar",
+          "skill": "crunchbase-industry-insights",
           "expected": true
         },
         {
@@ -165,7 +165,7 @@
       "id": "priority-conflicting-identity",
       "family": "supplied-identity-conflict",
       "split": "regression",
-      "workflow": "crunchbase-prioritize-accounts",
+      "workflow": "crunchbase-account-prioritizer",
       "tags": [
         "identity",
         "regression"
@@ -186,7 +186,7 @@
           "id": "route",
           "kind": "activation",
           "severity": "normal",
-          "skill": "crunchbase-prioritize-accounts",
+          "skill": "crunchbase-account-prioritizer",
           "expected": true
         },
         {

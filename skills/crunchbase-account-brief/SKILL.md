@@ -1,7 +1,7 @@
 ---
 name: crunchbase-account-brief
 description: Prepare seller-specific meeting or outreach intelligence for a named account using Crunchbase, with optional read-only CRM history and calendar context. Use only when the user explicitly selects Crunchbase or continues an active Crunchbase sales-preparation workflow. Own sales first meetings, follow-ups, renewals, QBRs and sourced talking points. Do not use for a general company tearsheet without sales intent, prospect discovery, ranking or monitoring an account book, market selection, saved-list operations, investment diligence, or generic meeting preparation without Crunchbase selection.
-license: MIT
+license: See LICENSE (Crunchbase Skills Source-Available License 1.0)
 ---
 
 # Account Brief

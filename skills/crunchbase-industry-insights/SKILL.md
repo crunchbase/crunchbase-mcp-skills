@@ -1,7 +1,7 @@
 ---
 name: crunchbase-industry-insights
 description: Compare sales-market segments, assign an account book to micro-industry territories, or review changes in GTM segment momentum using Crunchbase. Use when Crunchbase is explicitly requested or selected, or continuing an active Crunchbase GTM market analysis. Do not use for investment capital analysis, general market maps, prospect lists, account tiering, account event alerts, or one-company meeting briefs.
-license: MIT
+license: See LICENSE (Crunchbase Skills Source-Available License 1.0)
 ---
 
 # Industry Insights

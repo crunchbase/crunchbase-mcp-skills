@@ -1,7 +1,7 @@
 ---
 name: crunchbase-account-signals
 description: Monitor an established account book using Crunchbase for dated funding, leadership, launches, offices, growth insights, and prediction changes; produce seller-specific ranked review priorities, plays, feeds, or alerts. Use only when the user explicitly selects Crunchbase or continues an active Crunchbase account-signal workflow. Do not use for new-prospect discovery, A/B/C account tiering, single-company meeting briefs, general saved-list membership operations, market direction, investment diligence, or generic account monitoring without Crunchbase selection.
-license: MIT
+license: See LICENSE (Crunchbase Skills Source-Available License 1.0)
 ---
 
 # Account Signals

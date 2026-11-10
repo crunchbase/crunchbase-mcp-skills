@@ -1,6 +1,8 @@
-# Contributing
+# Feedback and maintenance
 
-Crunchbase MCP Skills is a general repository for reusable Crunchbase workflows. Contributions may extend the current private-company research collection or introduce a distinct use case supported by Crunchbase tools. Do not add capabilities to the catalog until they are implemented and validated.
+Crunchbase curates and maintains this collection. We welcome bug reports and suggestions through [GitHub issues](https://github.com/crunchbase/crunchbase-mcp-skills/issues). We do not accept external pull requests or third-party code contributions. Crunchbase maintainers decide which changes to implement and release.
+
+The development and release instructions below are for authorized maintainers.
 
 ## Repository structure
 
@@ -52,4 +54,4 @@ Include the skill name, package revision, host/model, prompt, expected behavior,
 
 ## License
 
-Contributions to instructions and code use the repository's [MIT License](LICENSE). Preserve attribution and [NOTICE](NOTICE); do not assume that third-party data or brand assets share the code license.
+Instructions and code use the [Crunchbase Skills Source-Available License 1.0](LICENSE). Internal business use is permitted. Commercial redistribution and commercial offerings derived from the skills require separate written permission from Crunchbase. Preserve attribution and [NOTICE](NOTICE); do not assume that third-party data or brand assets share the code license.

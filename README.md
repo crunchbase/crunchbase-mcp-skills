@@ -137,9 +137,9 @@ skills/<skill-name>/
 └── NOTICE
 ```
 
-## Contributing
+## Feedback
 
-New Crunchbase workflows and improvements to existing skills are welcome. See [contribution guidelines](CONTRIBUTING.md) and [tool requirements](MCP-REQUIREMENTS.md).
+Crunchbase curates and maintains these skills. We welcome bug reports and suggestions through [issues](https://github.com/crunchbase/crunchbase-mcp-skills/issues). We do not accept external pull requests. See the [feedback policy and maintainer guide](CONTRIBUTING.md).
 
 The collection and its skills share the version in [VERSION](VERSION). Release tags use `v<version>`. See [release versioning](CONTRIBUTING.md#version-a-release) for maintainer instructions.
 
@@ -147,4 +147,4 @@ For issues, include the skill, release version, agent, request, and expected res
 
 ## License
 
-Skill instructions and code are provided under the [MIT License](LICENSE). Crunchbase data access and use remain subject to the applicable service terms; this license does not grant service access or trademark rights. Bundled Crunchbase brand assets retain their existing terms and are excluded from the code license. See [NOTICE](NOTICE).
+Skill instructions and code use the [Crunchbase Skills Source-Available License 1.0](LICENSE). You may use and modify them for internal business work. Commercial redistribution and commercial products or services derived from the skills require separate written permission from Crunchbase. This is a source-available license, not an open-source license. Crunchbase data access and use remain subject to the applicable service terms; this license does not grant service access or trademark rights. Bundled Crunchbase brand assets retain their existing terms and are excluded from the code license. See [NOTICE](NOTICE).

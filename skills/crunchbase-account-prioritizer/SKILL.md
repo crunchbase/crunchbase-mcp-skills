@@ -1,7 +1,7 @@
 ---
 name: crunchbase-account-prioritizer
 description: Rank and tier an existing sales account book using Crunchbase under a disclosed, configurable heuristic, including monthly tier comparisons. Use only when Crunchbase is explicitly requested or selected, or following an active Crunchbase account-prioritization workflow. Do not use for net-new prospect discovery, investment screening, event alerts or a single-company brief.
-license: MIT
+license: See LICENSE (Crunchbase Skills Source-Available License 1.0)
 ---
 
 # Account Prioritizer

@@ -1,7 +1,7 @@
 ---
 name: crunchbase-capital-trends-analyzer
 description: Analyze funding concentration, capital intensity, formation, or market timing across a user-confirmed private-company universe using Crunchbase, or ask the user to confirm a universe when an explicit Crunchbase capital or overfunding question omits one. Use only when the user explicitly asks for Crunchbase, selects Crunchbase as the data source, or follows up on an active Crunchbase capital analysis. Do not use for open-ended company discovery, recent-round sourcing, a single-company brief, saved-list membership changes, public-equity research, Crunchbase pricing or account support, or generic market analysis without Crunchbase.
-license: MIT
+license: See LICENSE (Crunchbase Skills Source-Available License 1.0)
 ---
 
 # Capital Trends Analyzer

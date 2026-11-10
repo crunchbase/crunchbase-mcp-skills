@@ -1,7 +1,7 @@
 ---
 name: crunchbase-prospect-finder
 description: Find net-new sales prospects from an ICP, market segments or customer look-alikes using Crunchbase, with exclusions and evidence-based ranking. Use only when Crunchbase is explicitly requested or selected, or following an active Crunchbase prospecting workflow. Do not use for investment market maps, tiering an existing account book, account alerts or a single-company brief.
-license: MIT
+license: See LICENSE (Crunchbase Skills Source-Available License 1.0)
 ---
 
 # Prospect Finder

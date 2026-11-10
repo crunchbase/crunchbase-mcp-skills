@@ -1,0 +1,9 @@
+# Seller context
+
+Use conversation context first, then an explicitly selected saved context file or host memory that is actually exposed. Do not search unrelated files. If multiple seller contexts are plausible, ask which applies. Preserve source provenance and user corrections. The seller company alone does not establish which offerings this rep sells.
+
+For tailored advice require seller company and offering(s); buyer/use case is required only when unresolved choice changes advice. Bundle missing details with other material questions. Offer a product-neutral brief when the user declines. Do not guess products and save them as confirmed. If the user requests help identifying offerings, resolve the seller and retrieve relevant products; label the user's eventual choices. External seller-site research requires the user's request, uses only relevant pages, and stays explicitly attributed.
+
+Portable context schema (`schema_version: "seller-context/v1"`): `company` with name and optional canonical identity; `offerings` with name, buyer, use_case and source; optional `customers`/`proof_points` with source; `as_of`; `confirmed` boolean. A plain user statement is sufficient context and need not be forced into a file. Keep rep career/background separate and optional, with dated employers and sources. Do not invent customer outcomes, prices or proof points.
+
+Persist only using a supported host capability and within the requested/established workspace. Never overwrite a user-designated file unexpectedly. A local file is not a guarantee of availability in another chat or host. State what actually succeeded: saved to this workspace, saved to exposed memory, or usable only in this conversation. Absence of a memory tool does not establish a settings state. Do not promise “I won't ask next time” without a supported persistence guarantee.

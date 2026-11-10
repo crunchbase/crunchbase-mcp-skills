@@ -15,7 +15,7 @@ import uuid
 
 BASE = Path(__file__).parent / 'suites/private-company-research/base_data.json'
 MUTATIONS = {'cb_list_create', 'cb_list_add_entities'}
-ALIASES = {'organization':'organizations', 'organization.companies':'organizations', 'organization.companies.private':'organizations', 'funding_round':'funding_rounds', 'category':'categories', 'location':'locations', 'person':'people'}
+ALIASES = {'organization':'organizations', 'organization.companies':'organizations', 'organization.companies.private':'organizations', 'funding_round':'funding_rounds', 'category':'categories', 'location':'locations', 'person':'people', 'micro_category':'micro_categories', 'product':'products', 'org_similarity':'org_similarities', 'fund':'funds', 'growth_prediction':'growth_predictions', 'funding_prediction':'funding_predictions', 'market_insight':'market_insights', 'growth_insight':'growth_insights', 'key_employee_change':'key_employee_changes', 'product_launch':'product_launches', 'press_reference':'press_references', 'job':'jobs', 'investment':'investments', 'layoff':'layoffs', 'acquisition':'acquisitions', 'address':'addresses', 'partnership_announcement':'partnership_announcements'}
 
 def schema(properties, required=()):
     return {'type':'object','properties':properties,'required':list(required),'additionalProperties':False}
@@ -163,7 +163,7 @@ class Replay:
         elif path.startswith('guidance/') or path in ('operators','field_types'):
             body=('Use explicit field_ids; flat predicates are AND; includes values are OR and includes_all values are AND. query and predicates are mutually exclusive. Each query item is type=predicate; sub_query is outside this synthetic fixture contract and returns UNSUPPORTED_FIXTURE. Money values are USD integers; ISO dates are YYYY-MM-DD. after_id is last returned entity UUID; count is full matching count. Review entities/organization/fields or entities/funding_round/fields for operators and enum identifiers.')
         else:
-            body='Available paths: entities; entities/organization/fields; entities/organization/cards; entities/funding_round/fields; guidance/search_query. Collections: organizations (organization.companies), funding_rounds, categories, locations, people. Full field contracts are in the collection fields response.'
+            body='Available paths: entities; entities/organization/fields; entities/organization/cards; entities/funding_round/fields; guidance/search_query. Collections: '+', '.join(self.data['entities'])+'. Full field contracts are in the collection fields response.'
         return {'path':path,'content':body}
     def entity_autocomplete(self,query,collection_ids=None,limit=10):
         collections=[self.collection(c.strip()) for c in collection_ids.split(',')] if collection_ids else list(self.data['entities'])
@@ -276,7 +276,19 @@ class Replay:
             rows=absent+present if o.get('nulls')=='first' else present+absent
         count=len(rows)
         page,_=self.page(rows,after_id,min(limit or 20,self.fixture.get('page_size',1000)))
-        return {'collection_id':collection,'count':count,'entities':[{'uuid':uid(r),'url':r.get('url'),**{f:copy.deepcopy(r.get(f)) for f in fields}} for r in page],'response_status':200}
+        envelope=self.fixture.get('search_envelope',self.data.get('search_envelope','flat'))
+        if envelope not in ('flat','properties'):
+            raise ValidationError('Unsupported search_envelope; use flat or properties')
+        entities=[]
+        for r in page:
+            projected={f:copy.deepcopy(r.get(f)) for f in fields}
+            if envelope=='properties':
+                item={'uuid':uid(r),'properties':projected,'value':ident(r)['value']}
+                if r.get('url') is not None: item['url']=r['url']
+            else:
+                item={'uuid':uid(r),'url':r.get('url'),**projected}
+            entities.append(item)
+        return {'collection_id':collection,'count':count,'entities':entities,'response_status':200}
     def list_query(self):
         return {'company_lists':[{'list_id':k,'name':v['name'],'is_modifiable':True,'is_owner':True,'is_public':False,'identifiers_collection':{'collection_id':'identifiers','entities_count':len(v['entity_ids'])}} for k,v in self.state['lists'].items()],'response_status':200}
     def list_get(self,list_id,after_id=None):

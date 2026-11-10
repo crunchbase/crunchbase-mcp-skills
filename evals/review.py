@@ -35,10 +35,10 @@ def export_packets(run, output, seed=19):
         identity = f"{trial['case_id']}/{trial['arm']}/{trial['trial']}/{digest}"
         packet_id = hashlib.sha256(identity.encode()).hexdigest()[:20]
         prompts = [t["user"] for t in case["turns"]]
-        answers = [{k: t[k] for k in ("turn", "final", "messages", "timeline") if k in t} for t in trial["turns"]]
+        answers = [{k: t[k] for k in ("turn", "final", "messages", "timeline", "state_after", "artifacts") if k in t} for t in trial["turns"]]
         observations = [{k: e[k] for k in ("turn", "tool", "arguments", "result", "state_after") if k in e} for e in events]
         criteria = [{"criterion": f"c{index+1}", "rubric": c["rubric"], "turn": c.get("turn")} for index, c in enumerate(semantic)]
-        packets.append({"packet_id": packet_id, "user_turns": prompts, "assistant_turns": answers, "tool_observations": observations, "final_state": state, "criteria": criteria, "judgments": [{"criterion": c["criterion"], "pass": None, "evidence": ""} for c in criteria]})
+        packets.append({"packet_id": packet_id, "user_turns": prompts, "input_attachments": case.get("attachments", []), "assistant_turns": answers, "tool_observations": observations, "final_state": state, "criteria": criteria, "judgments": [{"criterion": c["criterion"], "pass": None, "evidence": ""} for c in criteria]})
         mapping[packet_id] = {"evidence_digest": digest, "packet_digest": packet_digest(packets[-1]), "checks": {f"c{i+1}": review_key(trial, c) for i, c in enumerate(semantic)}}
     random.Random(seed).shuffle(packets)
     output.mkdir(parents=True, exist_ok=False)

@@ -155,12 +155,12 @@ class IsolationTests(unittest.TestCase):
         self.assertIn("skill-b", catalog)
         self.assertNotIn("expected", catalog)
         self.assertNotIn("fixture", catalog)
-        self.assertEqual({p.name for p in self.workspace.iterdir()}, {"AGENTS.md", "skills"})
+        self.assertEqual({p.name for p in self.workspace.iterdir()}, {"AGENTS.md", "skills", ".eval-bin"})
 
     def test_baseline_has_same_general_context_but_no_skills(self):
         contents = runner.prepare_workspace(self.workspace, None, "2026-09-30")
         self.assertEqual(contents, {})
-        self.assertEqual({p.name for p in self.workspace.iterdir()}, {"AGENTS.md"})
+        self.assertEqual({p.name for p in self.workspace.iterdir()}, {"AGENTS.md", ".eval-bin"})
         self.assertIn("2026-09-30", (self.workspace / "AGENTS.md").read_text())
         self.assertNotIn("Available skills", (self.workspace / "AGENTS.md").read_text())
 
@@ -175,7 +175,8 @@ class IsolationTests(unittest.TestCase):
                   server=self.root / "server.py", model="configured-model", effort="high", turn=1, thread_id=None,
                   ephemeral=True, protected_paths=[self.root / "artifacts"])
         kw.update(overrides)
-        return runner.build_command(**kw)
+        with patch.object(runner, "native_skill_isolation", return_value={"disabled_names": ["host-canary"]}):
+            return runner.build_command(**kw)
 
     def test_command_disables_host_context_and_denies_fixture_artifacts(self):
         command = self.command()
@@ -221,6 +222,31 @@ class IsolationTests(unittest.TestCase):
         self.assertIn("profile_sha256", source)
         with self.assertRaises(runner.EvalError):
             runner.resolve_model(None, None, self.root / "absent.toml")
+
+
+class NativeCatalogTests(unittest.TestCase):
+    def test_native_parser_does_not_treat_injected_catalog_as_native(self):
+        prompt = [{'content': [{'text': 'Available skills\n- candidate: manual (file: skills/candidate/SKILL.md)'}]},
+                  {'content': [{'text': '<skills_instructions>\n### Available skills\n- host: hidden ambient description (file: r0/host/SKILL.md)\n</skills_instructions>'}]}]
+        self.assertEqual(runner.native_catalog_names(prompt), ['host'])
+
+    def test_preflight_fails_closed_and_is_cached(self):
+        runner.native_skill_isolation.cache_clear()
+        original = [{'content': [{'text': '<skills_instructions>\n### Available skills\n- eval-native-discovery-canary: EVAL_NATIVE_CANARY_712903\n- host: ambient\n</skills_instructions>'}]}]
+        isolated = [{'content': [{'text': 'EVAL_EXPLICIT_CANDIDATE_CATALOG_712903'}]}]
+        with patch.object(runner, 'render_catalog_probe', side_effect=[original, isolated]) as render:
+            result = runner.native_skill_isolation('test-cli')
+            self.assertEqual(result['native_catalog_after'], [])
+            runner.native_skill_isolation('test-cli')
+            self.assertEqual(render.call_count, 2)
+            self.assertIn('host', render.call_args.args[2])
+        runner.native_skill_isolation.cache_clear()
+        with patch.object(runner, 'render_catalog_probe', side_effect=[original, original]):
+            with self.assertRaises(runner.EvalError): runner.native_skill_isolation('test-cli')
+        runner.native_skill_isolation.cache_clear()
+        with patch.object(runner, 'render_catalog_probe', return_value=[]):
+            with self.assertRaises(runner.EvalError): runner.native_skill_isolation('test-cli')
+        runner.native_skill_isolation.cache_clear()
 
 
 class TraceTests(unittest.TestCase):
@@ -408,7 +434,7 @@ class ManifestTests(unittest.TestCase):
             args = argparse.Namespace(skills=skills, previous_skills=None, codex="codex", case=None,
                 seed=3, repeats=1, arms="candidate,baseline", timeout=60, jobs=2)
             jobs = runner.make_plan(suite["cases"], ["candidate", "baseline"], 1, 3)
-            with patch.object(runner, "ROOT", root), patch.object(runner.subprocess, "run", return_value=Mock(stdout="codex test")):
+            with patch.object(runner, "ROOT", root), patch.object(runner.subprocess, "run", return_value=Mock(stdout="codex test")), patch.object(runner, "native_skill_isolation", return_value={"disabled_names": ["host-canary"]}):
                 manifest = runner.create_manifest(args, suite, suite_path, jobs, "model", "high", {}, run_dir)
             self.assertTrue(manifest["full_suite"])
             frozen_skill = run_dir / "inputs/candidate-skills/skill-a/SKILL.md"
@@ -470,6 +496,9 @@ class ManifestTests(unittest.TestCase):
 
 class TrialTests(unittest.TestCase):
     def setUp(self):
+        patcher = patch.object(runner, "native_skill_isolation", return_value={"disabled_names": ["host-canary"]})
+        patcher.start()
+        self.addCleanup(patcher.stop)
         self.tmp = tempfile.TemporaryDirectory()
         self.root = Path(self.tmp.name)
         self.skills = self.root / "skills"

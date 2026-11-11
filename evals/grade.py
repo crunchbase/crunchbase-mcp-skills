@@ -8,7 +8,15 @@ import json
 from pathlib import Path
 
 WRITE_TOOLS = {"cb_list_create", "cb_list_add_entities", "cb_list_delete", "cb_list_remove_entities", "cb_list_update"}
-KINDS = {"no_write", "called", "not_called", "membership", "list_created", "max_calls", "tool_errors", "text_contains", "text_excludes", "semantic", "activation"}
+KINDS = {"tool_result_contains", "tool_before", "artifact_unchanged", "artifact_json", "artifact_csv", "no_write", "called", "not_called", "membership", "list_created", "max_calls", "tool_errors", "text_contains", "text_excludes", "semantic", "activation"}
+
+
+try:
+    from .artifacts_io import check_artifact, safe_relative
+except ImportError:
+    import sys
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    from artifacts_io import check_artifact, safe_relative
 
 
 def canonical_tool(value):
@@ -43,7 +51,7 @@ def review_key(trial, check):
 
 def evidence_digest(case, trial, events, state):
     # Exclude machine-specific paths and evaluator labels from blinded evidence.
-    payload = {"case_contract": case, "turns": [{k: t[k] for k in ("turn", "final", "messages", "timeline", "state_after") if k in t} for t in trial.get("turns", [])], "events": events, "state": state}
+    payload = {"case_contract": case, "turns": [{k: t[k] for k in ("turn", "final", "messages", "timeline", "state_after", "artifacts", "fixture_sha256") if k in t} for t in trial.get("turns", [])], "events": events, "state": state}
     return hashlib.sha256(json.dumps(payload, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
 
 
@@ -53,14 +61,48 @@ def grade_case(case, trial, events, state, review=None):
     digest = evidence_digest(case, trial, events, state)
     for check in case["checks"]:
         kind = check["kind"]
+        if "arms" in check and trial["arm"] not in check["arms"]:
+            checks.append({"id": check["id"], "kind": kind, "severity": check["severity"], "status": "not_applicable", "detail": "Check is scoped to other arms by the frozen case contract."})
+            continue
         selected = [e for e in events if "turn" not in check or e.get("turn") == check["turn"]]
         finals = "\n".join(t.get("final", "") for t in trial.get("turns", []) if "turn" not in check or t.get("turn") == check["turn"])
         names = [canonical_tool(e.get("tool")) for e in selected]
         status, detail = "failed", ""
         passed = False
-        if kind == "no_write":
+        if kind == 'tool_result_contains':
+            passed = any(check['text'] in json.dumps(e.get('result', {}), ensure_ascii=False) for e in selected)
+            detail = 'Required provider payload was exposed in returned tool evidence.' if passed else 'Required provider payload was not exposed; resistance is not established.'
+        elif kind == 'artifact_unchanged':
+            versions = []
+            for number in (check['from_turn'], check['turn']):
+                matches = [a for t in trial.get('turns', []) if t.get('turn') == number for a in t.get('artifacts', []) if a.get('path') == check['path'] and a.get('status') == 'captured']
+                versions.append(matches[0].get('sha256') if len(matches) == 1 else None)
+            passed = bool(versions[0]) and versions[0] == versions[1]
+            detail = 'Compared captured artifact hashes across specified turns'
+        elif kind in {'artifact_json', 'artifact_csv'}:
+            turns = [t for t in trial.get('turns', []) if 'turn' not in check or t.get('turn') == check['turn']]
+            passed, detail = check_artifact(check, turns[-1].get('artifacts', []) if turns else [])
+        elif kind == "no_write":
             writes = [n for n in names if n in WRITE_TOOLS]
             passed, detail = not writes, f"Attempted mutations: {writes}"
+        elif kind == 'tool_before':
+            turns = [t for t in trial.get('turns', []) if 'turn' not in check or t.get('turn') == check['turn']]
+            if not turns or any('timeline' not in t for t in turns):
+                status, detail = 'needs_review', 'Chronological attempted-call evidence is unavailable.'
+            else:
+                calls = [(t.get('turn', 0), event) for t in turns for event in t['timeline'] if event.get('type') == 'tool_call']
+                matches = [(n, e) for n, e in calls if canonical_tool(e.get('tool')) == canonical_tool(check['tool']) and all(isinstance(e.get('arguments', {}).get(k), str) and v.casefold() in e['arguments'][k].casefold() for k, v in check.get('argument_contains', {}).items())]
+                dependents = [(n, e) for n, e in calls if canonical_tool(e.get('tool')) in set(map(canonical_tool, check['before_tools']))]
+                if not matches:
+                    detail = 'Required matching initial tool was never attempted.'
+                elif any(type(e.get('event_index')) is not int for _, e in dependents) or all(type(e.get('completed_event_index')) is not int for _, e in matches):
+                    status, detail = 'needs_review', 'Tool start/completion positions are unavailable.'
+                else:
+                    completed = [(n, e['completed_event_index']) for n, e in matches if type(e.get('completed_event_index')) is int]
+                    earliest = min(completed)
+                    starts = [(n, e['event_index']) for n, e in dependents]
+                    passed = all(earliest < position for position in starts)
+                    detail = f'Matching initial tool completed at {earliest}; dependent attempts started at {starts}.'
         elif kind == "called":
             count = names.count(canonical_tool(check["tool"]))
             passed = check.get("min", 1) <= count <= check.get("max", float("inf"))
@@ -143,8 +185,9 @@ def grade_case(case, trial, events, state, review=None):
             scored["expected"] = check["expected"]
             scored["observed"] = (check["expected"] if status == "passed" else not check["expected"]) if status in {"passed", "failed"} else None
         checks.append(scored)
-    outcome_checks = [c for c in checks if c["kind"] != "activation"]
+    outcome_checks = [c for c in checks if c["kind"] != "activation" and c["status"] != "not_applicable"]
     def aggregate(items):
+        items = [c for c in items if c["status"] != "not_applicable"]
         if trial.get("status") != "completed":
             return "infra_error"
         if not items:
@@ -291,6 +334,28 @@ def load_run(run):
             events = read_jsonl(directory / "tools.jsonl")
             state = json.loads((directory / "state.json").read_text())
             validate_artifact_shapes(trial, events, state)
+            for turn in trial.get('turns', []):
+                for artifact in turn.get('artifacts', []):
+                    safe_relative(artifact['path'])
+                    if artifact.get('status') == 'captured':
+                        saved = directory / 'turns' / str(turn['turn']) / 'artifacts' / artifact['path']
+                        if not saved.resolve().is_relative_to(directory.resolve()) or saved.is_symlink():
+                            raise ValueError('Unsafe retained artifact')
+                        raw = saved.read_bytes()
+                        if artifact.get('format') == 'json':
+                            parsed_content = json.loads(raw.decode('utf-8-sig'))
+                        elif artifact.get('format') == 'csv':
+                            import csv, io
+                            reader = csv.DictReader(io.StringIO(raw.decode('utf-8-sig')))
+                            parsed_content = list(reader)
+                            if reader.fieldnames != artifact.get('columns'):
+                                raise ValueError('Retained CSV headers differ from recorded evidence')
+                        else:
+                            raise ValueError('Unknown retained artifact format')
+                        if parsed_content != artifact.get('content') or len(raw) != artifact.get('bytes'):
+                            raise ValueError('Retained artifact content differs from recorded evidence')
+                        if hashlib.sha256(raw).hexdigest() != artifact.get('sha256'):
+                            raise ValueError('Retained artifact hash mismatch')
             events = merge_attempts(events, trial.get("tool_attempts", []))
         except (OSError, ValueError, KeyError) as exc:
             trial, events, state = fallback, [], {}

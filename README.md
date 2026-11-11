@@ -1,8 +1,8 @@
 # Crunchbase MCP Skills
 
-Agent skills for company research, funding analysis, and saved lists, powered by Crunchbase MCP.
+Agent skills for company research, sales workflows, funding analysis, and saved lists, powered by Crunchbase MCP.
 
-Build an investment landscape, screen recent funding rounds, prepare for a company meeting, or compare capital across a market. Each skill packages a focused workflow with supporting references and calculation helpers where needed.
+Build an investment landscape, screen funding rounds, prepare a sales meeting, find prospects, or prioritize accounts. Each skill packages a focused workflow with supporting references and calculation helpers where needed.
 
 ## Get started
 
@@ -20,7 +20,7 @@ After installation, try:
 
 > Use Crunchbase to prepare a brief on Canva for an introductory meeting. Include financing, relevant peers, and questions to explore.
 
-Skills require the [Crunchbase MCP tools](MCP-REQUIREMENTS.md); installing them does not provide a connection or account access. Calculation helpers require Python 3.9+ and use only the standard library.
+Skills require the [Crunchbase MCP tools](MCP-REQUIREMENTS.md); installing them does not provide a connection or account access. Research calculation helpers require Python 3.9+. The GTM skills use Python 3.10+; CSV/JSON workflows use the standard library, while optional XLSX/XLSM CRM ingestion needs openpyxl.
 
 ## Choose a skill
 
@@ -35,6 +35,20 @@ Skills require the [Crunchbase MCP tools](MCP-REQUIREMENTS.md); installing them 
 The skills instruct the agent to ask for missing inputs and resolve ambiguous company identities before continuing. Research stays read-only unless you explicitly request a supported saved-list change. Write workflows require a preview and membership verification; the preview does not require another approval when the requested action is already clear.
 
 See the [workflow guide](docs/guides/private-company-research.md) for more examples and expected outputs.
+
+### GTM Skills Collection
+
+Use these skills to prepare sales meetings, find prospects, prioritize accounts, review account signals, and compare sales segments.
+
+| Skill | What it does |
+| --- | --- |
+| [Account Brief](skills/crunchbase-account-brief/SKILL.md) | Prepares seller-specific account research for meetings and outreach, including company developments, relevant context, and potential sales talking points. |
+| [Account Signals](skills/crunchbase-account-signals/SKILL.md) | Monitors an existing account book for funding, leadership changes, product launches, and other developments to help sellers identify accounts worth reviewing. |
+| [Prospect Finder](skills/crunchbase-prospect-finder/SKILL.md) | Finds new sales prospects using an ideal customer profile, market segments, or company lookalikes, with exclusions and evidence-based prioritization. |
+| [Account Prioritizer](skills/crunchbase-account-prioritizer/SKILL.md) | Scores and tiers an existing account book, explains each ranking, and exports results for sales planning. |
+| [Industry Insights](skills/crunchbase-industry-insights/SKILL.md) | Compares market segments using funding, company formation, and growth signals to support market selection and territory planning. |
+
+See the [GTM workflow guide](docs/guides/gtm-workflows.md) for examples, runtime requirements, and portability limits. CRM outputs are local artifacts, not automatic CRM updates. Recurring operation depends on the host's supported scheduling and persistence capabilities.
 
 ## Installation options
 
@@ -88,14 +102,6 @@ Upload `crunchbase-company-tearsheet-generator.zip` from the repository root. Us
 
 ### Downloads
 
-Build an individual `.skill` and `.zip` archive for every skill from a local checkout:
-
-```sh
-python3 scripts/build_releases.py
-```
-
-The output directory must be empty; use `--output <fresh-directory>` for another build. Files are written to `dist/<version>/` with a `SHA256SUMS` checksum file. Each archive includes the complete skill folder and its version. The `.skill` files contain the same ZIP data; use `.zip` for Claude.ai uploads.
-
 Download individual skills from [the latest release](https://github.com/crunchbase/crunchbase-mcp-skills/releases/latest). Use ZIP for Claude.ai uploads.
 
 | Skill | ZIP | .skill |
@@ -106,7 +112,7 @@ Download individual skills from [the latest release](https://github.com/crunchba
 | Capital Trends Analyzer | [Download](https://github.com/crunchbase/crunchbase-mcp-skills/releases/latest/download/crunchbase-capital-trends-analyzer.zip) | [Download](https://github.com/crunchbase/crunchbase-mcp-skills/releases/latest/download/crunchbase-capital-trends-analyzer.skill) |
 | Watchlists Manager | [Download](https://github.com/crunchbase/crunchbase-mcp-skills/releases/latest/download/crunchbase-watchlists-manager.zip) | [Download](https://github.com/crunchbase/crunchbase-mcp-skills/releases/latest/download/crunchbase-watchlists-manager.skill) |
 
-[SHA-256 checksums](https://github.com/crunchbase/crunchbase-mcp-skills/releases/latest/download/SHA256SUMS). The build command above packages the files in your checkout.
+[SHA-256 checksums](https://github.com/crunchbase/crunchbase-mcp-skills/releases/latest/download/SHA256SUMS).
 
 ## Agent requirements
 
@@ -131,9 +137,9 @@ skills/<skill-name>/
 └── NOTICE
 ```
 
-## Contributing
+## Feedback
 
-New Crunchbase workflows and improvements to existing skills are welcome. See [contribution guidelines](CONTRIBUTING.md) and [tool requirements](MCP-REQUIREMENTS.md).
+Crunchbase curates and maintains these skills. We welcome bug reports and suggestions through [issues](https://github.com/crunchbase/crunchbase-mcp-skills/issues). We do not accept external pull requests. See the [feedback policy and maintainer guide](CONTRIBUTING.md).
 
 The collection and its skills share the version in [VERSION](VERSION). Release tags use `v<version>`. See [release versioning](CONTRIBUTING.md#version-a-release) for maintainer instructions.
 
@@ -141,4 +147,4 @@ For issues, include the skill, release version, agent, request, and expected res
 
 ## License
 
-Skill instructions and code are provided under the [MIT License](LICENSE). Crunchbase data access and use remain subject to the applicable service terms; this license does not grant service access or trademark rights. Bundled Crunchbase brand assets retain their existing terms and are excluded from the code license. See [NOTICE](NOTICE).
+Skill instructions and code use the [Crunchbase Skills Source-Available License 1.0](LICENSE). You may use and modify them for internal business work. Commercial redistribution and commercial products or services derived from the skills require separate written permission from Crunchbase. This is a source-available license, not an open-source license. Crunchbase data access and use remain subject to the applicable service terms; this license does not grant service access or trademark rights. Bundled Crunchbase brand assets retain their existing terms and are excluded from the code license. See [NOTICE](NOTICE).

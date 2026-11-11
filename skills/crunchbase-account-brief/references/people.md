@@ -1,0 +1,7 @@
+# Attendees and professional common ground
+
+Use confirmed meeting attendees from the user/calendar/CRM. Resolve each named person with `cb_expert_resolve_entity` using collection people and the confirmed company as context; do not pass the company domain as the person's identity. Verify the current employer/title from returned structured records. Candidate rank or a matching name alone is insufficient. Follow `entity-resolution.md` for bounded fallback and ambiguity.
+
+Retrieve explicit person fields and only needed employment, education or board cards. Do not request unrelated personal information. A person lacking a display name is not guessed from an email address. Keep unresolved named attendees visible as unverified invite/CRM names, with no invented biography. When no attendees are named, up to four returned leaders may appear under Key people, explicitly not confirmed attendees.
+
+Common ground uses only supplied professional background and returned public professional evidence: employer, school, role, customer or board overlap. Compare canonical organizations and real dates; shared employers without overlapping years are not a claim they worked together. Never infer personal interests, protected characteristics, family, home location or private social activity. Omit weak connections. External person research requires an explicit request and attribution; never scrape LinkedIn or fabricate a profile URL. Returned public profile links may be shown.

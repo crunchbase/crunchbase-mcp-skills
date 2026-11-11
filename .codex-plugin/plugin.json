@@ -1,6 +1,6 @@
 {
   "name": "crunchbase-mcp-skills",
-  "version": "1.0.4",
+  "version": "1.1.0",
   "description": "Reusable skills for researching companies, analyzing markets, and managing Crunchbase workflows.",
   "author": {
     "name": "Crunchbase",
@@ -18,7 +18,7 @@
   "interface": {
     "displayName": "Crunchbase MCP Skills",
     "shortDescription": "Reusable skills for Crunchbase workflows",
-    "longDescription": "Research companies and markets with reusable Crunchbase skills. Skills include Market Map Builder, Funding Signals Screener, Watchlists Manager, Company Tearsheet Generator, and Capital Trends Analyzer.",
+    "longDescription": "Research companies and markets with Crunchbase. Build market maps, screen funding, prepare company briefs, analyze capital, and manage saved lists. Use Account Brief, Account Signals, Prospect Finder, Account Prioritizer, and Industry Insights for sales workflows.",
     "developerName": "Crunchbase",
     "category": "Business",
     "capabilities": [
@@ -37,6 +37,6 @@
     "composerIcon": "./assets/crunchbase-icon-blue.png",
     "logo": "./assets/crunchbase-icon-blue.png"
   },
-  "license": "MIT",
+  "license": "LicenseRef-Crunchbase-Skills-Source-Available-1.0",
   "repository": "https://github.com/crunchbase/crunchbase-mcp-skills"
 }

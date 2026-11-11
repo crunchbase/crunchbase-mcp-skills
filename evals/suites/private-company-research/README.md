@@ -35,3 +35,7 @@ Earlier pilot runs keep their original frozen fixture and rubric versions; these
 Run the corpus alongside separate live read-only compatibility checks. Saved-list mutation scenarios here never write to an actual Crunchbase account.
 
 The October 5 revision retires seven inspected or repaired holdouts into regression and adds three resolver recovery boundary cases. The remaining public partition is not newly sealed evidence. The September 30 frozen suite and scores remain unchanged in their original run artifacts. Interrupted-search fixtures target successful calls on the relevant collection; partial-write fixtures reject a fixed UUID independently of batching.
+
+## Search-envelope limitation
+
+This corpus retains the historical flat search-row fixture as a regression baseline. Live responses inspected November 5, 2026 use nested `properties` rows; the GTM and cross-collection corpora exercise that current observed shape, with one explicit legacy-flat GTM regression. A research replay pass therefore does not establish current live search-envelope compatibility. Historical frozen runs and their evidence have not been rewritten.

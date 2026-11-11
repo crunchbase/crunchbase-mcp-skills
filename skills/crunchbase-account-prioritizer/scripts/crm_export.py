@@ -12,7 +12,7 @@ or a contacts export; the kind is detected from the headers. Writes:
                          Type, Tier, Industry, Last activity, Open deals,
                          Deal stage, Open amount, Next close date, Won deals,
                          Last won date, Contacts
-  DIR/crm-contacts.csv   Account, Domain, Name, Title, Owner, Last activity
+  DIR/crm-contacts.csv   Account, Domain, CRM ID, Name, Title, Owner, Last activity
                          (email addresses and phone numbers are never written)
   DIR/crm-deals.json     original amount/currency evidence per included deal
   DIR/crm-domains.txt    one account domain per line
@@ -122,13 +122,17 @@ def parse_date(value: str) -> str:
 
 
 def parse_amount(value: str) -> float | None:
-    v = re.sub(r"[^\d.\-]", "", value or "")
-    try:
-        result = float(v) if v not in ("", "-", ".") else None
-        if result is not None and not math.isfinite(result): die("Non-finite CRM amount")
-        return result
-    except ValueError:
+    v = (value or "").strip()
+    if not v:
         return None
+    # Accept ungrouped decimal-point amounts only. Never guess locale or
+    # discard accounting signs, separators, currency codes, or other text.
+    if not re.fullmatch(r"[+-]?[$€£¥]?[0-9]+(?:\.[0-9]+)?", v):
+        die("Unsupported or ambiguous CRM amount; use ungrouped decimal-point numbers with a leading minus for negatives")
+    result = float(re.sub(r"[$€£¥]", "", v))
+    if not math.isfinite(result):
+        die("Non-finite CRM amount")
+    return result
 
 
 def read_rows(path: Path) -> list[list[str]]:
@@ -360,6 +364,7 @@ def main() -> None:
                                              "Last activity": parse_date(rec.get("last_activity", ""))})
 
     out_rows, contacts, deal_rows = [], [], []
+    contacts_by_account = {}
     owners: dict[str, int] = {}
     for acc in accounts.values():
         deals = acc.pop("_deals")
@@ -396,8 +401,10 @@ def main() -> None:
         deal_rows.extend({"Account": acc["Account"], "Domain": acc["Domain"], "CRM ID": acc["CRM ID"], **d} for d in deals)
         if acc["Owner"]:
             owners[acc["Owner"]] = owners.get(acc["Owner"], 0) + 1
-        for p in people:
-            contacts.append({"Account": acc["Account"], "Domain": acc["Domain"], **p})
+        account_contacts = [{"Account": acc["Account"], "Domain": acc["Domain"],
+                             "CRM ID": acc["CRM ID"], **p} for p in people]
+        contacts_by_account[id(acc)] = account_contacts
+        contacts.extend(account_contacts)
 
     out = Path(a.out_dir)
     out.mkdir(parents=True, exist_ok=True)
@@ -414,7 +421,7 @@ def main() -> None:
     paths["deals"] = str(out / "crm-deals.json")
     if contacts:
         with open(out / "crm-contacts.csv", "w", encoding="utf-8-sig", newline="") as fh:
-            w = csv.DictWriter(fh, fieldnames=["Account", "Domain", "Name", "Title", "Owner", "Last activity"])
+            w = csv.DictWriter(fh, fieldnames=["Account", "Domain", "CRM ID", "Name", "Title", "Owner", "Last activity"])
             w.writeheader()
             w.writerows({k: csv_cell(v) for k, v in row.items()} for row in contacts)
         paths["contacts"] = str(out / "crm-contacts.csv")
@@ -448,7 +455,7 @@ def main() -> None:
         hit = hits[0] if len(hits) == 1 else None
         summary["ambiguous_accounts"] = hits if len(hits) > 1 else []
         summary["account"] = ({k: v for k, v in hit.items() if v not in ("", None)} | {
-            "contacts": [c for c in contacts if c["Account"] == hit["Account"]]}) if hit else None
+            "contacts": contacts_by_account[id(hit)]}) if hit else None
     print(json.dumps(summary, indent=1))
 
 
